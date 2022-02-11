@@ -11,3 +11,14 @@ var map = L.map('map').setView([8.477703150412395,124.64379231398955],13);// tar
 
         L.control.locate().addTo(map); //check top left corner for added button/control
 
+function openNav() {
+    document.getElementById("mySidebar").style.width = "250px";
+    document.getElementById("menu").style.marginLeft = "250px";
+
+}
+
+function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("menu").style.marginLeft = "0";
+
+}
