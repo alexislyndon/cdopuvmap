@@ -1,25 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ><!--Route from point A to point B-->
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-    <style>
-        #map {position: absolute; top: 0; bottom: 0; left: 0; right: 0; width: 900px; height: 640px;}
-    </style>
-    <title>Map Test 1</title>
-</head>
-<body>
-    <div id="map"></div>
-    <script>
-        var map = L.map('map').setView([8.477703150412395,124.64379231398955],13);// target is rizal monument
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="https://js.arcgis.com/4.22/esri/themes/light/main.css">
+  <script src="https://js.arcgis.com/4.22/"></script>
 
-        L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeAqyxwLGSnrFq', 
-        {
-            attribution:'<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-        }).addTo(map);
-    </script>
+  <link rel="stylesheet" href="./style.css">
+  <script  src="./script.js"></script>
+  <title>Route</title> 
+
+</head>
+
+  <body>
+    <div id="viewDiv"></div>
+
 </body>
 </html>
