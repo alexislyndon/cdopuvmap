@@ -15,7 +15,7 @@
     position: fixed;
     top: 50%;
     left: 0;
-    transition: margin-left .5s; /* If you want a transition effect */
+    transition: margin-left .5s;
     padding: 20px;
 }
 .button{
@@ -31,15 +31,15 @@
 }
 
 .sidebar {
-    height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
+    height: 100%;
+    width: 0;
+    position: fixed; 
     top: 0;
     left: 0;
-    background-color: #003A6C; /* Black*/
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+    background-color: #003A6C; 
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s; 
 }
 
 .sidebar .closebtn {
