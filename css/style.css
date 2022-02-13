@@ -27,6 +27,7 @@
 }
 .button:hover{
     background-color: #006dcc;
+    cursor: pointer;
     color: #ffffff;
 }
 
