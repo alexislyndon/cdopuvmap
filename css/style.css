@@ -82,6 +82,7 @@
 .searchform{
     display: flex;
     flex-direction: row;
+    flex-wrap: nowrap;
     justify-content: center;
 }
 #searchbar{
@@ -108,7 +109,6 @@ input[type=text]{
 }
 #searchbtn{
     color: #003A6C;
-    float: right;
     width: 40px;
     height: 35px;
     padding: 0;
@@ -125,6 +125,9 @@ input[type=text]{
 ul{
     list-style: none;
     padding: 0;
+}
+.button_ul{
+    white-space: nowrap;
 }
 .listbutton{
     width: 100%;
