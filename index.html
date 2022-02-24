@@ -16,13 +16,7 @@
 <body>
     <div id="map"></div>
 
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-    <!-- script for leaflet locateControl plugin (user location) -->
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
-    <script src="main.js"></script>
-
     <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times</a>
         <a href="#">item1</a>
         <a href="#">item2</a>
         <a href="#">item3</a>
@@ -30,7 +24,15 @@
     </div>
     
     <div id="main">
-        <button id="menu" class="button" onclick="openNav()">&#9776;</button>
+        <button id="openbtn" class="menubtn" onclick="openNav()">&#9776;</button>
+        <button id="closebtn" class="menubtn" onclick="closeNav()">&#10094;</button>
     </div>
+
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <!-- script for leaflet locateControl plugin (user location) -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+    <script src="/routes/routes_geojson.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>

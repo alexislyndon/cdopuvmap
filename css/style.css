@@ -11,21 +11,25 @@
     height: 100%;
     z-index: -1;
 }
-#menu{
-    position: fixed;
-    top: 50%;
-    left: 0;
-    transition: margin-left .5s;
-    padding: 20px;
+#openbtn{
+    visibility: visible;
 }
-.button{
+#closebtn{
+    visibility: hidden;
+}
+.menubtn{
    background-color:#003A6C;
    color: #ffffff; 
    padding: 10px 15px;
    border: none;
    text-decoration: none;
+   position: fixed;
+   top: 50%;
+   left: 0;
+   transition: margin-left .5s;
+   padding: 20px;
 }
-.button:hover{
+.menubtn:hover{
     background-color: #006dcc;
     cursor: pointer;
     color: #ffffff;
@@ -40,7 +44,7 @@
     background-color: #003A6C; 
     overflow-x: hidden;
     padding-top: 60px;
-    transition: 0.5s; 
+    transition: 0.5s;
 }
 
 .sidebar .closebtn {
@@ -49,7 +53,6 @@
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
-    
 }
 
 .sidebar a {
