@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
     <!-- link for leaflet locateControl plugin (user location) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.css" />
-    <!-- link for additional fonts/icons (used in search icon)-->
+    <!-- cdn for additional fonts/icons (used in several icon)-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" href="css/style.css" type="text/css">
 
 
@@ -33,8 +34,12 @@
     </div>
     
     <div id="main">
-        <button id="openbtn" class="menubtn" onclick="openNav()">&#9776;</button>
-        <button id="closebtn" class="menubtn" onclick="closeNav()">&#10094;</button>
+        <button id="openbtn" class="menubtn" onclick="openNav()">
+            <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
+        </button>
+        <button id="closebtn" class="menubtn" onclick="closeNav()">
+            <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+        </button>
     </div>
 
 
