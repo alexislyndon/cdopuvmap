@@ -23,21 +23,44 @@
         <form class="searchform sidebaritem" action="">
             <input class="sidebaritem" id="searchbar" type="text" placeholder="Search routes...">
             <button class="sidebaritem" type="submit" id="searchbtn" >
-                <i class="fa fa-search"></i>
+                <i class="fa fa-search fa-lg"></i>
             </button>
         </form>
         <hr class="hrline sidebaritem">
-        <a href="#">item1</a>
-        <a href="#">item2</a>
-        <a href="#">item3</a>
-        <a href="#">item4</a>
+        <ul>
+            <li>
+                <button class="sidebaritem listbutton button" type="submit" id="routesbtn" >
+                    <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> Routes
+                </button>
+            </li>
+            <li>
+                <button class="sidebaritem listbutton button" type="submit" id="routesbtn" >
+                    <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i> some stuff
+                </button>
+            </li>
+            <li>
+                <button class="sidebaritem listbutton button" type="submit" id="routesbtn" >
+                    <i class="fa fa-location-arrow fa-lg" aria-hidden="true"></i> some stuff
+                </button>
+            </li>
+            <li>
+                <button class="sidebaritem listbutton button" type="submit" id="routesbtn" >
+                    <i class="fa fa-bus fa-lg" aria-hidden="true"></i> some stuff
+                </button>
+            </li>
+            <li>
+                <button class="sidebaritem listbutton button" type="submit" id="routesbtn" >
+                    <i class="fa fa-cog fa-lg" aria-hidden="true"></i> some stuff
+                </button>
+            </li>
+        </ul>
     </div>
     
     <div id="main">
-        <button id="openbtn" class="menubtn" onclick="openNav()">
+        <button id="openbtn" class="menubtn button" onclick="openNav()">
             <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
         </button>
-        <button id="closebtn" class="menubtn" onclick="closeNav()">
+        <button id="closebtn" class="menubtn button" onclick="closeNav()">
             <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
         </button>
     </div>

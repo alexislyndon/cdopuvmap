@@ -43,4 +43,5 @@ function closeNav() {
 
     document.getElementById("closebtn").style.marginLeft = "0";
     document.getElementById("closebtn").style.visibility = "hidden";
+    
 }
