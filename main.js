@@ -5,6 +5,7 @@ L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeA
     {
         attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
     }).addTo(map);
+
 function onEachFeature(feature, layer){
     if (feature.properties && feature.properties.name) {
         layer.bindPopup('Name: ' + feature.properties.name + '<br> Code: ' +  feature.properties.code);
@@ -26,12 +27,33 @@ L.geoJson(route_BAYABAS_COGON_RA, {
     onEachFeature: onEachFeature
 }).addTo(map);
 
+L.geoJson(route_BONBON_COGON, {
+    style: route_BONBON_COGON_style,
+    onEachFeature: onEachFeature
+}).addTo(map);
+
+L.geoJson(route_BALULANG_COGON, {
+    style: route_BALULANG_COGON_style,
+    onEachFeature: onEachFeature
+}).addTo(map);
+
+L.geoJson(route_BUENA_ORO_COGON, {
+    style: route_BUENA_ORO_COGON_style,
+    onEachFeature: onEachFeature
+}).addTo(map);
+
+L.geoJson(route_CAMP_EVG_COGON_C1, {
+    style: route_CAMP_EVG_COGON_C1_style,
+    onEachFeature: onEachFeature
+}).addTo(map);
+
+
 //adds marker (blue teardrop) on the map using [latlng]. useful for points of interest (?)
 var userMarker = L.marker([8.477703150412395, 124.64379231398955]).addTo(map)
 // L.geoJSON(geojsonFeature).addTo(map);
 
 L.control.locate().addTo(map); //check top left corner for added button/control
-
+console.log(route_RD_GUSA)
 function openNav() {
     document.getElementById("mySidebar").style.width = "250px";
 
