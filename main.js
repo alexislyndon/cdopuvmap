@@ -5,18 +5,25 @@ L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeA
     {
         attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
     }).addTo(map);
-
+function onEachFeature(feature, layer){
+    if (feature.properties && feature.properties.name) {
+        layer.bindPopup('Name: ' + feature.properties.name + '<br> Code: ' +  feature.properties.code);
+    }
+}
 //show route in the map
 L.geoJSON(route_RD_GUSA, {
-    style: route_RD_GUSA_style
+    style: route_RD_GUSA_style,
+    onEachFeature: onEachFeature
 }).addTo(map);
 
 L.geoJSON(route_PATAG_COGON_MKT_VIA_WB_TERMINAL, {
-    style: route_PATAG_COGON_MKT_VIA_WB_TERMINAL_style
+    style: route_PATAG_COGON_MKT_VIA_WB_TERMINAL_style,
+    onEachFeature: onEachFeature
 }).addTo(map);
 
 L.geoJson(route_BAYABAS_COGON_RA, {
-    style: route_BAYABAS_COGON_RA_style
+    style: route_BAYABAS_COGON_RA_style,
+    onEachFeature: onEachFeature
 }).addTo(map);
 
 //adds marker (blue teardrop) on the map using [latlng]. useful for points of interest (?)
@@ -43,5 +50,6 @@ function closeNav() {
 
     document.getElementById("closebtn").style.marginLeft = "0";
     document.getElementById("closebtn").style.visibility = "hidden";
-    
+
 }
+

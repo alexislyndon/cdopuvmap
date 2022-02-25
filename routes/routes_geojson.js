@@ -3,7 +3,7 @@ var route_RD_GUSA = {
     "type": "Feature",
     "properties": {
         "name": "RD - GUSA",
-        "code": "10J014NB"
+        "code": "10J014NB",
     },
     "geometry": {
         "type": "LineString",
