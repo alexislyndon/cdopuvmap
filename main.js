@@ -53,3 +53,9 @@ function closeNav() {
 
 }
 
+function toggle_visibility(layer){
+    layer.setStyle({
+        opacity: 0,
+        fillOpacity: 0.0
+    })
+}

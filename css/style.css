@@ -121,7 +121,7 @@ input[type=text]{
 #searchbtn:hover{
     cursor: pointer;
 }
-ul{
+.ul{
     list-style: none;
     padding: 0;
 }
@@ -133,4 +133,10 @@ ul{
     height: 50px;
     font-size: 15px;
     transition: 0.3s;
+}
+.routes_ul{
+    list-style: none;
+}
+.dropbtn{
+    text-align: left;
 }
