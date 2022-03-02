@@ -1,59 +1,78 @@
-var map = L.map('map').setView([8.477703150412395, 124.64379231398955], 13);// target is rizal monument
-
-// map tiles (maptiler api)
-L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeAqyxwLGSnrFq',
-    {
-        attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-    }).addTo(map);
-
-function onEachFeature(feature, layer){
+//this function was used for 'onEachFeature' allroutes option
+function popup(feature, layer){
     if (feature.properties && feature.properties.name) {
         layer.bindPopup('Name: ' + feature.properties.name + '<br> Code: ' +  feature.properties.code);
     }
 }
-//show route in the map
-L.geoJSON(route_RD_GUSA, {
-    style: route_RD_GUSA_style,
-    onEachFeature: onEachFeature
-}).addTo(map);
 
-L.geoJSON(route_PATAG_COGON_MKT_VIA_WB_TERMINAL, {
-    style: route_PATAG_COGON_MKT_VIA_WB_TERMINAL_style,
-    onEachFeature: onEachFeature
-}).addTo(map);
+//this function can be used for 'style' leaflet option
+function redcolor(){
+    return{
+        color: "#ff0000",
+        opacity: 0.65
+    }
+}
 
-L.geoJson(route_BAYABAS_COGON_RA, {
-    style: route_BAYABAS_COGON_RA_style,
-    onEachFeature: onEachFeature
-}).addTo(map);
+var allRoutes = L.geoJSON(allroutesJson,{
+    onEachFeature: popup, //see pop up function defined above
+}) //pwede man dili i add dretso
 
-L.geoJson(route_BONBON_COGON, {
-    style: route_BONBON_COGON_style,
-    onEachFeature: onEachFeature
-}).addTo(map);
+var allRouteLayer = L.layerGroup([allRoutes]);
 
-L.geoJson(route_BALULANG_COGON, {
-    style: route_BALULANG_COGON_style,
-    onEachFeature: onEachFeature
-}).addTo(map);
+// open street map layer (maptiler api)
+var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeAqyxwLGSnrFq',
+    {
+        attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+    });
 
-L.geoJson(route_BUENA_ORO_COGON, {
-    style: route_BUENA_ORO_COGON_style,
-    onEachFeature: onEachFeature
-}).addTo(map);
+// map initialization
+var map = L.map('map', {
+    center: [8.477703150412395, 124.64379231398955], // target is rizal monument
+    zoom: 13,
+    layers: [osmDefault, allRouteLayer]
+});
 
-L.geoJson(route_CAMP_EVG_COGON_C1, {
-    style: route_CAMP_EVG_COGON_C1_style,
-    onEachFeature: onEachFeature
-}).addTo(map);
+//two objects to contain our base layers and overlays. both are defined above. used for layers control
+var baseMaps = { 
+    "Default": osmDefault
+}
 
+var overlays = { 
+    "AllRouteLayer": allRouteLayer
+}
 
-//adds marker (blue teardrop) on the map using [latlng]. useful for points of interest (?)
-var userMarker = L.marker([8.477703150412395, 124.64379231398955]).addTo(map)
-// L.geoJSON(geojsonFeature).addTo(map);
+L.control.layers(baseMaps, overlays).addTo(map);
+
+var userMarker = L.marker([8.477703150412395, 124.64379231398955]);
+
+/* you can define custom marker icon
+var customMarker = L.icon({
+    iconUrl: 'directory.png',
+    iconSize: [38, 95],
+    iconAnchor: [22, 94],
+    popupAnchor: [-3, -76],
+    shadwoUrl:'my-icon-shadow.png', //shadows are optional
+    shadowSize: [68, 95],
+    shadowAnchor: [22, 94]
+
+    //to add
+    var customMarker = L.marker([8.477703150412395, 124.64379231398955],
+        {
+            icon: customMarker,
+            draggable: true //useful for shortest walking path (offroad)?
+        }).addTo(map)
+});
+*/
 
 L.control.locate().addTo(map); //check top left corner for added button/control
-console.log(route_RD_GUSA)
+
+/*
+var routeLayers = L.layerGroup().addTo(map);
+allroutes.features.forEach((feature) => {
+    L.geoJSON(feature).addTo(routeLayers);
+});
+*/
+
 function openNav() {
     document.getElementById("mySidebar").style.width = "250px";
 
@@ -75,9 +94,24 @@ function closeNav() {
 
 }
 
-function toggle_visibility(layer){
+function showAll(){
+    routes.forEach(route => {
+        showVisibility(route);
+    });
+}
+
+function hideAll(){
+    console.log(overlays.AllRouteLayer);
+}
+
+function hideVisibility(layer){
+   return{
+       opacity:0
+   }
+}
+
+function showVisibility(layer){
     layer.setStyle({
-        opacity: 0,
-        fillOpacity: 0.0
-    })
+        opacity: 0.65,
+    });
 }
