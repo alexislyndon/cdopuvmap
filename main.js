@@ -13,11 +13,64 @@ function redcolor(){
     }
 }
 
-var allRoutes = L.geoJSON(allroutesJson,{
-    onEachFeature: popup, //see pop up function defined above
-}) //pwede man dili i add dretso
-
-var allRouteLayer = L.layerGroup([allRoutes]);
+var route_RD_GUSA = L.geoJSON(allroutesJson.features[0],{
+    onEachFeature: popup,
+    style: {
+        opacity: 0.65,
+        color: '#ff9933'
+    }
+});
+var route_PATAG_COGON = L.geoJSON(allroutesJson.features[1],{
+    onEachFeature: popup,
+    style: {
+        opacity: 0.65,
+        color: '#9900ff'
+    }
+})
+var route_BAYABAS_COGON = L.geoJSON(allroutesJson.features[2],{
+    onEachFeature: popup,
+    style: {
+        opacity: 0.65,
+        color: '#009933'
+    }
+})
+var route_BONBON_COGON = L.geoJSON(allroutesJson.features[3],{
+    onEachFeature: popup,
+    style: {
+        opacity: 0.65,
+        color: '#cc3300'
+    }
+})
+var route_BALULANG_COGON = L.geoJSON(allroutesJson.features[4],{
+    onEachFeature: popup,
+    style: {
+        opacity: 0.65,
+        color: '#003366'
+    }
+})
+var route_BUENA_ORO_COGON = L.geoJSON(allroutesJson.features[5],{
+    onEachFeature: popup,
+    style: {
+        opacity: 0.65,
+        color: '#00ffff'
+    }
+})
+var route_CAMP_EVG_COGON = L.geoJSON(allroutesJson.features[6],{
+    onEachFeature: popup,
+    style: {
+        opacity: 0.65,
+        color: '#cc0000'
+    }
+})
+var allRouteLayer = L.layerGroup([
+    route_RD_GUSA, 
+    route_PATAG_COGON,
+    route_BAYABAS_COGON,
+    route_BONBON_COGON,
+    route_BALULANG_COGON,
+    route_BUENA_ORO_COGON,
+    route_CAMP_EVG_COGON
+]);
 
 // open street map layer (maptiler api)
 var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeAqyxwLGSnrFq',
@@ -29,7 +82,16 @@ var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.
 var map = L.map('map', {
     center: [8.477703150412395, 124.64379231398955], // target is rizal monument
     zoom: 13,
-    layers: [osmDefault, allRouteLayer]
+    layers: [
+        osmDefault, 
+        route_RD_GUSA,
+        route_PATAG_COGON,
+        route_BAYABAS_COGON,
+        route_BONBON_COGON,
+        route_BALULANG_COGON,
+        route_BUENA_ORO_COGON,
+        route_CAMP_EVG_COGON
+    ] //starts with all routes displayed
 });
 
 //two objects to contain our base layers and overlays. both are defined above. used for layers control
@@ -38,10 +100,17 @@ var baseMaps = {
 }
 
 var overlays = { 
-    "AllRouteLayer": allRouteLayer
+    "AllRouteLayer": allRouteLayer,
+    "RD_GUSA": route_RD_GUSA,
+    "PATAG_COGON": route_PATAG_COGON,
+    "BAYABAS_COGON": route_BAYABAS_COGON,
+    "BONBON_COGON": route_BONBON_COGON,
+    "BALULANG_COGON": route_BALULANG_COGON,
+    "BUENA_ORO_COGON": route_BUENA_ORO_COGON,
+    "CAMP_EVG_COGON": route_CAMP_EVG_COGON
 }
 
-L.control.layers(baseMaps, overlays).addTo(map);
+//L.control.layers(baseMaps, overlays).addTo(map);
 
 var userMarker = L.marker([8.477703150412395, 124.64379231398955]);
 
@@ -93,25 +162,87 @@ function closeNav() {
     document.getElementById("closebtn").style.visibility = "hidden";
 
 }
-
 function showAll(){
-    routes.forEach(route => {
-        showVisibility(route);
-    });
+    //overlays.AllRouteLayer.addTo(map);
+    overlays.RD_GUSA.addTo(map);
+    overlays.PATAG_COGON.addTo(map);
+    overlays.BAYABAS_COGON.addTo(map);
+    overlays.BONBON_COGON.addTo(map);
+    overlays.BALULANG_COGON.addTo(map);
+    overlays.BUENA_ORO_COGON.addTo(map);
+    overlays.CAMP_EVG_COGON.addTo(map);
 }
 
 function hideAll(){
-    console.log(overlays.AllRouteLayer);
+    //overlays.AllRouteLayer.remove();
+    overlays.RD_GUSA.remove();
+    overlays.PATAG_COGON.remove();
+    overlays.BAYABAS_COGON.remove();
+    overlays.BONBON_COGON.remove();
+    overlays.BALULANG_COGON.remove();
+    overlays.BUENA_ORO_COGON.remove();
+    overlays.CAMP_EVG_COGON.remove();
 }
 
-function hideVisibility(layer){
-   return{
-       opacity:0
-   }
-}
-
-function showVisibility(layer){
-    layer.setStyle({
-        opacity: 0.65,
-    });
+function toggleRoute(){
+    switch (window.event.target.id) {
+        case 'rd_gusa':
+            console.log('rd gusa');
+            if(overlays.RD_GUSA._mapToAdd == null){
+                overlays.RD_GUSA.addTo(map);
+            } else{
+                overlays.RD_GUSA.remove();
+            }
+            break;
+        case 'patag_cogon':
+            console.log('patag cogon');
+            if(overlays.PATAG_COGON._mapToAdd == null){
+                overlays.PATAG_COGON.addTo(map);
+            } else{
+                overlays.PATAG_COGON.remove();
+            }
+            break;
+        case 'bayabas_cogon':
+            console.log('bayabas cogon');
+            if(overlays.BAYABAS_COGON._mapToAdd == null){
+                overlays.BAYABAS_COGON.addTo(map);
+            } else{
+                overlays.BAYABAS_COGON.remove();
+            }
+            break;
+        case 'bonbon_cogon':
+            console.log('bonbon cogon');
+            if(overlays.BONBON_COGON._mapToAdd == null){
+                overlays.BONBON_COGON.addTo(map);
+            } else{
+                overlays.BONBON_COGON.remove();
+            }
+            break;
+        case 'balulang_cogon':
+            console.log('balulang cogon');
+            if(overlays.BALULANG_COGON._mapToAdd == null){
+                overlays.BALULANG_COGON.addTo(map);
+            } else{
+                overlays.BALULANG_COGON.remove();
+            }
+            break;
+        case 'buena_oro_cogon':
+            console.log('buena oro cogon');
+            if(overlays.BUENA_ORO_COGON._mapToAdd == null){
+                overlays.BUENA_ORO_COGON.addTo(map);
+            } else{
+                overlays.BUENA_ORO_COGON.remove();
+            }
+            break;
+        case 'camp_evg_cogon':
+            console.log('camp evg cogon');
+            if(overlays.CAMP_EVG_COGON._mapToAdd == null){
+                overlays.CAMP_EVG_COGON.addTo(map);
+            } else{
+                overlays.CAMP_EVG_COGON.remove();
+            }
+            break;
+        default:
+            break;
+    }
 }

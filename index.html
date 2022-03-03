@@ -30,47 +30,47 @@
         <hr class="hrline sidebaritem">
         <ul class="ul button_ul">
             <li>
-                <button class="sidebaritem listbutton button" type="submit" onclick="showAll()">
+                <button id="showAll"  class="sidebaritem listbutton button" type="submit" onclick="showAll()">
                     <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> Show All
                 </button>
             </li>
             <li>
-                <button class="sidebaritem listbutton button" type="submit" onclick="hideAll()">
+                <button id="hideAll" class="sidebaritem listbutton button" type="submit" onclick="hideAll()">
                     <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> Hide All
                 </button>
             </li>
             <li>
-                <button class="sidebaritem listbutton button" type="submit">
+                <button id="rd_gusa"  class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
                     <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> RD - GUSA
                 </button>
             </li>
             <li>
-                <button class="sidebaritem listbutton button" type="submit">
+                <button id="patag_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
                     <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> PATAG - COGON
                 </button>
             </li>
             <li>
-                <button class="sidebaritem listbutton button" type="submit">
+                <button id="bayabas_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
                     <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> BAYABAS - COGON
                 </button>
             </li>
             <li>
-                <button class="sidebaritem listbutton button" type="submit">
+                <button id="bonbon_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
                     <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> BONBON - COGON
                 </button>
             </li>
             <li>
-                <button class="sidebaritem listbutton button" type="submit">
+                <button id="balulang_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
                     <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> BALULANG - COGON
                 </button>
             </li>
             <li>
-                <button class="sidebaritem listbutton button" type="submit">
+                <button id="buena_oro_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
                     <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> BUENA ORO - COGON
                 </button>
             </li>
             <li>
-                <button class="sidebaritem listbutton button" type="submit">
+                <button id="camp_evg_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
                     <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> CAMP EVG - COGON
                 </button>
             </li>
@@ -111,8 +111,10 @@
 
     <!-- leaflet js-->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
     <!-- script for leaflet locateControl plugin (user location) -->
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+
     <script src="/routes/routes_geojson.js"></script>
     <script src="main.js"></script>
 </body>
