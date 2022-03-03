@@ -6,13 +6,14 @@ function popup(feature, layer){
 }
 
 //this function can be used for 'style' leaflet option
+/*
 function redcolor(){
     return{
         color: "#ff0000",
         opacity: 0.65
     }
 }
-
+*/
 var route_RD_GUSA = L.geoJSON(allroutesJson.features[0],{
     onEachFeature: popup,
     style: {
@@ -73,11 +74,13 @@ var allRouteLayer = L.layerGroup([
 ]);
 
 // open street map layer (maptiler api)
-var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeAqyxwLGSnrFq',
-    {
-        attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeAqyxwLGSnrFq',{
+        attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
     });
 
+var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    });
 // map initialization
 var map = L.map('map', {
     center: [8.477703150412395, 124.64379231398955], // target is rizal monument
@@ -96,7 +99,8 @@ var map = L.map('map', {
 
 //two objects to contain our base layers and overlays. both are defined above. used for layers control
 var baseMaps = { 
-    "Default": osmDefault
+    "Default": osmDefault,
+    "Satellite": Esri_WorldImagery
 }
 
 var overlays = { 
@@ -110,7 +114,7 @@ var overlays = {
     "CAMP_EVG_COGON": route_CAMP_EVG_COGON
 }
 
-//L.control.layers(baseMaps, overlays).addTo(map);
+L.control.layers(baseMaps).addTo(map);
 
 var userMarker = L.marker([8.477703150412395, 124.64379231398955]);
 
