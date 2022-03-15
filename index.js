@@ -1,3 +1,28 @@
+$(function () {
+
+
+    console.log('DOC READY');
+
+    $("#pathfind").on("click", function () {
+        const o = $('#origin').val()
+        const d = $('#destination').val()
+        
+
+        $.ajax({
+            url: `http://localhost:3232/pathfind/${o}/${d}`,
+            method: "POST",
+            crossDomain: true,
+            dataType: 'jsonp',
+            success: function (jsondata) {
+                // console.log(jsondata);
+                $('#res').val('jsondata')
+                $('#yyy').html('Hello World');
+            }
+        });
+    });
+
+});
+
 var geojsonFeature = {
     "type": "Feature",
     "properties": {
