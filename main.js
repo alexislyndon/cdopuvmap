@@ -138,7 +138,6 @@ var customMarker = L.icon({
 */
 
 L.control.locate().addTo(map); //check top left corner for added button/control
-
 /*
 var routeLayers = L.layerGroup().addTo(map);
 allroutes.features.forEach((feature) => {
