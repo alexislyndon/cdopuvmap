@@ -1,4 +1,6 @@
+
 //this function was used for 'onEachFeature' allroutes option
+
 function popup(feature, layer){
     if (feature.properties && feature.properties.name) {
         layer.bindPopup('Name: ' + feature.properties.name + '<br> Code: ' +  feature.properties.code);
@@ -14,6 +16,7 @@ function redcolor(){
     }
 }
 */
+
 var route_RD_GUSA = L.geoJSON(allroutesJson.features[0],{
     onEachFeature: popup,
     style: {
@@ -165,6 +168,7 @@ function closeNav() {
     document.getElementById("closebtn").style.visibility = "hidden";
 
 }
+
 function showAll(){
     //overlays.AllRouteLayer.addTo(map);
     overlays.RD_GUSA.addTo(map);
