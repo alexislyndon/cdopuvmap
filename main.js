@@ -42,7 +42,7 @@ app
         const [dlat, dlon] = d.split(" ")
         const result = await getPathsAtoB(olat, olon, dlat, dlon)
 
-        // console.log(result);
+        console.log(result);
         // res.send(`${olat} ${olon} ${dlat} ${dlon}`)
         res.status(200)
     })
