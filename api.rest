@@ -1,0 +1,13 @@
+GET http://localhost:3232
+
+###
+
+
+GET http://localhost:3232/routes/
+
+###
+
+GET http://localhost:3232/pathfind/124.64343309402464 8.47716876512738/124.6450102329254 8.48160439674907
+
+###
+GET http://localhost:3232/test/

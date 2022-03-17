@@ -1,122 +1,56 @@
-//this function was used for 'onEachFeature' allroutes option
-function popup(feature, layer){
-    if (feature.properties && feature.properties.name) {
-        layer.bindPopup('Name: ' + feature.properties.name + '<br> Code: ' +  feature.properties.code);
-    }
-}
+const express = require('express');
+const app = express()
+const getRoutes = require('./services/getRoutes');
+const getNBRoute = require('./services/getNBRoute');
+const getPathsAtoB = require('./services/getPathsAtoB');
+const coordsToWKT = require('./services/coordsToWKT')
+const parse = require('wellknown');
+const getallRoutes = require('./services/getallRoutes');
 
-//this function can be used for 'style' leaflet option
-/*
-function redcolor(){
-    return{
-        color: "#ff0000",
-        opacity: 0.65
-    }
-}
-*/
-var route_RD_GUSA = L.geoJSON(allroutesJson.features[0],{
-    onEachFeature: popup,
-    style: {
-        opacity: 0.65,
-        color: '#ff9933'
-    }
-});
-var route_PATAG_COGON = L.geoJSON(allroutesJson.features[1],{
-    onEachFeature: popup,
-    style: {
-        opacity: 0.65,
-        color: '#9900ff'
-    }
-})
-var route_BAYABAS_COGON = L.geoJSON(allroutesJson.features[2],{
-    onEachFeature: popup,
-    style: {
-        opacity: 0.65,
-        color: '#009933'
-    }
-})
-var route_BONBON_COGON = L.geoJSON(allroutesJson.features[3],{
-    onEachFeature: popup,
-    style: {
-        opacity: 0.65,
-        color: '#cc3300'
-    }
-})
-var route_BALULANG_COGON = L.geoJSON(allroutesJson.features[4],{
-    onEachFeature: popup,
-    style: {
-        opacity: 0.65,
-        color: '#003366'
-    }
-})
-var route_BUENA_ORO_COGON = L.geoJSON(allroutesJson.features[5],{
-    onEachFeature: popup,
-    style: {
-        opacity: 0.65,
-        color: '#00ffff'
-    }
-})
-var route_CAMP_EVG_COGON = L.geoJSON(allroutesJson.features[6],{
-    onEachFeature: popup,
-    style: {
-        opacity: 0.65,
-        color: '#cc0000'
-    }
-})
-var allRouteLayer = L.layerGroup([
-    route_RD_GUSA, 
-    route_PATAG_COGON,
-    route_BAYABAS_COGON,
-    route_BONBON_COGON,
-    route_BALULANG_COGON,
-    route_BUENA_ORO_COGON,
-    route_CAMP_EVG_COGON
-]);
+const port = 3232;
 
-// open street map layer (maptiler api)
-var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeAqyxwLGSnrFq',{
-        attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
+app
+
+    .use(express.json())
+
+    .get("/routes/", async (req, res) => {
+        const routes = await getallRoutes();
+
+        res.send(Object.values(routes)[0]);
+    })
+
+    .get("/routes/nb/:id", async (req, res) => {
+        const { id } = req.params;
+        const result = await getNBRoute(id)
+        res.send(result);
+    })
+
+    .get('/test', async (req, res) => {
+        const result = await coordsToWKT(124.6450102329254, 8.48160439674907);
+        const kini = result[0].the_geom
+        const k = parse('POINT(124.6450102329254 8.48160439674907)');
+        res.send(k);
+    })
+
+
+    //List your latitude coordinates before longitude coordinates.
+    // Check that the first number in your latitude coordinate is between -90 and 90.
+    // Check that the first number in your longitude coordinate is between -180 and 180.
+    .get("/pathfind/:o/:d", async (req, res) => {
+        const { o, d } = req.params;
+        const [olat, olon] = o.split(" ")
+        const [dlat, dlon] = d.split(" ")
+        const result = await getPathsAtoB(olat, olon, dlat, dlon)
+
+        console.log(result);
+        // res.send(`${olat} ${olon} ${dlat} ${dlon}`)
+        res.send(result)
+    })
+
+    .get('/', (req, res) => {
+        res.send("Hello World")
     });
 
-var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
-        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-    });
-// map initialization
-var map = L.map('map', {
-    center: [8.477703150412395, 124.64379231398955], // target is rizal monument
-    zoom: 13,
-    layers: [
-        osmDefault, 
-        route_RD_GUSA,
-        route_PATAG_COGON,
-        route_BAYABAS_COGON,
-        route_BONBON_COGON,
-        route_BALULANG_COGON,
-        route_BUENA_ORO_COGON,
-        route_CAMP_EVG_COGON
-    ] //starts with all routes displayed
-});
-
-//two objects to contain our base layers and overlays. both are defined above. used for layers control
-var baseMaps = { 
-    "Default": osmDefault,
-    "Satellite": Esri_WorldImagery
-}
-
-var overlays = { 
-    "AllRouteLayer": allRouteLayer,
-    "RD_GUSA": route_RD_GUSA,
-    "PATAG_COGON": route_PATAG_COGON,
-    "BAYABAS_COGON": route_BAYABAS_COGON,
-    "BONBON_COGON": route_BONBON_COGON,
-    "BALULANG_COGON": route_BALULANG_COGON,
-    "BUENA_ORO_COGON": route_BUENA_ORO_COGON,
-    "CAMP_EVG_COGON": route_CAMP_EVG_COGON
-}
-
-L.control.layers(baseMaps).addTo(map);
-
-var userMarker = L.marker([8.477703150412395, 124.64379231398955]);
 
 /* you can define custom marker icon
 var customMarker = L.icon({
@@ -249,3 +183,8 @@ function toggleRoute(){
             break;
     }
 }
+
+app.listen(port, () => {
+    console.log(`App listening on http://localhost:${port}`);
+})
+
