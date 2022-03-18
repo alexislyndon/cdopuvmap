@@ -4,7 +4,7 @@ module.exports = async (lat, long) => {
   const result = await db.query(`
   
 SELECT *
-  FROM edges
+  FROM routes
   ORDER BY the_geom <-> st_setsrid(st_makepoint($1, $2),4326)
   LIMIT 1
   `, [lat, long]);

@@ -44,7 +44,8 @@ app
 
         console.log(result);
         // res.send(`${olat} ${olon} ${dlat} ${dlon}`)
-        res.status(200)
+        res.send(Object.values(result));
+        // res.status(200)
     })
 
     .get('/', (req, res) => {

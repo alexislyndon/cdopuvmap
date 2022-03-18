@@ -5,7 +5,7 @@ const db = new Pool({
   host: "localhost",
   port: "5432",
   password: "1233",
-  database: "puv",
+  database: "puvroutemap",
 });
 
 // console.log(`${db}`)
