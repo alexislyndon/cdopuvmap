@@ -21,70 +21,78 @@
     <div id="map"></div>
 
     <div id="mySidebar" class="sidebar">
-        <form class="searchform sidebaritem" action="">
-            <input class="sidebaritem" id="searchbar" type="text" placeholder="Search routes...">
-            <button class="sidebaritem" type="submit" id="searchbtn" >
-                <i class="fa fa-search fa-lg"></i>
-            </button>
-        </form>
-        <hr class="hrline sidebaritem">
         <ul class="ul button_ul">
             <li>
-
-                <button id="showAll"  class="sidebaritem listbutton button" type="submit" onclick="showAll()">
-                    <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> Show All
+                <!--
+                <form class="searchform sidebaritem" action="">
+                    <input class="sidebaritem txtBox" id="searchbar" type="text" placeholder="Search routes...">
+                    <button class="sidebaritem" type="submit" id="searchbtn" >
+                        <i class="fa fa-search fa-lg"></i>
+                    </button>
+                </form>
+                -->
+                <button id="routes"  class="sidebaritem listbutton button expands" type="submit" onclick="">
+                    <i class="fa fa-bus fa-lg" aria-hidden="true"></i> Routes
                 </button>
+                <div class="verticalPanel" id="routesVerticalPanel">
+                    <ul class="ul button_ul">
+                        <li>
+                            <button id="hideAll" class="sidebaritem listbutton button" type="submit" onclick="hideAll()">
+                                <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> Hide All
+                            </button>
+                        </li>
+                        <li>
+                            <button id="rd_gusa"  class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
+                                <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> RD - GUSA
+                            </button>
+                        </li>
+                        <li>
+                            <button id="patag_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
+                                <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> PATAG - COGON
+                            </button>
+                        </li>
+                        <li>
+                            <button id="bayabas_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
+                                <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> BAYABAS - COGON
+                            </button>
+                        </li>
+                        <li>
+                            <button id="bonbon_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
+                                <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> BONBON - COGON
+                            </button>
+                        </li>
+                        <li>
+                            <button id="balulang_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
+                                <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> BALULANG - COGON
+                            </button>
+                        </li>
+                        <li>
+                            <button id="buena_oro_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
+                                <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> BUENA ORO - COGON
+                            </button>
+                        </li>
+                        <li>
+                            <button id="camp_evg_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
+                                <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> CAMP EVG - COGON
+                            </button>
+                        </li>
+                    </ul>
+                </div>
             </li>
             <li>
-
-                <button id="hideAll" class="sidebaritem listbutton button" type="submit" onclick="hideAll()">
-                    <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> Hide All
+                <button id="journey" class="sidebaritem listbutton button expands" type="submit">
+                    <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i> Journey Planner
                 </button>
-            </li>
-            <li>
-                <button id="rd_gusa"  class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
-                    <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> RD - GUSA
-                </button>
-            </li>
-            <li>
-                <button id="patag_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
-                    <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> PATAG - COGON
-                </button>
-            </li>
-            <li>
-                <button id="bayabas_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
-                    <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> BAYABAS - COGON
-                </button>
-            </li>
-            <li>
-                <button id="bonbon_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
-                    <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> BONBON - COGON
-                </button>
-            </li>
-            <li>
-                <button id="balulang_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
-                    <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> BALULANG - COGON
-                </button>
-            </li>
-            <li>
-                <button id="buena_oro_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
-                    <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> BUENA ORO - COGON
-                </button>
-            </li>
-            <li>
-
-                <button id="camp_evg_cogon" class="sidebaritem listbutton button" type="submit" onclick="toggleRoute()">
-                    <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> CAMP EVG - COGON
-                </button>
+                <div class="verticalPanel" id="journeyVerticalPanel">
+                    <input class="sidebaritem txtBox pointTxtBox" id="pointA_txtBox" type="text" placeholder="Starting Destination">
+                    <input class="sidebaritem txtBox pointTxtBox" id="pointB_txtBox" type="text" placeholder="Target Destination">
+                    <button id="journeyButton" class="sidebaritem listbutton button" type="submit" onclick="">
+                        GO
+                    </button>
+                </div>
             </li>
         </ul>
-        <hr class="hrline sidebaritem">
         <ul class="ul button_ul">
-            <li>
-                <button class="sidebaritem listbutton button" type="submit">
-                    <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i> some stuff
-                </button>
-            </li>
             <li>
                 <button class="sidebaritem listbutton button" type="submit">
                     <i class="fa fa-location-arrow fa-lg" aria-hidden="true"></i> some stuff
@@ -118,6 +126,9 @@
     <!-- script for leaflet locateControl plugin (user location) -->
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
 
+    <!-- jquery cdn -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
     <script src="/routes/routes_geojson.js"></script>
     <script src="client.js"></script>
 </body>

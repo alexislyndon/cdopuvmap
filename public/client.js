@@ -191,6 +191,34 @@ function hideAll(){
     overlays.CAMP_EVG_COGON.remove();
 }
 
+function expandPanel(id){
+    //console.log('will expand ' + id);
+    switch (id) {
+        case 'routes':
+            let routesPanelHeight = document.getElementById('routesVerticalPanel').style.height;
+            if (routesPanelHeight == '250px'){
+                document.getElementById('routesVerticalPanel').style.height = '0px'; //close
+                $('button.expands#routes').css({'background-color': '#003A6C'});
+            } else {
+                document.getElementById('routesVerticalPanel').style.height = '250px'; //open
+                $('button.expands#routes').css({'background-color': '#006dcc'});
+            }
+            break;
+        case 'journey':
+            let journeyPanelHeight = document.getElementById('journeyVerticalPanel').style.height;
+            if (journeyPanelHeight == '250px'){
+                document.getElementById('journeyVerticalPanel').style.height = '0px'; //close
+                $('button.expands#journey').css({'background-color': '#003A6C'});      
+            } else {
+                document.getElementById('journeyVerticalPanel').style.height = '250px'; //open
+                $('button.expands#journey').css({'background-color': '#006dcc'}); 
+            }
+            break;
+        default:
+            break;
+    }
+}
+
 function toggleRoute(){
     switch (window.event.target.id) {
         case 'rd_gusa':
@@ -253,3 +281,10 @@ function toggleRoute(){
             break;
     }
 }
+
+$(document).ready(function(){
+    $('button.expands').click(function(e){
+        //console.log(e.target.id);
+        expandPanel(e.target.id);
+    })
+});
