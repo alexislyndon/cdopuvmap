@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <!-- leaflet css-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
     <!-- link for leaflet locateControl plugin (user location) -->
@@ -29,6 +30,15 @@
         </form>
         <hr class="hrline sidebaritem">
         <ul class="ul button_ul">
+
+            <input type="text" name="origin" id="origin" value="124.64343309402464 8.47716876512738">
+            <br><br>
+            <input type="text" name="destination" id="destination" value="124.6450102329254 8.48160439674907">
+            <br><br>
+            <input type="text" name="res" id="res">
+            <p id="yyy"></p>
+            <br><br>
+            <button id="pathfind" type="submit">SUBMIT</button>
             <li>
 
                 <button id="showAll"  class="sidebaritem listbutton button" type="submit" onclick="showAll()">

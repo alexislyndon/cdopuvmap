@@ -19,12 +19,13 @@ module.exports = async (olat, olon, dlat, dlon) => { //origin lat/long, destinat
 
   await createtedgestbl()
   await INSERTtedges("leg1", first_leg, uuid, "walk");
-  await INSERTtedges(nearest_route_A.route_c, nearest_route_A, uuid, "route")
+  await INSERTtedges(nearest_route_A.route_code, nearest_route_A, uuid, "route")
 
   const last_leg = await drawClosestLine(nearest_route_A, b) //should be a js object with proper properties
   await INSERTtedges("leg99", last_leg, uuid, "walk");
 
 
+  console.log('noding network...');
   await pgrNodeNetwork(uuid);
 
   const o = await getNearestVertexID(olat,olon);
