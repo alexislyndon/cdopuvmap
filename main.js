@@ -7,7 +7,13 @@ const coordsToWKT = require('./services/coordsToWKT')
 const parse = require('wellknown');
 const getallRoutes = require('./services/getallRoutes');
 
+const path = require('path');
+const router = express.Router();
+
 const port = 3232;
+
+var http = require('http');
+var fs = require('fs');
 
 app
 
@@ -47,12 +53,14 @@ app
         res.send(Object.values(result));
         // res.status(200)
     })
-
+    
     .get('/', (req, res) => {
-        res.send("Hello World")
+        res.sendFile(path.join(__dirname+'/index.html'));
     });
+    
+    app.use(express.static(path.join(__dirname,'public')));
 
-
-app.listen(port, () => {
-    console.log(`App listening on http://localhost:${port}`);
-})
+    app.use("/", router);
+    app.listen(port, () => {
+        console.log(`App listening on http://localhost:${port}`);
+    });
