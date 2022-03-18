@@ -15,6 +15,8 @@ const port = 3232;
 var http = require('http');
 var fs = require('fs');
 
+app.use(express.json());
+
 app
 
     .use(express.json())
@@ -22,7 +24,7 @@ app
     .get("/routes/", async (req, res) => {
         const routes = await getallRoutes();
 
-        res.send(Object.values(routes)[0]);
+        res.json(Object.values(routes)[0]);
     })
 
     .get("/routes/nb/:id", async (req, res) => {
@@ -50,7 +52,7 @@ app
 
         console.log(result);
         // res.send(`${olat} ${olon} ${dlat} ${dlon}`)
-        res.send(Object.values(result));
+        res.json(Object.values(result)[0]);
         // res.status(200)
     })
     
