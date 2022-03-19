@@ -10,7 +10,7 @@ const getallRoutes = require('./services/getallRoutes');
 const path = require('path');
 const router = express.Router();
 
-const port = 3232;
+const port = process.env.PORT || 3232;
 
 var http = require('http');
 var fs = require('fs');
@@ -64,5 +64,5 @@ app
 
     app.use("/", router);
     app.listen(port, () => {
-        console.log(`App listening on http://localhost:${port}`);
+        console.log(`App listening on port: ${port}`);
     });
