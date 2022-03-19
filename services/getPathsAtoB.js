@@ -13,8 +13,8 @@ module.exports = async (olat, olon, dlat, dlon) => { //origin lat/long, destinat
   const uuid = await uuidv4();
   // const nearest_route = fromA.rows[0];
   const nearest_route_A = await getNearestRoute(olat, olon)
-  const a = await convCoordstoGeom(olat, olon)
-  const b = await convCoordstoGeom(dlat, dlon)
+  const a = await convCoordstoGeom(olat, olon)//origin
+  const b = await convCoordstoGeom(dlat, dlon)//destination
   const first_leg = await drawClosestLine(a, nearest_route_A) //should be a js object with proper properties
 
   await createtedgestbl()
