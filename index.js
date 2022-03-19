@@ -4,7 +4,6 @@ const getRoutes = require('./services/getRoutes');
 const getNBRoute = require('./services/getNBRoute');
 const getPathsAtoB = require('./services/getPathsAtoB');
 const coordsToWKT = require('./services/coordsToWKT')
-const parse = require('wellknown');
 const getallRoutes = require('./services/getallRoutes');
 
 const path = require('path');
