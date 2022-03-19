@@ -19,32 +19,37 @@ function redcolor(){
 */
 var colors = ['#71ff34', '#ff3471', '#ff7b34', '#34aeff', '#ff4834']
 var routes = []
-// const fetchroutes = fetch('/routes')
-//     .then(res => { return res.json() })
-//     .then(data => {
-//         data = data.features
-//         // data.forEach(route => {
-//         // routes.push(
-//         for (let index = 0; index < data.length; ++index) {
-//             L.geoJSON(data[index], {
-//                 onEachFeature: popup,
-//                 style: {
-//                     opacity: 0.65,
-//                     color: colors[index % colors.length],
-//                     weight: 6
-//                 }
-//             }).addTo(map)
-//             // )
-//         }//)
-//     })
-// // routes.forEach(route => {
-// //     route.addTo(map)
-// // });
-// console.log(routes);
+const fetchroutes = fetch('/routes')
+    .then(res => { return res.json() })
+    .then(data => {
+        data = data.features
+        // data.forEach(route => {
+        // routes.push(
+        for (let i = 0; i < data.length; ++i) {
+            routes.push(L.geoJSON(data[i], {
+                onEachFeature: popup,
+                style: {
+                    opacity: 0.65,
+                    color: colors[i % colors.length],
+                    weight: 6
+                }
+            }))
+            // )
+        }//)
+        routes.forEach(route => {
+            route.addTo(map)
+        });
+    })
+// routes.forEach(route => {
+//     route.addTo(map)
+// });
+console.log(routes);
 
 //////////
 
-const pathfind = fetch('/pathfind/124.62959289550781 8.478399711092143/124.64601874351503 8.476956532666085')
+
+
+const pathfind = (olon, olat) => fetch(`/pathfind/${olon} ${olat}/${dlon} ${dlat}`)
     .then(res => { return res.json() })
     .then(data => {
         data = data.features

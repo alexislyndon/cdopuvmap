@@ -46,9 +46,9 @@ app
     // Check that the first number in your longitude coordinate is between -180 and 180.
     .get("/pathfind/:o/:d", async (req, res) => {
         const { o, d } = req.params;
-        const [olat, olon] = o.split(" ")
-        const [dlat, dlon] = d.split(" ")
-        const result = await getPathsAtoB(olat, olon, dlat, dlon)
+        const [olon, olat] = o.split(" ")
+        const [dlon, dlat] = d.split(" ")
+        const result = await getPathsAtoB(olon, olat, dlon, dlat)
 
         console.log(result);
         // res.send(`${olat} ${olon} ${dlat} ${dlon}`)
