@@ -48,8 +48,32 @@ console.log(routes);
 //////////
 
 
+function pathfind(opoint, dpoint) {
+    var opoint = document.getElementById("origin").value
+    var dpoint = document.getElementById("destination").value
+    fetch(`/pathfind?origin=${encodeURIComponent(opoint)}&destination=${encodeURIComponent(dpoint)}`)
+        .then(res => { return res.json() })
+        .then(data => {
+            data = data.features
+            // data.forEach(route => {
+            // routes.push(
+            for (let index = 0; index < data.length; ++index) {
+                L.geoJSON(data[index], {
+                    onEachFeature: popup,
+                    style: {
+                        opacity: 0.65,
+                        color: '#3F826D',
+                        weight: 15,
+                        dashArray: '4 1 2',
+                        dashOffset: '3'
+                    }
+                }).addTo(map)
+                // )
+            }//)
+        })
+}
 
-const pathfind = (olon, olat) => fetch(`/pathfind/${olon} ${olat}/${dlon} ${dlat}`)
+var pathfind2 = (o, d) => fetch(`/pathfind?origin=${encodeURIComponent(o.value)}&destination=${encodeURIComponent(d.value)}`)
     .then(res => { return res.json() })
     .then(data => {
         data = data.features
@@ -70,6 +94,9 @@ const pathfind = (olon, olat) => fetch(`/pathfind/${olon} ${olat}/${dlon} ${dlat
         }//)
     })
 
+
+
+// document.getElementById("btnpathfind").addEventListener("click", pathfind);
 /////////
 
 var route_RD_GUSA = L.geoJSON(allroutesJson.features[0], {
@@ -144,14 +171,14 @@ var map = L.map('map', {
     center: [8.477703150412395, 124.64379231398955], // target is rizal monument
     zoom: 18,
     layers: [
-        osmDefault,
-        route_RD_GUSA,
-        route_PATAG_COGON,
-        route_BAYABAS_COGON,
-        route_BONBON_COGON,
-        route_BALULANG_COGON,
-        route_BUENA_ORO_COGON,
-        route_CAMP_EVG_COGON
+        osmDefault
+        //     route_RD_GUSA,
+        //     route_PATAG_COGON,
+        //     route_BAYABAS_COGON,
+        //     route_BONBON_COGON,
+        //     route_BALULANG_COGON,
+        //     route_BUENA_ORO_COGON,
+        //     route_CAMP_EVG_COGON
     ] //starts with all routes displayed
 });
 
@@ -307,4 +334,75 @@ function toggleRoute() {
         default:
             break;
     }
+}
+
+// map.on('click', function (e) {
+//     function addMarker(e) {
+//         // Add marker to map at click location; add popup window
+//         var newMarker = new L.marker(e.latlng).addTo(map);
+//         console.log(newMarker);
+//     }
+// });
+
+// map.on('click', function(e) {
+//     alert(e.latlng);
+// } );
+
+var LeafIcon = L.Icon.extend({
+    options: {
+        iconSize: [38, 95],
+        shadowSize: [50, 64],
+        iconAnchor: [22, 94],
+        shadowAnchor: [4, 62],
+        popupAnchor: [-3, -76]
+    }
+});
+var greenIcon = new LeafIcon({
+    iconUrl: 'http://leafletjs.com/SlavaUkraini/examples/custom-icons/leaf-green.png',
+    shadowUrl: 'http://leafletjs.com/SlavaUkraini/examples/custom-icons/leaf-shadow.png'
+})
+
+var origin = {}
+var destination = {}
+
+var pinOrigin = function (e) {
+    if (e.id == 'd-pin') return
+    if (origin.options) {
+        if (map.listens('drag')) {
+            var pin1 = origin.getLatLng()
+            document.getElementById("origin").value = Object.values(pin1).reverse().toString()
+            map.off('drag')
+        } else { map.on('drag', oDrag) }
+        return
+    }
+    if (!origin.options) {
+        origin = L.marker(map.getCenter(), { draggable: true }).addTo(map);
+        map.on('drag', oDrag);
+    }
+};
+
+var pinDestination = function (e) {
+    if (e.id == 'o-pin') return
+    if (destination.options) {
+        if (map.listens('drag')) {
+            var pin1 = destination.getLatLng()
+            document.getElementById("destination").value = Object.values(pin1).reverse().toString()
+            map.off('drag')
+        } else { map.on('drag', dDrag) }
+        return
+    }
+    if (!destination.options) {
+        destination = L.marker(map.getCenter(), { draggable: true, icon: greenIcon }).addTo(map);
+        map.on('drag', dDrag);
+    }
+};
+var oDrag = function (e) {
+    if (!e) return
+    var center = map.getCenter()
+    origin.setLatLng(center)
+}
+var dDrag = function (e) {
+    if (!e) return
+    var center = map.getCenter()
+    destination.setLatLng(center)
 }

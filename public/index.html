@@ -85,7 +85,13 @@
 
 <body>
     <div id="map"></div>
-
+    <div id="floating">
+        <form action="/pathfind" method="GET">
+            <button type="button" id="o-pin" onclick="pinOrigin(this)">Pin</button><input type="text" name="origin" id="origin" placeholder="Origin">
+            <button type="button" id="d-pin" onclick="pinDestination(this)">Pin</button><input type="text" name="destination" id="destination" placeholder="Destination">
+            <button type="button" id="btnpathfind" onclick="pathfind2(origin, destination)">get me there!</button>
+        </form>
+    </div>
     <div id="mySidebar" class="sidebar">
         <form class="searchform sidebaritem" action="">
             <input class="sidebaritem" id="searchbar" type="text" placeholder="Search routes...">
@@ -95,23 +101,12 @@
         </form>
         <hr class="hrline sidebaritem">
         <ul class="ul button_ul">
-
-            <input type="text" name="origin" id="origin" value="124.64343309402464 8.47716876512738">
-            <br><br>
-            <input type="text" name="destination" id="destination" value="124.6450102329254 8.48160439674907">
-            <br><br>
-            <input type="text" name="res" id="res">
-            <p id="yyy"></p>
-            <br><br>
-            <button id="pathfind" type="submit">SUBMIT</button>
             <li>
-
                 <button id="showAll" class="sidebaritem listbutton button" type="submit" onclick="showAll()">
                     <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> Show All
                 </button>
             </li>
             <li>
-
                 <button id="hideAll" class="sidebaritem listbutton button" type="submit" onclick="hideAll()">
                     <i class="fa fa-arrows-h fa-lg" aria-hidden="true"></i> Hide All
                 </button>
