@@ -4,9 +4,10 @@
   "description": "capstone project prototype",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
   },
-  "repository": {
+  "repository": { 
     "type": "git",
     "url": "git+https://github.com/alexislyndon/cdo-puv-map-test1.git"
   },
@@ -15,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/alexislyndon/cdo-puv-map-test1/issues"
   },
-  "homepage": "https://github.com/alexislyndon/cdo-puv-map-test1#readme"
+  "homepage": "https://github.com/alexislyndon/cdo-puv-map-test1#readme",
+  "keywords": [],
+  "dependencies": {
+    "express": "^4.17.3",
+    "leaflet": "^1.7.1",
+    "pg": "^8.7.3",
+    "uuid": "^8.3.2",
+    "wellknown": "^0.5.0"
+  }
 }
