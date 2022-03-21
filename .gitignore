@@ -1,8 +1,6 @@
 .vscode/*
 /node_modules
-<<<<<<< HEAD
 node_modules/
 /.vscode
-=======
-node_modules/
->>>>>>> 09008acb8bcca3758b150c9b3c0a47f386cae6ea
+
+
