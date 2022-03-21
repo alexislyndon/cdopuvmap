@@ -203,24 +203,23 @@ allroutes.features.forEach((feature) => {
 });
 */
 
-function openNav() {
-    document.getElementById("mySidebar").style.width = "250px";
+$('#journeyBtn, #routesBtn').click(function(e){
+    console.log('hoi');
+    console.log(e.target.id);
+    
+});
 
-    document.getElementById("openbtn").style.marginLeft = "250px";
-    document.getElementById("openbtn").style.visibility = "hidden";
-
-    document.getElementById("closebtn").style.marginLeft = "250px";
-    document.getElementById("closebtn").style.visibility = "visible";
+function openPanel(id) {
+    $(id).css({
+        'width': '350px', 
+        'visibility': 'visible'
+    });
 }
-
-function closeNav() {
-    document.getElementById("mySidebar").style.width = "0";
-
-    document.getElementById("openbtn").style.marginLeft = "0";
-    document.getElementById("openbtn").style.visibility = "visible";
-
-    document.getElementById("closebtn").style.marginLeft = "0";
-    document.getElementById("closebtn").style.visibility = "hidden";
+function closePanel(id) {
+    $(id).css({
+        'width': '0px', 
+        'visibility': 'hidden'
+    });
 
 }
 
