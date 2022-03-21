@@ -156,17 +156,26 @@
 }
 ul{
     list-style-type: none;
-    margin: 0;
     padding: 0;
 }
 .outputItem{
     margin-top: 25px;
+    left: 7px;
+    margin-right: auto;
     position: absolute;
     font-size: 15px;
     color: #3F2B96;
+    width: 290px;
     border-radius: 5px;
     box-shadow: -6px 10px 8px -6px #808080;
     border: 2px solid rgba(0, 0, 0, .3);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.outputItem:hover{
+    cursor: pointer;
 }
 #jeepneyIcon{
     display: inline-block;
@@ -176,7 +185,10 @@ ul{
     border-radius: 5px 0px 0px 5px;
 }
 #routeName{
+    position: relative;
     display: inline-block;
+    font-size: 15px;
+    flex-grow: 3;
     text-align: center;
 }
 /*
