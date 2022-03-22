@@ -406,3 +406,5 @@ var dDrag = function (e) {
     var center = map.getCenter()
     destination.setLatLng(center)
 }
+
+// test
