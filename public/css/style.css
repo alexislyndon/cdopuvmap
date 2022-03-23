@@ -281,3 +281,14 @@ ul{
 #hideAllBtn{
     margin-left: 5px;
 }
+.dropbtn{
+    text-align: left;
+}
+
+#floating {
+    float: right;
+    width: 300px;
+    border: 1px salmon;
+    padding: 5px;
+    
+}
