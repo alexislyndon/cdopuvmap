@@ -204,9 +204,8 @@ allroutes.features.forEach((feature) => {
 */
 
 $('#journeyBtn, #routesBtn').click(function(e){
-    console.log('hoi');
     console.log(e.target.id);
-    
+    openPanel(e.target.id);
 });
 
 function openPanel(id) {

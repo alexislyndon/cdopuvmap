@@ -62,8 +62,8 @@
     top: 5%;
     background: linear-gradient(#A8C0FF, #3F2B96);
     border-radius: 10px;
-    white-space: nowrap;
     transition: 0.3s;
+    overflow-x: hidden;
     
 }
 .headDiv{
@@ -100,26 +100,62 @@
 #closeIcon:hover{
     content: url('../icons/close_x_lightblue.svg');
 }
+h2{
+    font-weight: normal;
+    color: #ffffff;
+    font-size: 15px;
+}
 #org_des_form{
-    margin-top: 20px;
+    margin-top: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 150px;
+    height: 200px;
+    border: 2px solid green;
+}
+.inputDiv{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+#goBtnDiv{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    overflow: hidden;
 }
 .journeyInput{
-    display: block;
-    width: 280px;
+    margin-left: 15px;
+    display: inline-block;
+    width: 230px;
     height: 40px;
     border: 0px;
     border-radius: 10px;
     outline: 0;
     font-size: 15px;
-    padding: 0px 20px 0px 20px;
+    padding: 0px 10px 0px 10px;
     box-shadow: -6px 10px 8px -6px #808080 inset;
-    align-self: center;
 }
-
+.markerBtn{
+    background-color: #3F2B96;
+    color: #ffffff;
+    border: 0px;
+    width: 40px;
+    height: 40px;
+    float: right;
+    margin-right: 15px;
+    border-radius: 10px;
+}
+.markerBtn:hover{
+    cursor: pointer;
+}
+.markerIcon{
+    width: 25px;
+    height: 25px;
+}
+.inputLabel{
+    margin-left: 20px;
+}
 #goBtn{
     background-color: #3F2B96;
     border: 0px;
@@ -128,7 +164,6 @@
     width: 121px;
     height: 40px;
     font-size: 15px;
-    align-self: center;
     box-shadow: -6px 10px 8px -6px #808080;
 }
 #goBtn:hover{
@@ -136,10 +171,7 @@
 }
 #totalRide{
     position: relative;
-    font-weight: normal;
-    color: #ffffff;
-    font-size: 15px;
-    top: 40px;
+    top: 10px;
     left: 20px;
 }
 .outputPanel{
@@ -148,7 +180,7 @@
     background-color: #ffffff;
     height: 510px;
     width: 310px;
-    top: 50px;
+    top: 15px;
     border-radius: 10px;
     margin-left: auto;
     margin-right: auto;

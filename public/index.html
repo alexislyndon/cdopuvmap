@@ -110,9 +110,23 @@
         </div>
 
         <form action="" method="get" id="org_des_form">
-            <input type="text" name="origin" class="journeyInput"id="originInput" placeholder="Enter Origin">
-            <input type="text" name="destination" class="journeyInput"id="destinationInput" placeholder="Enter Destination">
-            <button id="goBtn"> GO </button>
+            <h2 id="originLabel" class="inputLabel">Origin</h2>
+            <div class="inputDiv">
+                <input type="text" name="origin" class="journeyInput"id="originInput" placeholder="Enter coordinates or use marker">
+                <button class="markerBtn" id="destinationBtn">
+                    <img src="icons/marker.svg" alt="markerIcon" class="markerIcon"/>
+                </button>
+            </div>
+            <h2 id="destinationLabel" class="inputLabel">Destination</h2>
+            <div class="inputDiv">
+                <input type="text" name="destination" class="journeyInput"id="destinationInput" placeholder="Enter coordinates or use marker">
+                <button class="markerBtn" id="destinationBtn">
+                    <img src="icons/marker.svg" alt="markerIcon" class="markerIcon"/>
+                </button>
+            </div>
+            <div id="goBtnDiv">
+                <button id="goBtn"> GO </button>
+            </div>
         </form>
         <h2 id="totalRide">
             1 Total Ride
