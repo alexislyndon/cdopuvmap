@@ -4,7 +4,6 @@ const getRoutes = require('./services/getRoutes');
 const getNBRoute = require('./services/getNBRoute');
 const getPathsAtoB = require('./services/getPathsAtoB');
 const coordsToWKT = require('./services/coordsToWKT')
-const parse = require('wellknown');
 const getallRoutes = require('./services/getallRoutes');
 
 const path = require('path');
@@ -44,10 +43,12 @@ app
     //List your latitude coordinates before longitude coordinates.
     // Check that the first number in your latitude coordinate is between -90 and 90.
     // Check that the first number in your longitude coordinate is between -180 and 180.
-    .get("/pathfind/:o/:d", async (req, res) => {
-        const { o, d } = req.params;
-        const [olon, olat] = o.split(" ")
-        const [dlon, dlat] = d.split(" ")
+    .get("/pathfind", async (req, res) => {
+        const { origin, destination } = req.query;
+        console.log(`origin: ${origin}`);
+        console.log(`dest: ${destination}`);
+        const [olon, olat] = origin.split(",")
+        const [dlon, dlat] = destination.split(",")
         const result = await getPathsAtoB(olon, olat, dlon, dlat)
 
         console.log(result);
