@@ -204,8 +204,34 @@ allroutes.features.forEach((feature) => {
 */
 
 $('#journeyBtn, #routesBtn').click(function(e){
-    console.log(e.target.id);
-    openPanel(e.target.id);
+    switch (e.target.id) {
+        case "journeyBtn":
+                //close other panels first
+                closePanel('#routesPanel');
+                $('#routesBtn').css({
+                    'background-color': '#3F2B96'
+                });
+                //then open target panel
+                openPanel('#journeyPanel');
+                $('#journeyBtn').css({
+                    'background-color': '#A8C0FF'
+                });
+            break;
+        case "routesBtn":
+                closePanel('#journeyPanel');
+                $('#journeyBtn').css({
+                    'background-color': '#3F2B96'
+                });
+
+                openPanel('#routesPanel');
+                $('#routesBtn').css({
+                    'background-color': '#A8C0FF'
+                });
+            break;
+        default:
+            console.log('here');
+            break;
+    }
 });
 
 function openPanel(id) {
@@ -213,11 +239,12 @@ function openPanel(id) {
         'width': '350px', 
         'visibility': 'visible'
     });
+    console.log(id);
 }
 function closePanel(id) {
     $(id).css({
         'width': '0px', 
-        'visibility': 'hidden'
+        'visibility': 'hidden',
     });
 
 }
