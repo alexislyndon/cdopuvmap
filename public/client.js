@@ -203,6 +203,21 @@ allroutes.features.forEach((feature) => {
 });
 */
 
+function openPanel(id) {
+    $(id).css({
+        'width': '350px', 
+        'visibility': 'visible'
+    });
+    console.log(id);
+}
+function closePanel(id) {
+    $(id).css({
+        'width': '0px', 
+        'visibility': 'hidden',
+    });
+
+}
+
 $('#journeyBtn, #routesBtn').click(function(e){
     switch (e.target.id) {
         case "journeyBtn":
@@ -234,21 +249,20 @@ $('#journeyBtn, #routesBtn').click(function(e){
     }
 });
 
-function openPanel(id) {
-    $(id).css({
-        'width': '350px', 
-        'visibility': 'visible'
-    });
-    console.log(id);
-}
-function closePanel(id) {
-    $(id).css({
-        'width': '0px', 
-        'visibility': 'hidden',
-    });
-
-}
-
+$('.closeBtn').click(function(e){
+    console.log(e.target.id);
+    switch (e.target.id) {
+        case 'journeyCloseBtn':
+            closePanel('#journeyPanel');
+            break;
+        case 'routesCloseBtn':
+            closePanel('#routesPanel');
+            break;
+    
+        default:
+            break;
+    }
+});
 function showAll() {
     //overlays.AllRouteLayer.addTo(map);
     overlays.RD_GUSA.addTo(map);
