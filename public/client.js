@@ -230,27 +230,66 @@ allroutes.features.forEach((feature) => {
 });
 */
 
-function openNav() {
-    document.getElementById("mySidebar").style.width = "250px";
-
-    document.getElementById("openbtn").style.marginLeft = "250px";
-    document.getElementById("openbtn").style.visibility = "hidden";
-
-    document.getElementById("closebtn").style.marginLeft = "250px";
-    document.getElementById("closebtn").style.visibility = "visible";
+function openPanel(id) {
+    $(id).css({
+        'width': '350px', 
+        'visibility': 'visible'
+    });
+    console.log(id);
 }
-
-function closeNav() {
-    document.getElementById("mySidebar").style.width = "0";
-
-    document.getElementById("openbtn").style.marginLeft = "0";
-    document.getElementById("openbtn").style.visibility = "visible";
-
-    document.getElementById("closebtn").style.marginLeft = "0";
-    document.getElementById("closebtn").style.visibility = "hidden";
+function closePanel(id) {
+    $(id).css({
+        'width': '0px', 
+        'visibility': 'hidden',
+    });
 
 }
 
+$('#journeyBtn, #routesBtn').click(function(e){
+    switch (e.target.id) {
+        case "journeyBtn":
+                //close other panels first
+                closePanel('#routesPanel');
+                $('#routesBtn').css({
+                    'background-color': '#3F2B96'
+                });
+                //then open target panel
+                openPanel('#journeyPanel');
+                $('#journeyBtn').css({
+                    'background-color': '#A8C0FF'
+                });
+            break;
+        case "routesBtn":
+                closePanel('#journeyPanel');
+                $('#journeyBtn').css({
+                    'background-color': '#3F2B96'
+                });
+
+                openPanel('#routesPanel');
+                $('#routesBtn').css({
+                    'background-color': '#A8C0FF'
+                });
+            break;
+        default:
+            console.log('here');
+            break;
+    }
+});
+
+$('.closeBtn').click(function(e){
+    console.log(e.target.id);
+    switch (e.target.id) {
+        case 'journeyCloseBtn':
+            closePanel('#journeyPanel');
+            break;
+        case 'routesCloseBtn':
+            closePanel('#routesPanel');
+            break;
+    
+        default:
+            break;
+    }
+});
 function showAll() {
     //overlays.AllRouteLayer.addTo(map);
     overlays.RD_GUSA.addTo(map);

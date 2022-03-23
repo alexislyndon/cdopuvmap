@@ -1,5 +1,7 @@
 *{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 #map{
     position: absolute; 
@@ -15,127 +17,269 @@
     -webkit-filter: blur(8px);
     */
 }
-#openbtn{
-    visibility: visible;
+.maincontainer{
+    position: absolute;
+    box-sizing: border-box;
+    height: 100%;
+    width: 10%;
+
 }
-#closebtn{
+.buttonPanel{
+    position: absolute;
+    box-sizing: border-box;
+    height: 90%;
+    width: 60px;
+    display: inline-block;
+    background-color: #3F2B96;
+    border-radius: 5px;
+    top: 5%;
+}
+.toggles{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    top: 40%;
+    background-color: #3F2B96;
+    border: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#journeyBtn{
+    background-image: url('../icons/journey.svg');
+    background-size: 50px 50px;
+}
+#routesBtn{
+    background-image: url('../icons/arrow_leftright.svg');
+    background-size: 50px 50px;
+}
+.toggles:hover{
+    background-color: #A8C0FF;
+    cursor: pointer;
+}
+.toggleIcons{
+    width: 40px;
+    height: 40px;
+}
+.panel{
+    position: absolute;
+    display: inline-block;
+    box-sizing: border-box;
+    border: 5px solid #A8C0FF;
+    height: 90%;
+    width: 0px;
+    left: 65px;
+    top: 5%;
+    background: linear-gradient(#A8C0FF, #3F2B96);
+    border-radius: 10px;
+    transition: 0.2s;
+    overflow: hidden;
     visibility: hidden;
 }
-.button{
-    background-color:#003A6C;
-    color: #ffffff;
-    border: none;
-    text-decoration: none;
-}
-.menubtn{
-    padding: 10px 15px;
-    position: fixed;
-    top: 50%;
-    left: 0;
-    transition: 0.3s;
-    padding: 20px;
-    border-radius: 0px 3px 3px 0px;
-    box-shadow: 10px 0 5px -2px #888;
-}
-.button:hover{
-    background-color: #006dcc;
-    cursor: pointer;
-    color: #ffffff;
-}
-.sidebar {
-    height: 100%;
-    width: 0;
-    position: fixed; 
-    top: 0;
-    left: 0;
-    background-color: #003A6C; 
-    overflow-x: hidden;
-    padding-top: 60px;
-    transition: 0.3s;
-    box-shadow: 10px 0 5px -2px #888;
-}
-.sidebar .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-.sidebar a{
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #ffffff;
-    display: block;
-    transition: 0.3s;
-}
-.hrline{
-    /**
-    border: 0.5px solid #e5f0cc;
-    */
-    border: 0.5px solid #ffffff;
-    top: 15px;
-}
-.sidebaritem{
+
+.headDiv{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
     position: relative;
+    width: 100%;
+    height: 7%;
+    background-color: #3F2B96;
+    border-radius: 10px 10px 0px 0px;
+    overflow: hidden;
 }
-.searchform{
+.panelTitle{
+    position: relative;
+    font-weight: normal;
+    color: #ffffff;
+    font-size: 20px;
+    top: 33px;
+    left: 10px;
+}
+.closeBtn{
+    position: relative;
+    background-color: #3F2B96;
+    border: 0px;
+    width: 30px;
+    height: 30px;
+    top: 5px;
+    right: -160px;
+    background-image: url('../icons/close_x.svg');
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#journeyCloseBtn{
+    right: -160px;
+}
+#routesCloseBtn{
+    right: -220px;
+}
+.closeBtn:hover{
+    cursor: pointer;
+}
+h2{
+    font-weight: normal;
+    color: #ffffff;
+    font-size: 15px;
+    white-space: nowrap;
+}
+#org_des_form{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 200px;
+}
+#searchRouteForm{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.inputDiv{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+#goBtnDiv{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    overflow: hidden;
+}
+.textInput{
+    margin-left: 15px;
+    display: inline-block;
+    width: 230px;
+    height: 40px;
+    border: 0px;
+    border-radius: 10px;
+    outline: 0;
+    font-size: 15px;
+    padding: 0px 10px 0px 10px;
+    box-shadow: -6px 10px 8px -6px #808080 inset;
+}
+.markerBtn, #searchBtn{
+    background-color: #3F2B96;
+    color: #ffffff;
+    border: 0px;
+    width: 40px;
+    height: 40px;
+    float: right;
+    margin-right: 15px;
+    border-radius: 10px;
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#destinationBtn, #originBtn{
+    background-image: url('../icons/marker.svg');
+}
+
+.markerBtn:hover{
+    cursor: pointer;
+}
+#searchBtn{
+    background-image: url('../icons/search_slim.svg');
+}
+.inputLabel{
+    margin-left: 20px;
+}
+#goBtn{
+    background-color: #3F2B96;
+    border: 0px;
+    color: #ffffff;
+    border-radius: 10px;
+    width: 121px;
+    height: 40px;
+    font-size: 15px;
+    box-shadow: -6px 10px 8px -6px #808080;
+}
+#goBtn:hover{
+    cursor: pointer;
+}
+#totalRide{
+    position: relative;
+    top: 10px;
+    left: 20px;
+}
+.outputPanel{
+    position: relative;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    width: 310px;
+    border-radius: 10px;
+    margin-right: auto;
+    box-shadow: -6px 10px 8px -6px #808080 inset;
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+}
+#journeyOutputPanel{
+    top: 15px;
+    height: 520px;
+}
+#routesOutputPanel{
+    height: 646px;
+}
+ul{
+    list-style-type: none;
+    padding: 0;
+}
+.outputItem{
+    margin-top: 25px;
+    left: 7px;
+    margin-right: auto;
+    position: absolute;
+    font-size: 15px;
+    color: #3F2B96;
+    width: 290px;
+    border-radius: 5px;
+    box-shadow: -6px 10px 8px -6px #808080;
+    border: 2px solid rgba(0, 0, 0, .3);
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: center;
+    align-items: center;
 }
-#searchbar{
-    text-align: center;
-    left: 2px;
-    height: 35px;
-    width: 200px;
-    padding: 0;
-    margin: 0;
-    background-color: #f5f5f5;
-    outline: none;
-    border: none;
-    border-radius: 3px 0px 0px 3px;
-}
-input[type=text]{
-    padding: 2px 23px 2px 30px;
-    outline: 0;
-    font-size: 15px;
-}
-#searchbar:focus{
-    border: none;
-    background-color: #ffffff;
-}
-#searchbtn{
-    color: #003A6C;
-    width: 40px;
-    height: 35px;
-    padding: 0;
-    margin: 0;
-    display: inline;
-    border: none;
-    background-color: #e6e6e6;
-    outline: none;
-    border-radius: 0px 3px 3px 0px;
-}
-#searchbtn:hover{
+.outputItem:hover{
     cursor: pointer;
 }
-.ul{
-    list-style: none;
-    padding: 0;
+.jeepneyIcon{
+    display: inline-block;
+    background-color: #3F2B96;
+    width: 50px;
+    height: 54px;
+    border-radius: 5px 0px 0px 5px;
 }
-.button_ul{
+.routeName{
+    position: relative;
+    display: inline-block;
+    font-size: 15px;
+    flex-grow: 3;
+    text-align: center;
     white-space: nowrap;
 }
-.listbutton{
+#hideShowDiv{
+    margin-top: 20px;
+    margin-bottom: 7px;
+    display: flex;
+    flex-direction: row;
     width: 100%;
-    height: 50px;
-    font-size: 15px;
-    transition: 0.3s;
+    padding: 0px 15px 0px 15px;
 }
-.routes_ul{
-    list-style: none;
+.toggleRouteBtn{
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: #3F2B96;
+    border: 0px;
+    height: 40px;
+    width: 70px;
+    color: #ffffff;
+    border-radius: 10px;
+}
+#hideAllBtn{
+    margin-left: 5px;
 }
 .dropbtn{
     text-align: left;
