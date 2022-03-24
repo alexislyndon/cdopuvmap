@@ -6,32 +6,63 @@ function popup(feature, layer) {
     }
 }
 
-//this function can be used for 'style' leaflet option
+// this function can be used for 'style' leaflet option
 // function redcolor(){
 //     return{
 //         color: "#ff0000",
 //         opacity: 0.65
 //     }
 // }
+function dehighlight (layer) {
+    if (selected === null || selected._leaflet_id !== layer._leaflet_id) {
+        layer.setStyle({
+            weight: 6
+        });
+    }
+  }
+function highlight(layer){
+    if (selected !== null){
+        var previous = selected;
+    }
+    map.fitBounds(layer.getBounds());
+    selected = layer;
+    layer.setStyle({
+        weight: 20
+    });
 
+    if (!L.Browser.ie && !L.Browser.opera) {
+        layer.bringToFront();
+    }
+    if (previous) {
+        dehighlight(previous);
+    }
+}
+var selected = null;
 var colors = ['#71ff34', '#ff3471', '#ff7b34', '#34aeff', '#ff4834']
-var routes = L.layerGroup()
+var allRoutesLayer = L.layerGroup()  //add all routes as layer group
 const fetchroutes = fetch('/routes')
     .then(res => { return res.json() })
     .then(data => {
         data = data.features
         for (let i = 0; i < data.length; ++i) {
-            routes.addLayer(L.geoJSON(data[i], {
-                onEachFeature: popup,
+            allRoutesLayer.addLayer(L.geoJSON(data[i], {
+                onEachFeature: function(feature, layer){
+                    layer.on({
+                        'click': function (e){
+                            highlight(e.target);
+                            popup(feature, layer);
+                        }
+                    })
+                },
                 style: {
                     opacity: 0.65,
                     color: colors[i % colors.length],
                     weight: 6
                 }
             }))
+            $('#routesOutputList').append('<li><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon"><p class="routeName"><strong>Iponan - Cogon Mkt <br></strong>Via Westbound Tmnl </p></div></li>');
         }
-        routes.addTo(map);
-        console.log(routes);
+        allRoutesLayer.addTo(map);
     })
 
 function pathfind(opoint, dpoint) {
@@ -280,10 +311,10 @@ $('.closeBtn').click(function(e){
     }
 });
 $('#hideAllBtn').click(function(){
-    routes.remove();
+    allRoutesLayer.remove();
 });
 $('#showAllBtn').click(function(){
-    routes.addTo(map);
+    allRoutesLayer.addTo(map);
 });
 
 // function toggleRoute() {

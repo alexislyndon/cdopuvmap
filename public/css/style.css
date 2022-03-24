@@ -213,6 +213,7 @@ h2{
     left: 20px;
 }
 .outputPanel{
+    padding-top: 10px;
     position: relative;
     box-sizing: border-box;
     background-color: #ffffff;
@@ -236,10 +237,9 @@ ul{
     padding: 0;
 }
 .outputItem{
-    margin-top: 25px;
-    left: 7px;
+    margin-top: 10px;
+    margin-left: auto;
     margin-right: auto;
-    position: absolute;
     font-size: 15px;
     color: #3F2B96;
     width: 290px;
@@ -299,6 +299,12 @@ ul{
     background-color: #A8C0FF;
     cursor: pointer;
 }
+.outputList{
+
+}
+.outputListItem{
+
+} 
 .dropbtn{
     text-align: left;
 }
