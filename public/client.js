@@ -27,7 +27,8 @@ function highlight(layer){
     map.fitBounds(layer.getBounds());
     selected = layer;
     layer.setStyle({
-        weight: 20
+        weight: 10,
+        opacity: 1
     });
 
     if (!L.Browser.ie && !L.Browser.opera) {
@@ -60,7 +61,13 @@ const fetchroutes = fetch('/routes')
                     weight: 6
                 }
             }))
-            $('#routesOutputList').append('<li><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon"><p class="routeName"><strong>Iponan - Cogon Mkt <br></strong>Via Westbound Tmnl </p></div></li>');
+            let text = data[i].properties.route_name;
+            let splitted = text.split('Via');
+            if (splitted.length == 2) {
+                $('#routesOutputList').append('<li><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon"><p class="routeName"><strong>'+splitted[0]+'<br></strong>Via'+splitted[1]+'</p></div></li>');
+            } else {
+                $('#routesOutputList').append('<li><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon"><p class="routeName"><strong>'+splitted[0]+'<br></strong></p></div></li>');
+            }
         }
         allRoutesLayer.addTo(map);
     })
@@ -252,7 +259,6 @@ function closePanel(id) {
         'width': '0px', 
         'visibility': 'hidden',
     });
-
 }
 $('#journeyBtn, #routesBtn').click(function(e){ //sidebar button function
     switch (e.target.id) {

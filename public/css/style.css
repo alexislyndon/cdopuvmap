@@ -27,12 +27,12 @@
 .buttonPanel{
     position: absolute;
     box-sizing: border-box;
-    height: 90%;
+    height: auto;
     width: 60px;
     display: inline-block;
-    background-color: #3F2B96;
+    /* background-color: #3F2B96; */
     border-radius: 5px;
-    top: 5%;
+    top: 45%;
 }
 .toggles{
     position: relative;
@@ -227,7 +227,7 @@ h2{
 }
 #journeyOutputPanel{
     top: 15px;
-    height: 520px;
+    height: 510px;
 }
 #routesOutputPanel{
     height: 626px;
