@@ -1,31 +1,27 @@
 
 //this function was used for 'onEachFeature' allroutes option
 function popup(feature, layer) {
-    console.log(feature, layer);
     if (feature.properties) {
         layer.bindPopup('Name: ' + feature.properties.route_name + '<br> Code: ' + feature.properties.route_code);
     }
 }
 
 //this function can be used for 'style' leaflet option
-/*
-function redcolor(){
-    return{
-        color: "#ff0000",
-        opacity: 0.65
-    }
-}
-*/
+// function redcolor(){
+//     return{
+//         color: "#ff0000",
+//         opacity: 0.65
+//     }
+// }
+
 var colors = ['#71ff34', '#ff3471', '#ff7b34', '#34aeff', '#ff4834']
-var routes = []
+var routes = L.layerGroup()
 const fetchroutes = fetch('/routes')
     .then(res => { return res.json() })
     .then(data => {
         data = data.features
-        // data.forEach(route => {
-        // routes.push(
         for (let i = 0; i < data.length; ++i) {
-            routes.push(L.geoJSON(data[i], {
+            routes.addLayer(L.geoJSON(data[i], {
                 onEachFeature: popup,
                 style: {
                     opacity: 0.65,
@@ -33,19 +29,10 @@ const fetchroutes = fetch('/routes')
                     weight: 6
                 }
             }))
-            // )
-        }//)
-        routes.forEach(route => {
-            route.addTo(map)
-        });
+        }
+        routes.addTo(map);
+        console.log(routes);
     })
-// routes.forEach(route => {
-//     route.addTo(map)
-// });
-console.log(routes);
-
-//////////
-
 
 function pathfind(opoint, dpoint) {
     var opoint = document.getElementById("origin").value
@@ -54,8 +41,6 @@ function pathfind(opoint, dpoint) {
         .then(res => { return res.json() })
         .then(data => {
             data = data.features
-            // data.forEach(route => {
-            // routes.push(
             for (let index = 0; index < data.length; ++index) {
                 L.geoJSON(data[index], {
                     onEachFeature: popup,
@@ -67,8 +52,7 @@ function pathfind(opoint, dpoint) {
                         dashOffset: '3'
                     }
                 }).addTo(map)
-                // )
-            }//)
+            }
         })
 }
 
@@ -76,8 +60,6 @@ var pathfind2 = (o, d) => fetch(`/pathfind?origin=${encodeURIComponent(o.value)}
     .then(res => { return res.json() })
     .then(data => {
         data = data.features
-        // data.forEach(route => {
-        // routes.push(
         for (let index = 0; index < data.length; ++index) {
             L.geoJSON(data[index], {
                 onEachFeature: popup,
@@ -89,8 +71,7 @@ var pathfind2 = (o, d) => fetch(`/pathfind?origin=${encodeURIComponent(o.value)}
                     dashOffset: '3'
                 }
             }).addTo(map)
-            // )
-        }//)
+        }
     })
 
 
@@ -234,7 +215,6 @@ function openPanel(id) {
         'width': '350px', 
         'visibility': 'visible'
     });
-    console.log(id);
 }
 function closePanel(id) {
     $(id).css({
@@ -243,15 +223,13 @@ function closePanel(id) {
     });
 
 }
-
-$('#journeyBtn, #routesBtn').click(function(e){
+$('#journeyBtn, #routesBtn').click(function(e){ //sidebar button function
     switch (e.target.id) {
         case "journeyBtn":
+                // console.log(buttonClicked('#'+e.target.id));
                 if ($('#journeyPanel').width() > 0) { //check if open already
-                    console.log('abri daan');
                     closePanel('#journeyPanel');
                 } else {
-                    console.log('sirado daan');
                     //close other panels first
                     closePanel('#routesPanel');
                     $('#routesBtn').css({
@@ -267,7 +245,6 @@ $('#journeyBtn, #routesBtn').click(function(e){
             break;
         case "routesBtn":
                 if ($('#routesPanel').width() > 0) { //check if open already
-                    console.log('abri daan');
                     closePanel('#routesPanel');
                 } else {
                     closePanel('#journeyPanel');
@@ -280,8 +257,7 @@ $('#journeyBtn, #routesBtn').click(function(e){
                         'background-color': '#A8C0FF'
                     });
                 }
-            
-                
+                    
             break;
         default:
             console.log('here');
@@ -290,7 +266,7 @@ $('#journeyBtn, #routesBtn').click(function(e){
 });
 
 $('.closeBtn').click(function(e){
-    console.log(e.target.id);
+    
     switch (e.target.id) {
         case 'journeyCloseBtn':
             closePanel('#journeyPanel');
@@ -303,27 +279,12 @@ $('.closeBtn').click(function(e){
             break;
     }
 });
-// function showAll() {
-//     //overlays.AllRouteLayer.addTo(map);
-//     overlays.RD_GUSA.addTo(map);
-//     overlays.PATAG_COGON.addTo(map);
-//     overlays.BAYABAS_COGON.addTo(map);
-//     overlays.BONBON_COGON.addTo(map);
-//     overlays.BALULANG_COGON.addTo(map);
-//     overlays.BUENA_ORO_COGON.addTo(map);
-//     overlays.CAMP_EVG_COGON.addTo(map);
-// }
-
-// function hideAll() {
-//     //overlays.AllRouteLayer.remove();
-//     overlays.RD_GUSA.remove();
-//     overlays.PATAG_COGON.remove();
-//     overlays.BAYABAS_COGON.remove();
-//     overlays.BONBON_COGON.remove();
-//     overlays.BALULANG_COGON.remove();
-//     overlays.BUENA_ORO_COGON.remove();
-//     overlays.CAMP_EVG_COGON.remove();
-// }
+$('#hideAllBtn').click(function(){
+    routes.remove();
+});
+$('#showAllBtn').click(function(){
+    routes.addTo(map);
+});
 
 // function toggleRoute() {
 //     switch (window.event.target.id) {
