@@ -247,27 +247,41 @@ function closePanel(id) {
 $('#journeyBtn, #routesBtn').click(function(e){
     switch (e.target.id) {
         case "journeyBtn":
-                //close other panels first
-                closePanel('#routesPanel');
-                $('#routesBtn').css({
-                    'background-color': '#3F2B96'
-                });
-                //then open target panel
-                openPanel('#journeyPanel');
-                $('#journeyBtn').css({
-                    'background-color': '#A8C0FF'
-                });
+                if ($('#journeyPanel').width() > 0) { //check if open already
+                    console.log('abri daan');
+                    closePanel('#journeyPanel');
+                } else {
+                    console.log('sirado daan');
+                    //close other panels first
+                    closePanel('#routesPanel');
+                    $('#routesBtn').css({
+                        'background-color': '#3F2B96'
+                    });
+                    //then open target panel
+                    openPanel('#journeyPanel');
+                    $('#journeyBtn').css({
+                        'background-color': '#A8C0FF'
+                    });
+                }
+                
             break;
         case "routesBtn":
-                closePanel('#journeyPanel');
-                $('#journeyBtn').css({
-                    'background-color': '#3F2B96'
-                });
+                if ($('#routesPanel').width() > 0) { //check if open already
+                    console.log('abri daan');
+                    closePanel('#routesPanel');
+                } else {
+                    closePanel('#journeyPanel');
+                    $('#journeyBtn').css({
+                        'background-color': '#3F2B96'
+                    });
 
-                openPanel('#routesPanel');
-                $('#routesBtn').css({
-                    'background-color': '#A8C0FF'
-                });
+                    openPanel('#routesPanel');
+                    $('#routesBtn').css({
+                        'background-color': '#A8C0FF'
+                    });
+                }
+            
+                
             break;
         default:
             console.log('here');
