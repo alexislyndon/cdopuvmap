@@ -40,6 +40,7 @@
     height: 60px;
     top: 40%;
     background-color: #3F2B96;
+    border-radius: 10px;
     border: 0;
     background-repeat: no-repeat;
     background-position: center;
@@ -128,7 +129,7 @@ h2{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 200px;
+    height: 210px;
 }
 #searchRouteForm{
     margin-top: 15px;
@@ -171,16 +172,22 @@ h2{
     background-size: 25px 25px;
     background-repeat: no-repeat;
     background-position: center;
+    box-shadow: -6px 10px 8px -6px #808080;
 }
 #destinationBtn, #originBtn{
     background-image: url('../icons/marker.svg');
 }
 
 .markerBtn:hover{
+    background-color: #A8C0FF;
     cursor: pointer;
 }
 #searchBtn{
     background-image: url('../icons/search_slim.svg');
+}
+#searchBtn:hover{
+    background-color: #A8C0FF;
+    cursor: pointer;
 }
 .inputLabel{
     margin-left: 20px;
@@ -194,8 +201,10 @@ h2{
     height: 40px;
     font-size: 15px;
     box-shadow: -6px 10px 8px -6px #808080;
+    margin-bottom: 10px;
 }
 #goBtn:hover{
+    background-color: #A8C0FF;
     cursor: pointer;
 }
 #totalRide{
@@ -220,7 +229,7 @@ h2{
     height: 520px;
 }
 #routesOutputPanel{
-    height: 646px;
+    height: 626px;
 }
 ul{
     list-style-type: none;
@@ -268,6 +277,9 @@ ul{
     width: 100%;
     padding: 0px 15px 0px 15px;
 }
+#searchInput{
+    margin-bottom: 10px;
+}
 .toggleRouteBtn{
     overflow: hidden;
     white-space: nowrap;
@@ -277,9 +289,15 @@ ul{
     width: 70px;
     color: #ffffff;
     border-radius: 10px;
+    box-shadow: -6px 10px 8px -6px #808080;
+    margin-bottom: 10px;
 }
 #hideAllBtn{
     margin-left: 5px;
+}
+.toggleRouteBtn:hover{
+    background-color: #A8C0FF;
+    cursor: pointer;
 }
 .dropbtn{
     text-align: left;
