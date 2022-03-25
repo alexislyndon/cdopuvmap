@@ -31,7 +31,7 @@ function highlight(layer){
 }
 var selected = null;
 var colors = ['#71ff34', '#ff3471', '#ff7b34', '#34aeff', '#ff4834']
-var allRoutesLayer = L.layerGroup()  //add all routes as layer group
+var allRoutesArray = []
 const fetchroutes = fetch('/routes')
     .then(res => { return res.json() })
     .then(data => {
@@ -40,7 +40,7 @@ const fetchroutes = fetch('/routes')
         data = data.features
         for (let i = 0; i < data.length; ++i) {
             
-            allRoutesLayer.addLayer(L.geoJSON(data[i], {
+            allRoutesArray.push(L.geoJSON(data[i], {
                 onEachFeature: function(feature, layer){
                     layer.on({
                         'click': function (e){
@@ -58,19 +58,19 @@ const fetchroutes = fetch('/routes')
             let text = data[i].properties.route_name;
             let splitted = text.split('Via');
             if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
-                $('#routesOutputList').append('<li><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon"><p class="routeName"><strong>'+splitted[0]+'<br></strong>Via'+splitted[1]+'</p></div></li>').attr('id', index);
+                $('#routesOutputList').append('<li><div class="outputItem" id="'+text+'"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon"><p class="routeName"><strong>'+splitted[0]+'<br></strong>Via'+splitted[1]+'</p></div></li>');
             } else {
-                $('#routesOutputList').append('<li><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon"><p class="routeName"><strong>'+splitted[0]+'<br></strong></p></div></li>');
+                $('#routesOutputList').append('<li><div class="outputItem" id="'+text+'"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon"><p class="routeName"><strong>'+splitted[0]+'<br></strong></p></div></li>');
             }
         }
-        allRoutesLayer.addTo(map);
+        allRoutesArray.forEach(route => {
+            route.addTo(map);
+        });
 
         //need to add allRoutesLayers to map first before doing this loop
-        for (let i = 0; i < data.length; ++i) {
-            allRoutesLayer.eachLayer(function(layer){
-                layer.layer_id = data[i].properties.route_name; // adds new attribute 'layer_id'
-                console.log(layer);
-            })
+        for (let i = 0; i < data.length; i++) {
+            allRoutesArray[i].layer_id = data[i].properties.route_name; //adds new attribute 'layer_id'
+            console.log(allRoutesArray[i].layer_id);
         }
     })
 
@@ -236,11 +236,15 @@ $('.closeBtn').click(function(e){
     }
 });
 $('#hideAllBtn').click(function(){
-    allRoutesLayer.remove();
+    allRoutesArray.forEach(route => {
+        route.remove();
+    });
 
 });
 $('#showAllBtn').click(function(){
-    allRoutesLayer.addTo(map);
+    allRoutesArray.forEach(route => {
+        route.addTo(map);
+    });
 });
 
 
