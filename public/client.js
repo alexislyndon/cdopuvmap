@@ -1,3 +1,4 @@
+//to do: store each routes into an object literals (dictionary). assign each button by iterating through the objeect literals. similar to 'var overlays' see line 148
 
 //this function was used for 'onEachFeature' allroutes option
 function popup(feature, layer) {
@@ -6,25 +7,18 @@ function popup(feature, layer) {
     }
 }
 
-// this function can be used for 'style' leaflet option
-// function redcolor(){
-//     return{
-//         color: "#ff0000",
-//         opacity: 0.65
-//     }
-// }
 function dehighlight (layer) {
     if (selected === null || selected._leaflet_id !== layer._leaflet_id) {
-        layer.setStyle({
+        layer.setStyle({ //return to default
             weight: 6
         });
     }
   }
 function highlight(layer){
-    if (selected !== null){
+    if (selected !== null){ //check if there is a layer already selected prior to this
         var previous = selected;
     }
-    map.fitBounds(layer.getBounds());
+    map.fitBounds(layer.getBounds()); //layer will center to viewport
     selected = layer;
     layer.setStyle({
         weight: 10,
@@ -34,7 +28,7 @@ function highlight(layer){
     if (!L.Browser.ie && !L.Browser.opera) {
         layer.bringToFront();
     }
-    if (previous) {
+    if (previous) { //dehighlight the previous selected layer
         dehighlight(previous);
     }
 }
@@ -44,14 +38,17 @@ var allRoutesLayer = L.layerGroup()  //add all routes as layer group
 const fetchroutes = fetch('/routes')
     .then(res => { return res.json() })
     .then(data => {
+        
+        console.log(data);
         data = data.features
         for (let i = 0; i < data.length; ++i) {
+            //console.log(data);
             allRoutesLayer.addLayer(L.geoJSON(data[i], {
                 onEachFeature: function(feature, layer){
                     layer.on({
                         'click': function (e){
-                            highlight(e.target);
-                            popup(feature, layer);
+                            highlight(e.target); //e.target is layer
+                            popup(feature, e.target);
                         }
                     })
                 },
@@ -60,16 +57,21 @@ const fetchroutes = fetch('/routes')
                     color: colors[i % colors.length],
                     weight: 6
                 }
-            }))
+            }));
             let text = data[i].properties.route_name;
             let splitted = text.split('Via');
-            if (splitted.length == 2) {
+            if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
                 $('#routesOutputList').append('<li><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon"><p class="routeName"><strong>'+splitted[0]+'<br></strong>Via'+splitted[1]+'</p></div></li>');
             } else {
                 $('#routesOutputList').append('<li><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon"><p class="routeName"><strong>'+splitted[0]+'<br></strong></p></div></li>');
             }
         }
+        console.log(allRoutesLayer);
         allRoutesLayer.addTo(map);
+        console.log(allRoutesLayer);
+        allRoutesLayer.eachLayer(function(layer){
+            //console.log(layer);
+        });
     })
 
 function pathfind(opoint, dpoint) {
@@ -112,70 +114,6 @@ var pathfind2 = (o, d) => fetch(`/pathfind?origin=${encodeURIComponent(o.value)}
         }
     })
 
-
-
-// document.getElementById("btnpathfind").addEventListener("click", pathfind);
-/////////
-
-// var route_RD_GUSA = L.geoJSON(allroutesJson.features[0], {
-//     onEachFeature: popup,
-//     style: {
-//         opacity: 0.65,
-//         color: '#F7F7FF'
-//     }
-// });
-// var route_PATAG_COGON = L.geoJSON(allroutesJson.features[1], {
-//     onEachFeature: popup,
-//     style: {
-//         opacity: 0.65,
-//         color: '#F7F7FF'
-//     }
-// })
-// var route_BAYABAS_COGON = L.geoJSON(allroutesJson.features[2], {
-//     onEachFeature: popup,
-//     style: {
-//         opacity: 0.65,
-//         color: '#F7F7FF'
-//     }
-// })
-// var route_BONBON_COGON = L.geoJSON(allroutesJson.features[3], {
-//     onEachFeature: popup,
-//     style: {
-//         opacity: 0.65,
-//         color: '#F7F7FF'
-//     }
-// })
-// var route_BALULANG_COGON = L.geoJSON(allroutesJson.features[4], {
-//     onEachFeature: popup,
-//     style: {
-//         opacity: 0.65,
-//         color: '#F7F7FF'
-//     }
-// })
-// var route_BUENA_ORO_COGON = L.geoJSON(allroutesJson.features[5], {
-//     onEachFeature: popup,
-//     style: {
-//         opacity: 0.65,
-//         color: '#F7F7FF'
-//     }
-// })
-// var route_CAMP_EVG_COGON = L.geoJSON(allroutesJson.features[6], {
-//     onEachFeature: popup,
-//     style: {
-//         opacity: 0.65,
-//         color: '#F7F7FF'
-//     }
-// })
-// var allRouteLayer = L.layerGroup([
-//     route_RD_GUSA,
-//     route_PATAG_COGON,
-//     route_BAYABAS_COGON,
-//     route_BONBON_COGON,
-//     route_BALULANG_COGON,
-//     route_BUENA_ORO_COGON,
-//     route_CAMP_EVG_COGON
-// ]);
-
 // open street map layer (maptiler api)
 var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeAqyxwLGSnrFq', {
     attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
@@ -188,26 +126,17 @@ var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest
 var map = L.map('map', {
     center: [8.477703150412395, 124.64379231398955], // target is rizal monument
     zoom: 18,
-    layers: [
+    layers: [ //route layer can be added directly if needed
         osmDefault
-        //     route_RD_GUSA,
-        //     route_PATAG_COGON,
-        //     route_BAYABAS_COGON,
-        //     route_BONBON_COGON,
-        //     route_BALULANG_COGON,
-        //     route_BUENA_ORO_COGON,
-        //     route_CAMP_EVG_COGON
-    ] //starts with all routes displayed
+    ]
 });
 
-//two objects to contain our base layers and overlays. both are defined above. used for layers control
 var baseMaps = {
     "Default": osmDefault,
     "Satellite": Esri_WorldImagery
 }
 
 // var overlays = {
-//     "AllRouteLayer": allRouteLayer,
 //     "RD_GUSA": route_RD_GUSA,
 //     "PATAG_COGON": route_PATAG_COGON,
 //     "BAYABAS_COGON": route_BAYABAS_COGON,
@@ -216,7 +145,6 @@ var baseMaps = {
 //     "BUENA_ORO_COGON": route_BUENA_ORO_COGON,
 //     "CAMP_EVG_COGON": route_CAMP_EVG_COGON
 // }
-
 L.control.layers(baseMaps).addTo(map);
 
 var userMarker = L.marker([8.477703150412395, 124.64379231398955]);
@@ -322,6 +250,7 @@ $('#hideAllBtn').click(function(){
 $('#showAllBtn').click(function(){
     allRoutesLayer.addTo(map);
 });
+
 
 // function toggleRoute() {
 //     switch (window.event.target.id) {
