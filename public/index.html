@@ -127,9 +127,9 @@
             1 Total Ride
         </h2>
         <div class="outputPanel" id="journeyOutputPanel">
-            <ul id="outputList">
+            <ul id="journeyOutputList">
                 <li>
-                    <div class="outputItem">
+                    <div class="outputItem journeyOutputItem">
                         <img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon">
                         <p class="routeName"> 
                             <strong>
@@ -151,7 +151,7 @@
 
         <form action="" method="get" id="searchRouteForm">
             <div class="inputDiv">
-                <input type="text" name="origin" class="textInput"id="originInput" placeholder="Search specific route">
+                <input type="text" name="origin" class="textInput"id="searchInput" placeholder="Search specific route">
                 <button id="searchBtn"></button>
             </div>
         </form>
@@ -160,9 +160,9 @@
             <button id="hideAllBtn" class="toggleRouteBtn">Hide All</button>
         </div>
         <div class="outputPanel" id="routesOutputPanel">
-            <ul id="outputList">
-                <li>
-                    <div class="outputItem">
+            <ul id="routesOutputList">
+                <li class="outputListItem">
+                    <!-- <div class="outputItem">
                         <img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon">
                         <p class="routeName"> 
                             <strong>
@@ -170,7 +170,7 @@
                             </strong>
                                 Via Westbound Tmnl 
                         </p> 
-                    </div>
+                    </div> -->
                 </li>
             </ul>
         </div>
@@ -186,7 +186,6 @@
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.js"
         charset="utf-8"></script>
 
-    <script src="/routes/routes_geojson.js"></script>
     <script src="client.js"></script>
 
     <script>

@@ -1,52 +1,79 @@
-
-//this function was used for 'onEachFeature' allroutes option
-
 function popup(feature, layer) {
-    console.log(feature, layer);
     if (feature.properties) {
         layer.bindPopup('Name: ' + feature.properties.route_name + '<br> Code: ' + feature.properties.route_code);
     }
 }
 
-//this function can be used for 'style' leaflet option
-/*
-function redcolor(){
-    return{
-        color: "#ff0000",
-        opacity: 0.65
+function dehighlight (layer) {
+    if (selected === null || selected._leaflet_id !== layer._leaflet_id) {
+        layer.setStyle({ //return to default
+            weight: 6
+        });
+    }
+  }
+function highlight(layer){
+    if (selected !== null){ //check if there is a layer already selected prior to this
+        var previous = selected;
+    }
+
+    map.fitBounds(layer.getBounds()); //layer will center to viewport
+    selected = layer;
+    layer.setStyle({
+        weight: 10,
+        opacity: 1
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera) {
+        layer.bringToFront();
+    }
+    if (previous) { //dehighlight the previous selected layer
+        dehighlight(previous);
     }
 }
-*/
+var selected = null;
 var colors = ['#71ff34', '#ff3471', '#ff7b34', '#34aeff', '#ff4834']
-var routes = []
+var allRoutesArray = []
 const fetchroutes = fetch('/routes')
     .then(res => { return res.json() })
     .then(data => {
+        
+        console.log(data);
         data = data.features
-        // data.forEach(route => {
-        // routes.push(
         for (let i = 0; i < data.length; ++i) {
-            routes.push(L.geoJSON(data[i], {
-                onEachFeature: popup,
+            
+            allRoutesArray.push(L.geoJSON(data[i], {
+                onEachFeature: function(feature, layer){
+                    layer.on({
+                        'click': function (e){
+                            popup(feature, e.target);
+                            highlight(e.target); //e.target is layer
+                        }
+                    })
+                },
                 style: {
                     opacity: 0.65,
                     color: colors[i % colors.length],
                     weight: 6
                 }
-            }))
-            // )
-        }//)
-        routes.forEach(route => {
-            route.addTo(map)
+            }));
+            let text = data[i].properties.route_name;
+            let splitted = text.split('Via');
+            if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
+                $('#routesOutputList').append('<li><span class="itemClickZone" id="'+text+'"><div class="outputItem" id="'+text+'"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>'+splitted[0]+'<br></strong>Via'+splitted[1]+'</p></div></span></li>');
+            } else {
+                $('#routesOutputList').append('<li><span class="itemClickZone" id="'+text+'"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>'+splitted[0]+'<br></strong></p></div></span></li>');
+            }
+        }
+        allRoutesArray.forEach(route => {
+            route.addTo(map);
         });
+
+        //need to add allRoutesLayers to map first before doing this loop
+        for (let i = 0; i < data.length; i++) {
+            allRoutesArray[i].layer_id = data[i].properties.route_name; //adds new attribute 'layer_id'
+            console.log(allRoutesArray[i].layer_id);
+        }
     })
-// routes.forEach(route => {
-//     route.addTo(map)
-// });
-console.log(routes);
-
-//////////
-
 
 function pathfind(opoint, dpoint) {
     var opoint = document.getElementById("origin").value
@@ -55,8 +82,6 @@ function pathfind(opoint, dpoint) {
         .then(res => { return res.json() })
         .then(data => {
             data = data.features
-            // data.forEach(route => {
-            // routes.push(
             for (let index = 0; index < data.length; ++index) {
                 L.geoJSON(data[index], {
                     onEachFeature: popup,
@@ -68,8 +93,7 @@ function pathfind(opoint, dpoint) {
                         dashOffset: '3'
                     }
                 }).addTo(map)
-                // )
-            }//)
+            }
         })
 }
 
@@ -77,8 +101,6 @@ var pathfind2 = (o, d) => fetch(`/pathfind?origin=${encodeURIComponent(o.value)}
     .then(res => { return res.json() })
     .then(data => {
         data = data.features
-        // data.forEach(route => {
-        // routes.push(
         for (let index = 0; index < data.length; ++index) {
             L.geoJSON(data[index], {
                 onEachFeature: popup,
@@ -90,73 +112,8 @@ var pathfind2 = (o, d) => fetch(`/pathfind?origin=${encodeURIComponent(o.value)}
                     dashOffset: '3'
                 }
             }).addTo(map)
-            // )
-        }//)
+        }
     })
-
-
-
-// document.getElementById("btnpathfind").addEventListener("click", pathfind);
-/////////
-
-var route_RD_GUSA = L.geoJSON(allroutesJson.features[0], {
-    onEachFeature: popup,
-    style: {
-        opacity: 0.65,
-        color: '#F7F7FF'
-    }
-});
-var route_PATAG_COGON = L.geoJSON(allroutesJson.features[1], {
-    onEachFeature: popup,
-    style: {
-        opacity: 0.65,
-        color: '#F7F7FF'
-    }
-})
-var route_BAYABAS_COGON = L.geoJSON(allroutesJson.features[2], {
-    onEachFeature: popup,
-    style: {
-        opacity: 0.65,
-        color: '#F7F7FF'
-    }
-})
-var route_BONBON_COGON = L.geoJSON(allroutesJson.features[3], {
-    onEachFeature: popup,
-    style: {
-        opacity: 0.65,
-        color: '#F7F7FF'
-    }
-})
-var route_BALULANG_COGON = L.geoJSON(allroutesJson.features[4], {
-    onEachFeature: popup,
-    style: {
-        opacity: 0.65,
-        color: '#F7F7FF'
-    }
-})
-var route_BUENA_ORO_COGON = L.geoJSON(allroutesJson.features[5], {
-    onEachFeature: popup,
-    style: {
-        opacity: 0.65,
-        color: '#F7F7FF'
-    }
-})
-var route_CAMP_EVG_COGON = L.geoJSON(allroutesJson.features[6], {
-    onEachFeature: popup,
-    style: {
-        opacity: 0.65,
-        color: '#F7F7FF'
-    }
-})
-var allRouteLayer = L.layerGroup([
-    route_RD_GUSA,
-    route_PATAG_COGON,
-    route_BAYABAS_COGON,
-    route_BONBON_COGON,
-    route_BALULANG_COGON,
-    route_BUENA_ORO_COGON,
-    route_CAMP_EVG_COGON
-]);
 
 // open street map layer (maptiler api)
 var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeAqyxwLGSnrFq', {
@@ -170,105 +127,75 @@ var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest
 var map = L.map('map', {
     center: [8.477703150412395, 124.64379231398955], // target is rizal monument
     zoom: 18,
-    layers: [
+    layers: [ //route layer can be added directly if needed
         osmDefault
-        //     route_RD_GUSA,
-        //     route_PATAG_COGON,
-        //     route_BAYABAS_COGON,
-        //     route_BONBON_COGON,
-        //     route_BALULANG_COGON,
-        //     route_BUENA_ORO_COGON,
-        //     route_CAMP_EVG_COGON
-    ] //starts with all routes displayed
+    ]
 });
 
-//two objects to contain our base layers and overlays. both are defined above. used for layers control
 var baseMaps = {
     "Default": osmDefault,
     "Satellite": Esri_WorldImagery
-}
-
-var overlays = {
-    "AllRouteLayer": allRouteLayer,
-    "RD_GUSA": route_RD_GUSA,
-    "PATAG_COGON": route_PATAG_COGON,
-    "BAYABAS_COGON": route_BAYABAS_COGON,
-    "BONBON_COGON": route_BONBON_COGON,
-    "BALULANG_COGON": route_BALULANG_COGON,
-    "BUENA_ORO_COGON": route_BUENA_ORO_COGON,
-    "CAMP_EVG_COGON": route_CAMP_EVG_COGON
 }
 
 L.control.layers(baseMaps).addTo(map);
 
 var userMarker = L.marker([8.477703150412395, 124.64379231398955]);
 
-/* you can define custom marker icon
-var customMarker = L.icon({
-    iconUrl: 'directory.png',
-    iconSize: [38, 95],
-    iconAnchor: [22, 94],
-    popupAnchor: [-3, -76],
-    shadwoUrl:'my-icon-shadow.png', //shadows are optional
-    shadowSize: [68, 95],
-    shadowAnchor: [22, 94]
-
-    //to add
-    var customMarker = L.marker([8.477703150412395, 124.64379231398955],
-        {
-            icon: customMarker,
-            draggable: true //useful for shortest walking path (offroad)?
-        }).addTo(map)
-});
-*/
-
 L.control.locate().addTo(map); //check top left corner for added button/control
-/*
-var routeLayers = L.layerGroup().addTo(map);
-allroutes.features.forEach((feature) => {
-    L.geoJSON(feature).addTo(routeLayers);
-});
-*/
 
 function openPanel(id) {
     $(id).css({
         'width': '350px', 
         'visibility': 'visible'
     });
-    console.log(id);
 }
 function closePanel(id) {
     $(id).css({
         'width': '0px', 
         'visibility': 'hidden',
     });
-
 }
-
-$('#journeyBtn, #routesBtn').click(function(e){
+$('#journeyBtn, #routesBtn').click(function(e){ //sidebar button function
     switch (e.target.id) {
         case "journeyBtn":
-                //close other panels first
-                closePanel('#routesPanel');
-                $('#routesBtn').css({
-                    'background-color': '#3F2B96'
-                });
-                //then open target panel
-                openPanel('#journeyPanel');
-                $('#journeyBtn').css({
-                    'background-color': '#A8C0FF'
-                });
+                // console.log(buttonClicked('#'+e.target.id));
+                if ($('#journeyPanel').width() > 0) { //check if open already
+                    closePanel('#journeyPanel');
+                    $('#journeyBtn').css({
+                        'background-color': '#3F2B96'
+                    });
+                } else {
+                    //close other panels first
+                    closePanel('#routesPanel');
+                    $('#routesBtn').css({
+                        'background-color': '#3F2B96'
+                    });
+                    //then open target panel
+                    openPanel('#journeyPanel');
+                    $('#journeyBtn').css({
+                        'background-color': '#A8C0FF'
+                    });
+                }
+                
             break;
         case "routesBtn":
-                closePanel('#journeyPanel');
-                $('#journeyBtn').css({
-                    'background-color': '#3F2B96'
-                });
+                if ($('#routesPanel').width() > 0) { //check if open already
+                    closePanel('#routesPanel');
+                    $('#routesBtn').css({
+                        'background-color': '#3F2B96'
+                    });
+                } else {
+                    closePanel('#journeyPanel');
+                    $('#journeyBtn').css({
+                        'background-color': '#3F2B96'
+                    });
 
-                openPanel('#routesPanel');
-                $('#routesBtn').css({
-                    'background-color': '#A8C0FF'
-                });
+                    openPanel('#routesPanel');
+                    $('#routesBtn').css({
+                        'background-color': '#A8C0FF'
+                    });
+                }
+                    
             break;
         default:
             console.log('here');
@@ -277,7 +204,7 @@ $('#journeyBtn, #routesBtn').click(function(e){
 });
 
 $('.closeBtn').click(function(e){
-    console.log(e.target.id);
+    
     switch (e.target.id) {
         case 'journeyCloseBtn':
             closePanel('#journeyPanel');
@@ -290,102 +217,38 @@ $('.closeBtn').click(function(e){
             break;
     }
 });
-function showAll() {
-    //overlays.AllRouteLayer.addTo(map);
-    overlays.RD_GUSA.addTo(map);
-    overlays.PATAG_COGON.addTo(map);
-    overlays.BAYABAS_COGON.addTo(map);
-    overlays.BONBON_COGON.addTo(map);
-    overlays.BALULANG_COGON.addTo(map);
-    overlays.BUENA_ORO_COGON.addTo(map);
-    overlays.CAMP_EVG_COGON.addTo(map);
-}
+$('#hideAllBtn').click(function(){
+    allRoutesArray.forEach(route => {
+        route.remove();
+    });
+    
 
-function hideAll() {
-    //overlays.AllRouteLayer.remove();
-    overlays.RD_GUSA.remove();
-    overlays.PATAG_COGON.remove();
-    overlays.BAYABAS_COGON.remove();
-    overlays.BONBON_COGON.remove();
-    overlays.BALULANG_COGON.remove();
-    overlays.BUENA_ORO_COGON.remove();
-    overlays.CAMP_EVG_COGON.remove();
-}
-
-function toggleRoute() {
-    switch (window.event.target.id) {
-        case 'rd_gusa':
-            console.log('rd gusa');
-            if (overlays.RD_GUSA._mapToAdd == null) {
-                overlays.RD_GUSA.addTo(map);
-            } else {
-                overlays.RD_GUSA.remove();
-            }
-            break;
-        case 'patag_cogon':
-            console.log('patag cogon');
-            if (overlays.PATAG_COGON._mapToAdd == null) {
-                overlays.PATAG_COGON.addTo(map);
-            } else {
-                overlays.PATAG_COGON.remove();
-            }
-            break;
-        case 'bayabas_cogon':
-            console.log('bayabas cogon');
-            if (overlays.BAYABAS_COGON._mapToAdd == null) {
-                overlays.BAYABAS_COGON.addTo(map);
-            } else {
-                overlays.BAYABAS_COGON.remove();
-            }
-            break;
-        case 'bonbon_cogon':
-            console.log('bonbon cogon');
-            if (overlays.BONBON_COGON._mapToAdd == null) {
-                overlays.BONBON_COGON.addTo(map);
-            } else {
-                overlays.BONBON_COGON.remove();
-            }
-            break;
-        case 'balulang_cogon':
-            console.log('balulang cogon');
-            if (overlays.BALULANG_COGON._mapToAdd == null) {
-                overlays.BALULANG_COGON.addTo(map);
-            } else {
-                overlays.BALULANG_COGON.remove();
-            }
-            break;
-        case 'buena_oro_cogon':
-            console.log('buena oro cogon');
-            if (overlays.BUENA_ORO_COGON._mapToAdd == null) {
-                overlays.BUENA_ORO_COGON.addTo(map);
-            } else {
-                overlays.BUENA_ORO_COGON.remove();
-            }
-            break;
-        case 'camp_evg_cogon':
-            console.log('camp evg cogon');
-            if (overlays.CAMP_EVG_COGON._mapToAdd == null) {
-                overlays.CAMP_EVG_COGON.addTo(map);
-            } else {
-                overlays.CAMP_EVG_COGON.remove();
-            }
-            break;
-        default:
-            break;
+});
+$('#showAllBtn').click(function(){
+    allRoutesArray.forEach(route => {
+        route.setStyle({ //para ma refresh
+            weight: 6
+        });
+        route.addTo(map);
+    });
+});
+function removeRoute(input){
+    let id = input;
+    for (let i = 0; i < allRoutesArray.length; i++) {
+        if(allRoutesArray[i].layer_id == id){
+            allRoutesArray[i].remove();
+        }
     }
 }
-
-// map.on('click', function (e) {
-//     function addMarker(e) {
-//         // Add marker to map at click location; add popup window
-//         var newMarker = new L.marker(e.latlng).addTo(map);
-//         console.log(newMarker);
-//     }
-// });
-
-// map.on('click', function(e) {
-//     alert(e.latlng);
-// } );
+$(document).on('click', '.itemClickZone', function(e){
+    let id = e.currentTarget.id;
+    //console.log(e.currentTarget.id);
+    for (let i = 0; i < allRoutesArray.length; i++) {
+        if(allRoutesArray[i].layer_id == id){
+            highlight(allRoutesArray[i]);
+        }
+    }
+});
 
 var LeafIcon = L.Icon.extend({
     options: {
@@ -445,5 +308,3 @@ var dDrag = function (e) {
     var center = map.getCenter()
     destination.setLatLng(center)
 }
-
-// test
