@@ -310,6 +310,7 @@ ul{
 ::-webkit-scrollbar-thumb {
     background: #3F2B96; 
     border-radius: 10px;
+    border: 2px solid #A8C0FF;
 }
 ::-webkit-scrollbar-thumb:hover {
     background: #A8C0FF; 
