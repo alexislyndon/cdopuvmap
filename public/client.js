@@ -1,6 +1,6 @@
 function popup(feature, layer) {
     if (feature.properties) {
-        layer.bindPopup('Name: ' + feature.properties.route_name + '<br> Code: ' + feature.properties.route_code);
+        layer.bindPopup('Name: ' + feature.properties.route_name + '<br> Code: ' + feature.properties.route_code + '<br> leg: ' + feature.properties.leg_type);
     }
 }
 
@@ -87,7 +87,7 @@ function pathfind(opoint, dpoint) {
                     onEachFeature: popup,
                     style: {
                         opacity: 0.65,
-                        color: '#3F826D',
+                        color: '#F6179E',
                         weight: 15,
                         dashArray: '4 1 2',
                         dashOffset: '3'
@@ -145,13 +145,13 @@ L.control.locate().addTo(map); //check top left corner for added button/control
 
 function openPanel(id) {
     $(id).css({
-        'width': '350px', 
+        'width': '350px',
         'visibility': 'visible'
     });
 }
 function closePanel(id) {
     $(id).css({
-        'width': '0px', 
+        'width': '0px',
         'visibility': 'hidden',
     });
 }
@@ -212,7 +212,7 @@ $('.closeBtn').click(function(e){
         case 'routesCloseBtn':
             closePanel('#routesPanel');
             break;
-    
+
         default:
             break;
     }
@@ -308,3 +308,13 @@ var dDrag = function (e) {
     var center = map.getCenter()
     destination.setLatLng(center)
 }
+
+/*
+map.on('click', addMarker);
+});
+
+function addMarker(e){
+	// Add marker to map at click location; add popup window
+    var newMarker = new L.marker(e.latlng).addTo(map);
+}*/
+// test
