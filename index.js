@@ -45,25 +45,25 @@ app
     // Check that the first number in your longitude coordinate is between -180 and 180.
     .get("/pathfind", async (req, res) => {
         const { origin, destination } = req.query;
-        console.log(`origin: ${origin}`);
-        console.log(`dest: ${destination}`);
-        const [olon, olat] = origin.split(",")
-        const [dlon, dlat] = destination.split(",")
+        // console.log(`origin: ${origin}`);
+        // console.log(`dest: ${destination}`);
+        const [olon, olat] = origin.split(" ")
+        const [dlon, dlat] = destination.split(" ")
         const result = await getPathsAtoB(olon, olat, dlon, dlat)
 
-        console.log(result);
+        // console.log(JSON.stringify(result, null, 2))
         // res.send(`${olat} ${olon} ${dlat} ${dlon}`)
         res.json(Object.values(result)[0]);
         // res.status(200)
     })
-    
-    .get('/', (req, res) => {
-        res.sendFile(path.join(__dirname+'/public/index.html'));
-    });
-    
-    app.use(express.static(path.join(__dirname,'public')));
 
-    app.use("/", router);
-    app.listen(port, () => {
-        console.log(`App listening on port: ${port}`);
+    .get('/', (req, res) => {
+        res.sendFile(path.join(__dirname + '/public/index.html'));
     });
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use("/", router);
+app.listen(port, () => {
+    console.log(`App listening on port: ${port}`);
+});

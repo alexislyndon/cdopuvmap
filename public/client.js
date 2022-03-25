@@ -4,7 +4,7 @@
 function popup(feature, layer) {
     console.log(feature, layer);
     if (feature.properties) {
-        layer.bindPopup('Name: ' + feature.properties.route_name + '<br> Code: ' + feature.properties.route_code);
+        layer.bindPopup('Name: ' + feature.properties.route_name + '<br> Code: ' + feature.properties.route_code + '<br> leg: ' + feature.properties.leg_type);
     }
 }
 
@@ -18,7 +18,9 @@ function redcolor(){
 }
 */
 var colors = ['#71ff34', '#ff3471', '#ff7b34', '#34aeff', '#ff4834']
-var routes = []
+var routes = {}
+var removed = []
+var routelayers = []
 const fetchroutes = fetch('/routes')
     .then(res => { return res.json() })
     .then(data => {
@@ -26,7 +28,7 @@ const fetchroutes = fetch('/routes')
         // data.forEach(route => {
         // routes.push(
         for (let i = 0; i < data.length; ++i) {
-            routes.push(L.geoJSON(data[i], {
+            routes[data[i].properties.route_code] = (L.geoJSON(data[i], {
                 onEachFeature: popup,
                 style: {
                     opacity: 0.65,
@@ -36,14 +38,29 @@ const fetchroutes = fetch('/routes')
             }))
             // )
         }//)
-        routes.forEach(route => {
-            route.addTo(map)
-        });
+        // var iterator = routes.keys();
+        var l = routes.length
+        for (var key in routes) {
+            var obj = routes[key]
+            obj.addTo(map)
+        }
+        // routes.forEach((route, index) => {
+        //     route[index].addTo(map)
+        //     console.log(iterator[index]);
+        // });
     })
 // routes.forEach(route => {
 //     route.addTo(map)
 // });
 console.log(routes);
+function tog(id) {
+    if (map.hasLayer(routes[id])) {
+        routes[id].remove()
+    } else {
+        routes[id].addTo(map)
+    }
+
+}
 
 //////////
 
@@ -62,7 +79,7 @@ function pathfind(opoint, dpoint) {
                     onEachFeature: popup,
                     style: {
                         opacity: 0.65,
-                        color: '#3F826D',
+                        color: '#F6179E',
                         weight: 15,
                         dashArray: '4 1 2',
                         dashOffset: '3'
@@ -73,27 +90,49 @@ function pathfind(opoint, dpoint) {
         })
 }
 
-var pathfind2 = (o, d) => fetch(`/pathfind?origin=${encodeURIComponent(o.value)}&destination=${encodeURIComponent(d.value)}`)
-    .then(res => { return res.json() })
-    .then(data => {
-        data = data.features
-        // data.forEach(route => {
-        // routes.push(
-        for (let index = 0; index < data.length; ++index) {
-            L.geoJSON(data[index], {
-                onEachFeature: popup,
-                style: {
-                    opacity: 0.65,
-                    color: '#3F826D',
-                    weight: 15,
-                    dashArray: '4 1 2',
-                    dashOffset: '3'
-                }
-            }).addTo(map)
-            // )
-        }//)
-    })
+var stylistic = (leg_type, index) => {
+    if (leg_type == 'route') return {
+        opacity: 0.65,
+        color: colors[index % colors.length],
+        weight: 15,
+    }
+    if (leg_type && leg_type.startsWith('walk')) return {
+        opacity: 0.65,
+        color: '#FFBE54',
+        weight: 10,
+        dashArray: "12 3 9"
+    }
+}
 
+var pathfind2 = (o, d) => {
+    var o = origin.getLatLng();
+    console.log(o.lng, o.lat);
+    var d = destination.getLatLng();
+
+    destination.getLatLng()
+    fetch(`/pathfind?origin=${encodeURIComponent(`${o.lng} ${o.lat}`)}&destination=${encodeURIComponent(`${d.lng} ${d.lat}`)}`)
+        .then(res => { return res.json() })
+        .then(data => {
+            data = data.features
+            // data.forEach(route => {
+            // routes.push(
+            // routes.forEach(route => {
+            //     route.remove();
+            // });
+            for (var key in routes) {
+                var obj = routes[key]
+                obj.remove(map)
+            }
+
+            for (let index = 0; index < data.length; ++index) {
+                L.geoJSON(data[index], {
+                    onEachFeature: popup,
+                    style: stylistic(data[index].properties.leg_type, index)
+                }).addTo(map)
+                // )
+            }//)
+        })
+}
 
 
 // document.getElementById("btnpathfind").addEventListener("click", pathfind);
@@ -232,43 +271,43 @@ allroutes.features.forEach((feature) => {
 
 function openPanel(id) {
     $(id).css({
-        'width': '350px', 
+        'width': '350px',
         'visibility': 'visible'
     });
     console.log(id);
 }
 function closePanel(id) {
     $(id).css({
-        'width': '0px', 
+        'width': '0px',
         'visibility': 'hidden',
     });
 
 }
 
-$('#journeyBtn, #routesBtn').click(function(e){
+$('#journeyBtn, #routesBtn').click(function (e) {
     switch (e.target.id) {
         case "journeyBtn":
-                //close other panels first
-                closePanel('#routesPanel');
-                $('#routesBtn').css({
-                    'background-color': '#3F2B96'
-                });
-                //then open target panel
-                openPanel('#journeyPanel');
-                $('#journeyBtn').css({
-                    'background-color': '#A8C0FF'
-                });
+            //close other panels first
+            closePanel('#routesPanel');
+            $('#routesBtn').css({
+                'background-color': '#3F2B96'
+            });
+            //then open target panel
+            openPanel('#journeyPanel');
+            $('#journeyBtn').css({
+                'background-color': '#A8C0FF'
+            });
             break;
         case "routesBtn":
-                closePanel('#journeyPanel');
-                $('#journeyBtn').css({
-                    'background-color': '#3F2B96'
-                });
+            closePanel('#journeyPanel');
+            $('#journeyBtn').css({
+                'background-color': '#3F2B96'
+            });
 
-                openPanel('#routesPanel');
-                $('#routesBtn').css({
-                    'background-color': '#A8C0FF'
-                });
+            openPanel('#routesPanel');
+            $('#routesBtn').css({
+                'background-color': '#A8C0FF'
+            });
             break;
         default:
             console.log('here');
@@ -276,7 +315,7 @@ $('#journeyBtn, #routesBtn').click(function(e){
     }
 });
 
-$('.closeBtn').click(function(e){
+$('.closeBtn').click(function (e) {
     console.log(e.target.id);
     switch (e.target.id) {
         case 'journeyCloseBtn':
@@ -285,7 +324,7 @@ $('.closeBtn').click(function(e){
         case 'routesCloseBtn':
             closePanel('#routesPanel');
             break;
-    
+
         default:
             break;
     }
@@ -446,4 +485,12 @@ var dDrag = function (e) {
     destination.setLatLng(center)
 }
 
+/*
+map.on('click', addMarker);
+});
+
+function addMarker(e){
+	// Add marker to map at click location; add popup window
+    var newMarker = new L.marker(e.latlng).addTo(map);
+}*/
 // test
