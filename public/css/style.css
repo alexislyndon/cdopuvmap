@@ -76,7 +76,6 @@
     overflow: hidden;
     visibility: hidden;
 }
-
 .headDiv{
     display: flex;
     flex-wrap: nowrap;
@@ -299,12 +298,6 @@ ul{
     background-color: #A8C0FF;
     cursor: pointer;
 }
-.outputList{
-
-}
-.outputListItem{
-
-} 
 .dropbtn{
     text-align: left;
 }

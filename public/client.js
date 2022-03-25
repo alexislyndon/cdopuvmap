@@ -15,6 +15,7 @@ function highlight(layer){
     if (selected !== null){ //check if there is a layer already selected prior to this
         var previous = selected;
     }
+
     map.fitBounds(layer.getBounds()); //layer will center to viewport
     selected = layer;
     layer.setStyle({
@@ -44,8 +45,8 @@ const fetchroutes = fetch('/routes')
                 onEachFeature: function(feature, layer){
                     layer.on({
                         'click': function (e){
-                            highlight(e.target); //e.target is layer
                             popup(feature, e.target);
+                            highlight(e.target); //e.target is layer
                         }
                     })
                 },
@@ -58,9 +59,9 @@ const fetchroutes = fetch('/routes')
             let text = data[i].properties.route_name;
             let splitted = text.split('Via');
             if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
-                $('#routesOutputList').append('<li><div class="outputItem" id="'+text+'"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon"><p class="routeName"><strong>'+splitted[0]+'<br></strong>Via'+splitted[1]+'</p></div></li>');
+                $('#routesOutputList').append('<li><span class="itemClickZone" id="'+text+'"><div class="outputItem" id="'+text+'"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>'+splitted[0]+'<br></strong>Via'+splitted[1]+'</p></div></span></li>');
             } else {
-                $('#routesOutputList').append('<li><div class="outputItem" id="'+text+'"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon"><p class="routeName"><strong>'+splitted[0]+'<br></strong></p></div></li>');
+                $('#routesOutputList').append('<li><span class="itemClickZone" id="'+text+'"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>'+splitted[0]+'<br></strong></p></div></span></li>');
             }
         }
         allRoutesArray.forEach(route => {
@@ -140,32 +141,7 @@ L.control.layers(baseMaps).addTo(map);
 
 var userMarker = L.marker([8.477703150412395, 124.64379231398955]);
 
-/* you can define custom marker icon
-var customMarker = L.icon({
-    iconUrl: 'directory.png',
-    iconSize: [38, 95],
-    iconAnchor: [22, 94],
-    popupAnchor: [-3, -76],
-    shadwoUrl:'my-icon-shadow.png', //shadows are optional
-    shadowSize: [68, 95],
-    shadowAnchor: [22, 94]
-
-    //to add
-    var customMarker = L.marker([8.477703150412395, 124.64379231398955],
-        {
-            icon: customMarker,
-            draggable: true //useful for shortest walking path (offroad)?
-        }).addTo(map)
-});
-*/
-
 L.control.locate().addTo(map); //check top left corner for added button/control
-/*
-var routeLayers = L.layerGroup().addTo(map);
-allroutes.features.forEach((feature) => {
-    L.geoJSON(feature).addTo(routeLayers);
-});
-*/
 
 function openPanel(id) {
     $(id).css({
@@ -185,6 +161,9 @@ $('#journeyBtn, #routesBtn').click(function(e){ //sidebar button function
                 // console.log(buttonClicked('#'+e.target.id));
                 if ($('#journeyPanel').width() > 0) { //check if open already
                     closePanel('#journeyPanel');
+                    $('#journeyBtn').css({
+                        'background-color': '#3F2B96'
+                    });
                 } else {
                     //close other panels first
                     closePanel('#routesPanel');
@@ -202,6 +181,9 @@ $('#journeyBtn, #routesBtn').click(function(e){ //sidebar button function
         case "routesBtn":
                 if ($('#routesPanel').width() > 0) { //check if open already
                     closePanel('#routesPanel');
+                    $('#routesBtn').css({
+                        'background-color': '#3F2B96'
+                    });
                 } else {
                     closePanel('#journeyPanel');
                     $('#journeyBtn').css({
@@ -239,89 +221,34 @@ $('#hideAllBtn').click(function(){
     allRoutesArray.forEach(route => {
         route.remove();
     });
+    
 
 });
 $('#showAllBtn').click(function(){
     allRoutesArray.forEach(route => {
+        route.setStyle({ //para ma refresh
+            weight: 6
+        });
         route.addTo(map);
     });
 });
-
-
-// function toggleRoute() {
-//     switch (window.event.target.id) {
-//         case 'rd_gusa':
-//             console.log('rd gusa');
-//             if (overlays.RD_GUSA._mapToAdd == null) {
-//                 overlays.RD_GUSA.addTo(map);
-//             } else {
-//                 overlays.RD_GUSA.remove();
-//             }
-//             break;
-//         case 'patag_cogon':
-//             console.log('patag cogon');
-//             if (overlays.PATAG_COGON._mapToAdd == null) {
-//                 overlays.PATAG_COGON.addTo(map);
-//             } else {
-//                 overlays.PATAG_COGON.remove();
-//             }
-//             break;
-//         case 'bayabas_cogon':
-//             console.log('bayabas cogon');
-//             if (overlays.BAYABAS_COGON._mapToAdd == null) {
-//                 overlays.BAYABAS_COGON.addTo(map);
-//             } else {
-//                 overlays.BAYABAS_COGON.remove();
-//             }
-//             break;
-//         case 'bonbon_cogon':
-//             console.log('bonbon cogon');
-//             if (overlays.BONBON_COGON._mapToAdd == null) {
-//                 overlays.BONBON_COGON.addTo(map);
-//             } else {
-//                 overlays.BONBON_COGON.remove();
-//             }
-//             break;
-//         case 'balulang_cogon':
-//             console.log('balulang cogon');
-//             if (overlays.BALULANG_COGON._mapToAdd == null) {
-//                 overlays.BALULANG_COGON.addTo(map);
-//             } else {
-//                 overlays.BALULANG_COGON.remove();
-//             }
-//             break;
-//         case 'buena_oro_cogon':
-//             console.log('buena oro cogon');
-//             if (overlays.BUENA_ORO_COGON._mapToAdd == null) {
-//                 overlays.BUENA_ORO_COGON.addTo(map);
-//             } else {
-//                 overlays.BUENA_ORO_COGON.remove();
-//             }
-//             break;
-//         case 'camp_evg_cogon':
-//             console.log('camp evg cogon');
-//             if (overlays.CAMP_EVG_COGON._mapToAdd == null) {
-//                 overlays.CAMP_EVG_COGON.addTo(map);
-//             } else {
-//                 overlays.CAMP_EVG_COGON.remove();
-//             }
-//             break;
-//         default:
-//             break;
-//     }
-// }
-
-// map.on('click', function (e) {
-//     function addMarker(e) {
-//         // Add marker to map at click location; add popup window
-//         var newMarker = new L.marker(e.latlng).addTo(map);
-//         console.log(newMarker);
-//     }
-// });
-
-// map.on('click', function(e) {
-//     alert(e.latlng);
-// } );
+function removeRoute(input){
+    let id = input;
+    for (let i = 0; i < allRoutesArray.length; i++) {
+        if(allRoutesArray[i].layer_id == id){
+            allRoutesArray[i].remove();
+        }
+    }
+}
+$(document).on('click', '.itemClickZone', function(e){
+    let id = e.currentTarget.id;
+    //console.log(e.currentTarget.id);
+    for (let i = 0; i < allRoutesArray.length; i++) {
+        if(allRoutesArray[i].layer_id == id){
+            highlight(allRoutesArray[i]);
+        }
+    }
+});
 
 var LeafIcon = L.Icon.extend({
     options: {
@@ -381,5 +308,3 @@ var dDrag = function (e) {
     var center = map.getCenter()
     destination.setLatLng(center)
 }
-
-// test
