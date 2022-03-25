@@ -1,6 +1,3 @@
-//to do: store each routes into an object literals (dictionary). assign each button by iterating through the objeect literals. similar to 'var overlays' see line 148
-
-//this function was used for 'onEachFeature' allroutes option
 function popup(feature, layer) {
     if (feature.properties) {
         layer.bindPopup('Name: ' + feature.properties.route_name + '<br> Code: ' + feature.properties.route_code);
@@ -42,7 +39,7 @@ const fetchroutes = fetch('/routes')
         console.log(data);
         data = data.features
         for (let i = 0; i < data.length; ++i) {
-            //console.log(data);
+            
             allRoutesLayer.addLayer(L.geoJSON(data[i], {
                 onEachFeature: function(feature, layer){
                     layer.on({
@@ -61,17 +58,20 @@ const fetchroutes = fetch('/routes')
             let text = data[i].properties.route_name;
             let splitted = text.split('Via');
             if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
-                $('#routesOutputList').append('<li><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon"><p class="routeName"><strong>'+splitted[0]+'<br></strong>Via'+splitted[1]+'</p></div></li>');
+                $('#routesOutputList').append('<li><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon"><p class="routeName"><strong>'+splitted[0]+'<br></strong>Via'+splitted[1]+'</p></div></li>').attr('id', index);
             } else {
                 $('#routesOutputList').append('<li><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon"><p class="routeName"><strong>'+splitted[0]+'<br></strong></p></div></li>');
             }
         }
-        console.log(allRoutesLayer);
         allRoutesLayer.addTo(map);
-        console.log(allRoutesLayer);
-        allRoutesLayer.eachLayer(function(layer){
-            //console.log(layer);
-        });
+
+        //need to add allRoutesLayers to map first before doing this loop
+        for (let i = 0; i < data.length; ++i) {
+            allRoutesLayer.eachLayer(function(layer){
+                layer.layer_id = data[i].properties.route_name; // adds new attribute 'layer_id'
+                console.log(layer);
+            })
+        }
     })
 
 function pathfind(opoint, dpoint) {
@@ -136,15 +136,6 @@ var baseMaps = {
     "Satellite": Esri_WorldImagery
 }
 
-// var overlays = {
-//     "RD_GUSA": route_RD_GUSA,
-//     "PATAG_COGON": route_PATAG_COGON,
-//     "BAYABAS_COGON": route_BAYABAS_COGON,
-//     "BONBON_COGON": route_BONBON_COGON,
-//     "BALULANG_COGON": route_BALULANG_COGON,
-//     "BUENA_ORO_COGON": route_BUENA_ORO_COGON,
-//     "CAMP_EVG_COGON": route_CAMP_EVG_COGON
-// }
 L.control.layers(baseMaps).addTo(map);
 
 var userMarker = L.marker([8.477703150412395, 124.64379231398955]);
@@ -246,6 +237,7 @@ $('.closeBtn').click(function(e){
 });
 $('#hideAllBtn').click(function(){
     allRoutesLayer.remove();
+
 });
 $('#showAllBtn').click(function(){
     allRoutesLayer.addTo(map);
