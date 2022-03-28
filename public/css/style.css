@@ -223,6 +223,7 @@ h2{
     display: flex;
     flex-direction: column;
     margin-left: 15px;
+    overflow: auto;
 }
 #journeyOutputPanel{
     top: 15px;
@@ -298,6 +299,22 @@ ul{
     background-color: #A8C0FF;
     cursor: pointer;
 }
+::-webkit-scrollbar {
+    width: 10px; /*vertical scroll bar*/
+    height: 10px; /*horizontal scroll bar*/
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: #3F2B96; 
+    border-radius: 10px;
+    border: 2px solid #A8C0FF;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #A8C0FF; 
+}
+
 .dropbtn{
     text-align: left;
 }
@@ -307,5 +324,4 @@ ul{
     width: 300px;
     border: 1px salmon;
     padding: 5px;
-    
 }
