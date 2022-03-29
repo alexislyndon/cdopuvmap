@@ -120,6 +120,40 @@ var stylistic = (leg_type, index) => {
     }
 }
 
+function getItineraries(o, d){
+    hideAllItem();
+    hideAllRouteLayers();
+    var o = origin.getLatLng();
+    var d = destination.getLatLng();
+    fetch(`/itineraries?origin=${encodeURIComponent(`${o.lng} ${o.lat}`)}&destination=${encodeURIComponent(`${d.lng} ${d.lat}`)}`)
+        .then(res => { return res.json() })
+        .then(data => {
+            console.log(data.length);
+            console.log(data);
+            console.log(data[0].json.features.length);
+            console.log(data[0].json.features);
+            for (let i = 0; i < data.length; ++i) { //loop for data[n]
+                console.log('loop level 1')
+                for (let j = 0; j < data[i].json.features.length; ++j) { //loop for data[n].json.features[n]
+                    console.log('loop level 2');
+                    // console.log(data[i].json.features[j])
+                    // L.geoJSON(data[i].json.features[j]).addTo(map)
+                    // console.log('here');
+                    L.geoJSON(data[i].json.features[j], {
+                        onEachFeature: popup,
+                        style: stylistic(data[i].json.features[j].properties.leg_type, i)
+                    }).addTo(map)
+                }
+            }
+            // for (let index = 0; index < data.length; ++index) {
+            //     L.geoJSON(data[index], {
+            //         onEachFeature: popup,
+            //         style: stylistic(data[index].properties.leg_type, index)
+            //     }).addTo(map)
+            // }
+        })
+}
+
 var pathfind2 = (o, d) => {
     var o = origin.getLatLng();
     var d = destination.getLatLng();
@@ -135,7 +169,6 @@ var pathfind2 = (o, d) => {
             }
         })
 }
-
 
 // open street map layer (maptiler api)
 var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeAqyxwLGSnrFq', {
@@ -216,6 +249,8 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
                 $('#routesBtn').css({
                     'background-color': '#A8C0FF'
                 });
+                showAllItem();
+                showAllRouteLayers();
             }
 
             break;
@@ -239,20 +274,23 @@ $('.closeBtn').click(function (e) {
             break;
     }
 });
-$('#hideAllBtn').click(function () {
-    hideAllItem();
+function hideAllRouteLayers(){
     allRoutesArray.forEach(route => {
         route.remove();
     });
+}
+$('#hideAllBtn').click(function () {
+    hideAllItem();
+    hideAllRouteLayers();
 });
-$('#showAllBtn').click(function () {
-    showAllItem();
+function showAllRouteLayers(){
     allRoutesArray.forEach(route => {
-        route.setStyle({ //para ma refresh
-            weight: 6
-        });
         route.addTo(map);
     });
+}
+$('#showAllBtn').click(function () {
+    showAllItem();
+    showAllRouteLayers();
 });
 
 $('#searchBtn').click(function () {

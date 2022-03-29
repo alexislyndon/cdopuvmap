@@ -94,7 +94,7 @@
         <form action="/pathfind" method="GET">
             <button type="button" id="o-pin" onclick="pinOrigin(this)">Pin</button><input type="text" name="origin" id="origin" placeholder="Origin"> <br>
             <button type="button" id="d-pin" onclick="pinDestination(this)">Pin</button><input type="text" name="destination" id="destination" placeholder="Destination"> <br>
-            <button type="button" id="btnpathfind" onclick="pathfind2(origin, destination)">get me there!</button>
+            <button type="button" id="btnpathfind" onclick="getItineraries(origin, destination)">get me there!</button>
         </form>
     </div>
     <div class="buttonPanel">
@@ -124,7 +124,7 @@
             </div>
         </div>
         <h2 id="totalRide">
-            1 Total Ride
+            Itineraries 
         </h2>
         <div class="outputPanel" id="journeyOutputPanel">
             <ul id="journeyOutputList">
