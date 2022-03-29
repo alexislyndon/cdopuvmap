@@ -8,7 +8,7 @@ console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 const db = new Pool({
   connectionString: process.env.DATABASE_URL || 'postgresql://postgres:1233@localhost:5432/puvroutemap',
   //ssl: process.env.DATABASE_URL ? true : false
-  ssl: process.env.DATABASE_URL&&process.env.NODE_ENV ? true : false
+  ssl: false //process.env.DATABASE_URL&&process.env.NODE_ENV ? true : false
 })
 
 
