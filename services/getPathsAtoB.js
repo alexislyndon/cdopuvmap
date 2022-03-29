@@ -33,6 +33,7 @@ module.exports = async (olat, olon, dlat, dlon) => { //origin lat/long, destinat
 
   const o = await getNearestVertexID(olat, olon);
   const d = await getNearestVertexID(dlat, dlon);
+  
   console.log(`vertices: ${o.id} ${d.id}`);
   const oid = o.id
   const did = d.id

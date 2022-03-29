@@ -16,3 +16,10 @@ GET http://localhost:3232/test/
 ###
 
 POST http://localhost:3232/pathfind/124.64405905455351 8.476703511625551/124.65731352567673 8.48159113237676
+
+
+###
+GET http://localhost:3232/test?origin=124.64642643928529 8.477327939396453&destination=124.6568548679352 8.481530116258243
+
+###
+GET http://localhost:3232/asdf
