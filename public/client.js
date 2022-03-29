@@ -136,21 +136,12 @@ function getItineraries(o, d){
                 console.log('loop level 1')
                 for (let j = 0; j < data[i].json.features.length; ++j) { //loop for data[n].json.features[n]
                     console.log('loop level 2');
-                    // console.log(data[i].json.features[j])
-                    // L.geoJSON(data[i].json.features[j]).addTo(map)
-                    // console.log('here');
                     L.geoJSON(data[i].json.features[j], {
                         onEachFeature: popup,
                         style: stylistic(data[i].json.features[j].properties.leg_type, i)
                     }).addTo(map)
                 }
             }
-            // for (let index = 0; index < data.length; ++index) {
-            //     L.geoJSON(data[index], {
-            //         onEachFeature: popup,
-            //         style: stylistic(data[index].properties.leg_type, index)
-            //     }).addTo(map)
-            // }
         })
 }
 
@@ -249,8 +240,6 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
                 $('#routesBtn').css({
                     'background-color': '#A8C0FF'
                 });
-                showAllItem();
-                showAllRouteLayers();
             }
 
             break;
