@@ -5,6 +5,8 @@ const getNBRoute = require('./services/getNBRoute');
 const getPathsAtoB = require('./services/getPathsAtoB');
 const coordsToWKT = require('./services/coordsToWKT')
 const getallRoutes = require('./services/getallRoutes');
+const db = require('./services/db')
+const { v4: uuidv4 } = require('uuid');
 
 const path = require('path');
 const router = express.Router();
@@ -13,9 +15,10 @@ const port = process.env.PORT || 3232;
 
 var http = require('http');
 var fs = require('fs');
+const pathfind3 = require('./services/pathfind3');
 
 function parseHrtimeToSeconds(hrtime) {
-    var seconds = (hrtime[0] + (hrtime[1] / 1e9)).toFixed(3);
+    var seconds = (hrtime[0] + (hrtime[1] / 1e9)).toFixed(4);
     return seconds;
 }
 
@@ -40,11 +43,36 @@ app
         res.send(result);
     })
 
-    .get('/test', async (req, res) => {
-        const result = await coordsToWKT(124.6450102329254, 8.48160439674907);
-        const kini = result[0].the_geom
-        const k = parse('POINT(124.6450102329254 8.48160439674907)');
-        res.send(k);
+    .get('/itineraries', async (req, res) => {
+        var startTime = process.hrtime();
+
+        // const result = await coordsToWKT(124.6450102329254, 8.48160439674907);
+        // const kini = result[0].the_geom
+        // const k = parse('POINT(124.6450102329254 8.48160439674907)');
+        const { origin, destination } = req.query;
+        const [olon, olat] = origin.split(" ")
+        const [dlon, dlat] = destination.split(" ")
+        const result = await pathfind3(olon, olat, dlon, dlat)
+        res.json(result);
+        // console.log(result);
+        var elapsedSeconds = parseHrtimeToSeconds(process.hrtime(startTime));
+        console.log('/test ---' + elapsedSeconds + 'seconds');
+    })
+
+    .get('/asdf', async (req, res) => {
+        const uuid = await uuidv4().replace(/-/g,'');
+        const result = await db.query(`
+        CREATE TABLE "${uuid}" (
+            id serial PRIMARY KEY,
+            route_id integer,
+            route_code varchar,
+            the_geom geometry(Geometry,4326),
+            route_name varchar,
+            leg_type varchar,
+            distance float,
+            uuid uuid );
+	    `);
+        res.json(Object.values(result));
     })
 
 
