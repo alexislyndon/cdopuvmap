@@ -30,14 +30,22 @@ function highlight(layer) {
         dehighlight(previous);
     }
 }
+function cleanString(str){
+    let newStr = '';
+    newStr = str.replace(/\s/g, '_'); //replace whitespace with '_'
+    newStr = newStr.replace(/\//g,'_');
+    newStr = newStr.replace(/\(/g,'_');
+    newStr = newStr.replace(/\)/g,'_');
+    newStr = newStr.replace(/\./g,'_');
+    newStr = newStr.toLocaleLowerCase();
+    return newStr;
+}
 var selected = null;
 var colors = ['#71ff34', '#ff3471', '#ff7b34', '#34aeff', '#ff4834']
 var allRoutesArray = []
 const fetchroutes = fetch('/routes')
     .then(res => { return res.json() })
     .then(data => {
-
-        console.log(data);
         data = data.features
         for (let i = 0; i < data.length; ++i) {
 
@@ -58,10 +66,12 @@ const fetchroutes = fetch('/routes')
             }));
             let text = data[i].properties.route_name;
             let splitted = text.split('Via');
+            let elementID = cleanString(text);
+            // console.log(elementID);
             if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
-                $('#routesOutputList').append('<li><span class="itemClickZone" id="' + text + '"><div class="outputItem" id="' + text + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
+                $('#routesOutputList').append('<li><span class="itemClickZone" id="' + elementID + '"><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
             } else {
-                $('#routesOutputList').append('<li><span class="itemClickZone" id="' + text + '"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
+                $('#routesOutputList').append('<li><span class="itemClickZone" id="' + elementID + '"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
             }
         }
         allRoutesArray.forEach(route => {
@@ -70,8 +80,7 @@ const fetchroutes = fetch('/routes')
 
         //need to add allRoutesLayers to map first before doing this loop
         for (let i = 0; i < data.length; i++) {
-            allRoutesArray[i].layer_id = data[i].properties.route_name; //adds new attribute 'layer_id'
-            console.log(allRoutesArray[i].layer_id);
+            allRoutesArray[i].layer_id = cleanString(data[i].properties.route_name); //adds new attribute 'layer_id'
         }
     })
 
@@ -231,18 +240,33 @@ $('.closeBtn').click(function (e) {
     }
 });
 $('#hideAllBtn').click(function () {
+    hideAllItem();
     allRoutesArray.forEach(route => {
         route.remove();
     });
-
-
 });
 $('#showAllBtn').click(function () {
+    showAllItem();
     allRoutesArray.forEach(route => {
         route.setStyle({ //para ma refresh
             weight: 6
         });
         route.addTo(map);
+    });
+});
+
+$('#searchBtn').click(function () {
+    let inputStr = $('#searchInput').val();
+    inputStr = inputStr.toLocaleLowerCase();
+    let elementID = '';
+    allRoutesArray.forEach(route => {
+        if(route.layer_id.search(inputStr) == -1){
+            elementID = cleanString(route.layer_id);
+            $('#'+elementID).hide();
+        }else{
+            elementID = cleanString(route.layer_id);
+            $('#'+elementID).show();
+        }
     });
 });
 function removeRoute(input) {
@@ -255,14 +279,28 @@ function removeRoute(input) {
 }
 $(document).on('click', '.itemClickZone', function (e) {
     let id = e.currentTarget.id;
-    //console.log(e.currentTarget.id);
+    console.log(e.currentTarget.id);
     for (let i = 0; i < allRoutesArray.length; i++) {
         if (allRoutesArray[i].layer_id == id) {
             highlight(allRoutesArray[i]);
         }
     }
 });
-
+function showAllItem(){
+    allRoutesArray.forEach(route => {
+        $('#'+route.layer_id).show();
+    });
+}
+function hideAllItem(){
+    allRoutesArray.forEach(route => {
+        $('#'+route.layer_id).hide();
+    });
+}
+$("#searchInput").keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#searchBtn").click();
+    }
+});
 var LeafIcon = L.Icon.extend({
     options: {
         iconSize: [38, 95],
@@ -330,4 +368,3 @@ function addMarker(e){
     // Add marker to map at click location; add popup window
     var newMarker = new L.marker(e.latlng).addTo(map);
 }*/
-// test

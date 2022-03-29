@@ -108,7 +108,7 @@
             <button class="closeBtn" id="journeyCloseBtn"></button>
         </div>
 
-        <form action="" method="get" id="org_des_form">
+        <div id="org_des_div">
             <h2 id="originLabel" class="inputLabel">Origin</h2>
             <div class="inputDiv">
                 <input type="text" name="origin" class="textInput"id="originInput" placeholder="Enter coordinates or use marker">
@@ -122,7 +122,7 @@
             <div id="goBtnDiv">
                 <button id="goBtn"> GO </button>
             </div>
-        </form>
+        </div>
         <h2 id="totalRide">
             1 Total Ride
         </h2>
@@ -149,29 +149,18 @@
             <button class="closeBtn" id="routesCloseBtn"></button>
         </div>
 
-        <form action="" method="get" id="searchRouteForm">
+        <div id="searchRouteDiv">
             <div class="inputDiv">
-                <input type="text" name="origin" class="textInput"id="searchInput" placeholder="Search specific route">
+                <input type="text" class="textInput" id="searchInput" placeholder="Search specific route">
                 <button id="searchBtn"></button>
             </div>
-        </form>
+        </div>
         <div id="hideShowDiv">
             <button id="showAllBtn" class="toggleRouteBtn">Show All</button>
             <button id="hideAllBtn" class="toggleRouteBtn">Hide All</button>
         </div>
         <div class="outputPanel" id="routesOutputPanel">
             <ul id="routesOutputList">
-                <li class="outputListItem">
-                    <!-- <div class="outputItem">
-                        <img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon">
-                        <p class="routeName"> 
-                            <strong>
-                                Iponan - Cogon Mkt <br>
-                            </strong>
-                                Via Westbound Tmnl 
-                        </p> 
-                    </div> -->
-                </li>
             </ul>
         </div>
     </div>

@@ -123,14 +123,14 @@ h2{
     font-size: 15px;
     white-space: nowrap;
 }
-#org_des_form{
+#org_des_div{
     margin-top: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 210px;
 }
-#searchRouteForm{
+#searchRouteDiv{
     margin-top: 15px;
     display: flex;
     flex-direction: column;
