@@ -10,6 +10,7 @@ with routeslist as (
 		ST_Distance(ST_Transform(st_setsrid(st_makepoint(124.65665102005003, 8.481561950756083),4326),3857), ST_Transform(r.the_geom,3857)) xx
 	on true
 	where xx*cosd(8.481561950756083) < 250
+    inner join 
 ),
 	leg99 as (
 	--INSERT INTO tedges (route_code, itinerary, the_geom, uuid, leg_type)

@@ -60,7 +60,7 @@ const fetchroutes = fetch('/routes')
                 style: {
                     opacity: 0.65,
                     color: colors[i % colors.length],
-                    weight: 6
+                    weight: 10
                 }
             }));
             let text = data[i].properties.route_name;
