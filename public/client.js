@@ -37,6 +37,7 @@ function cleanString(str){
     newStr = newStr.replace(/\(/g,'_');
     newStr = newStr.replace(/\)/g,'_');
     newStr = newStr.replace(/\./g,'_');
+    newStr = newStr.toLocaleLowerCase();
     return newStr;
 }
 var selected = null;
@@ -79,7 +80,7 @@ const fetchroutes = fetch('/routes')
 
         //need to add allRoutesLayers to map first before doing this loop
         for (let i = 0; i < data.length; i++) {
-            allRoutesArray[i].layer_id = data[i].properties.route_name; //adds new attribute 'layer_id'
+            allRoutesArray[i].layer_id = cleanString(data[i].properties.route_name); //adds new attribute 'layer_id'
         }
     })
 
@@ -239,11 +240,13 @@ $('.closeBtn').click(function (e) {
     }
 });
 $('#hideAllBtn').click(function () {
+    hideAllItem();
     allRoutesArray.forEach(route => {
         route.remove();
     });
 });
 $('#showAllBtn').click(function () {
+    showAllItem();
     allRoutesArray.forEach(route => {
         route.setStyle({ //para ma refresh
             weight: 6
@@ -254,15 +257,14 @@ $('#showAllBtn').click(function () {
 
 $('#searchBtn').click(function () {
     let inputStr = $('#searchInput').val();
+    inputStr = inputStr.toLocaleLowerCase();
     let elementID = '';
     allRoutesArray.forEach(route => {
         if(route.layer_id.search(inputStr) == -1){
             elementID = cleanString(route.layer_id);
-            console.log(elementID);
             $('#'+elementID).hide();
         }else{
             elementID = cleanString(route.layer_id);
-            console.log(elementID);
             $('#'+elementID).show();
         }
     });
@@ -277,14 +279,28 @@ function removeRoute(input) {
 }
 $(document).on('click', '.itemClickZone', function (e) {
     let id = e.currentTarget.id;
-    //console.log(e.currentTarget.id);
+    console.log(e.currentTarget.id);
     for (let i = 0; i < allRoutesArray.length; i++) {
         if (allRoutesArray[i].layer_id == id) {
             highlight(allRoutesArray[i]);
         }
     }
 });
-
+function showAllItem(){
+    allRoutesArray.forEach(route => {
+        $('#'+route.layer_id).show();
+    });
+}
+function hideAllItem(){
+    allRoutesArray.forEach(route => {
+        $('#'+route.layer_id).hide();
+    });
+}
+$("#searchInput").keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#searchBtn").click();
+    }
+});
 var LeafIcon = L.Icon.extend({
     options: {
         iconSize: [38, 95],
@@ -352,4 +368,3 @@ function addMarker(e){
     // Add marker to map at click location; add popup window
     var newMarker = new L.marker(e.latlng).addTo(map);
 }*/
-// test
