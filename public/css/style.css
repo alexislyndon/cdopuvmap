@@ -130,7 +130,7 @@ h2{
     justify-content: space-between;
     height: 210px;
 }
-#searchRouteForm{
+#searchRouteDiv{
     margin-top: 15px;
     display: flex;
     flex-direction: column;

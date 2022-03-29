@@ -30,14 +30,21 @@ function highlight(layer) {
         dehighlight(previous);
     }
 }
+function cleanString(str){
+    let newStr = '';
+    newStr = str.replace(/\s/g, '_'); //replace whitespace with '_'
+    newStr = newStr.replace(/\//g,'_');
+    newStr = newStr.replace(/\(/g,'_');
+    newStr = newStr.replace(/\)/g,'_');
+    newStr = newStr.replace(/\./g,'_');
+    return newStr;
+}
 var selected = null;
 var colors = ['#71ff34', '#ff3471', '#ff7b34', '#34aeff', '#ff4834']
 var allRoutesArray = []
 const fetchroutes = fetch('/routes')
     .then(res => { return res.json() })
     .then(data => {
-
-        console.log(data);
         data = data.features
         for (let i = 0; i < data.length; ++i) {
 
@@ -58,10 +65,12 @@ const fetchroutes = fetch('/routes')
             }));
             let text = data[i].properties.route_name;
             let splitted = text.split('Via');
+            let elementID = cleanString(text);
+            // console.log(elementID);
             if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
-                $('#routesOutputList').append('<li><span class="itemClickZone" id="' + text + '"><div class="outputItem" id="' + text + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
+                $('#routesOutputList').append('<li><span class="itemClickZone" id="' + elementID + '"><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
             } else {
-                $('#routesOutputList').append('<li><span class="itemClickZone" id="' + text + '"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
+                $('#routesOutputList').append('<li><span class="itemClickZone" id="' + elementID + '"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
             }
         }
         allRoutesArray.forEach(route => {
@@ -71,7 +80,6 @@ const fetchroutes = fetch('/routes')
         //need to add allRoutesLayers to map first before doing this loop
         for (let i = 0; i < data.length; i++) {
             allRoutesArray[i].layer_id = data[i].properties.route_name; //adds new attribute 'layer_id'
-            console.log(allRoutesArray[i].layer_id);
         }
     })
 
@@ -234,8 +242,6 @@ $('#hideAllBtn').click(function () {
     allRoutesArray.forEach(route => {
         route.remove();
     });
-
-
 });
 $('#showAllBtn').click(function () {
     allRoutesArray.forEach(route => {
@@ -243,6 +249,22 @@ $('#showAllBtn').click(function () {
             weight: 6
         });
         route.addTo(map);
+    });
+});
+
+$('#searchBtn').click(function () {
+    let inputStr = $('#searchInput').val();
+    let elementID = '';
+    allRoutesArray.forEach(route => {
+        if(route.layer_id.search(inputStr) == -1){
+            elementID = cleanString(route.layer_id);
+            console.log(elementID);
+            $('#'+elementID).hide();
+        }else{
+            elementID = cleanString(route.layer_id);
+            console.log(elementID);
+            $('#'+elementID).show();
+        }
     });
 });
 function removeRoute(input) {
