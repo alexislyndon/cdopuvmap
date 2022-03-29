@@ -1,18 +1,18 @@
 function popup(feature, layer) {
     if (feature.properties) {
-        layer.bindPopup('Name: ' + feature.properties.route_name + '<br> Code: ' + feature.properties.route_code);
+        layer.bindPopup('Name: ' + feature.properties.route_name + '<br> Code: ' + feature.properties.route_code + '<br> leg: ' + feature.properties.leg_type);
     }
 }
 
-function dehighlight (layer) {
+function dehighlight(layer) {
     if (selected === null || selected._leaflet_id !== layer._leaflet_id) {
         layer.setStyle({ //return to default
             weight: 6
         });
     }
-  }
-function highlight(layer){
-    if (selected !== null){ //check if there is a layer already selected prior to this
+}
+function highlight(layer) {
+    if (selected !== null) { //check if there is a layer already selected prior to this
         var previous = selected;
     }
 
@@ -36,15 +36,15 @@ var allRoutesArray = []
 const fetchroutes = fetch('/routes')
     .then(res => { return res.json() })
     .then(data => {
-        
+
         console.log(data);
         data = data.features
         for (let i = 0; i < data.length; ++i) {
-            
+
             allRoutesArray.push(L.geoJSON(data[i], {
-                onEachFeature: function(feature, layer){
+                onEachFeature: function (feature, layer) {
                     layer.on({
-                        'click': function (e){
+                        'click': function (e) {
                             popup(feature, e.target);
                             highlight(e.target); //e.target is layer
                         }
@@ -59,9 +59,9 @@ const fetchroutes = fetch('/routes')
             let text = data[i].properties.route_name;
             let splitted = text.split('Via');
             if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
-                $('#routesOutputList').append('<li><span class="itemClickZone" id="'+text+'"><div class="outputItem" id="'+text+'"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>'+splitted[0]+'<br></strong>Via'+splitted[1]+'</p></div></span></li>');
+                $('#routesOutputList').append('<li><span class="itemClickZone" id="' + text + '"><div class="outputItem" id="' + text + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
             } else {
-                $('#routesOutputList').append('<li><span class="itemClickZone" id="'+text+'"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>'+splitted[0]+'<br></strong></p></div></span></li>');
+                $('#routesOutputList').append('<li><span class="itemClickZone" id="' + text + '"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
             }
         }
         allRoutesArray.forEach(route => {
@@ -87,7 +87,7 @@ function pathfind(opoint, dpoint) {
                     onEachFeature: popup,
                     style: {
                         opacity: 0.65,
-                        color: '#3F826D',
+                        color: '#F6179E',
                         weight: 15,
                         dashArray: '4 1 2',
                         dashOffset: '3'
@@ -97,23 +97,36 @@ function pathfind(opoint, dpoint) {
         })
 }
 
-var pathfind2 = (o, d) => fetch(`/pathfind?origin=${encodeURIComponent(o.value)}&destination=${encodeURIComponent(d.value)}`)
-    .then(res => { return res.json() })
-    .then(data => {
-        data = data.features
-        for (let index = 0; index < data.length; ++index) {
-            L.geoJSON(data[index], {
-                onEachFeature: popup,
-                style: {
-                    opacity: 0.65,
-                    color: '#3F826D',
-                    weight: 15,
-                    dashArray: '4 1 2',
-                    dashOffset: '3'
-                }
-            }).addTo(map)
-        }
-    })
+var stylistic = (leg_type, index) => {
+    if (leg_type == 'route') return {
+        opacity: 0.65,
+        color: colors[index % colors.length],
+        weight: 15,
+    }
+    if (leg_type && leg_type.startsWith('walk')) return {
+        opacity: 0.65,
+        color: '#FFBE54',
+        weight: 10,
+        dashArray: "12 3 9"
+    }
+}
+
+var pathfind2 = (o, d) => {
+    var o = origin.getLatLng();
+    var d = destination.getLatLng();
+    fetch(`/pathfind?origin=${encodeURIComponent(`${o.lng} ${o.lat}`)}&destination=${encodeURIComponent(`${d.lng} ${d.lat}`)}`)
+        .then(res => { return res.json() })
+        .then(data => {
+            data = data.features
+            for (let index = 0; index < data.length; ++index) {
+                L.geoJSON(data[index], {
+                    onEachFeature: popup,
+                    style: stylistic(data[index].properties.leg_type, index)
+                }).addTo(map)
+            }
+        })
+}
+
 
 // open street map layer (maptiler api)
 var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeAqyxwLGSnrFq', {
@@ -145,57 +158,57 @@ L.control.locate().addTo(map); //check top left corner for added button/control
 
 function openPanel(id) {
     $(id).css({
-        'width': '350px', 
+        'width': '350px',
         'visibility': 'visible'
     });
 }
 function closePanel(id) {
     $(id).css({
-        'width': '0px', 
+        'width': '0px',
         'visibility': 'hidden',
     });
 }
-$('#journeyBtn, #routesBtn').click(function(e){ //sidebar button function
+$('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
     switch (e.target.id) {
         case "journeyBtn":
-                // console.log(buttonClicked('#'+e.target.id));
-                if ($('#journeyPanel').width() > 0) { //check if open already
-                    closePanel('#journeyPanel');
-                    $('#journeyBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-                } else {
-                    //close other panels first
-                    closePanel('#routesPanel');
-                    $('#routesBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-                    //then open target panel
-                    openPanel('#journeyPanel');
-                    $('#journeyBtn').css({
-                        'background-color': '#A8C0FF'
-                    });
-                }
-                
+            // console.log(buttonClicked('#'+e.target.id));
+            if ($('#journeyPanel').width() > 0) { //check if open already
+                closePanel('#journeyPanel');
+                $('#journeyBtn').css({
+                    'background-color': '#3F2B96'
+                });
+            } else {
+                //close other panels first
+                closePanel('#routesPanel');
+                $('#routesBtn').css({
+                    'background-color': '#3F2B96'
+                });
+                //then open target panel
+                openPanel('#journeyPanel');
+                $('#journeyBtn').css({
+                    'background-color': '#A8C0FF'
+                });
+            }
+
             break;
         case "routesBtn":
-                if ($('#routesPanel').width() > 0) { //check if open already
-                    closePanel('#routesPanel');
-                    $('#routesBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-                } else {
-                    closePanel('#journeyPanel');
-                    $('#journeyBtn').css({
-                        'background-color': '#3F2B96'
-                    });
+            if ($('#routesPanel').width() > 0) { //check if open already
+                closePanel('#routesPanel');
+                $('#routesBtn').css({
+                    'background-color': '#3F2B96'
+                });
+            } else {
+                closePanel('#journeyPanel');
+                $('#journeyBtn').css({
+                    'background-color': '#3F2B96'
+                });
 
-                    openPanel('#routesPanel');
-                    $('#routesBtn').css({
-                        'background-color': '#A8C0FF'
-                    });
-                }
-                    
+                openPanel('#routesPanel');
+                $('#routesBtn').css({
+                    'background-color': '#A8C0FF'
+                });
+            }
+
             break;
         default:
             console.log('here');
@@ -203,8 +216,8 @@ $('#journeyBtn, #routesBtn').click(function(e){ //sidebar button function
     }
 });
 
-$('.closeBtn').click(function(e){
-    
+$('.closeBtn').click(function (e) {
+
     switch (e.target.id) {
         case 'journeyCloseBtn':
             closePanel('#journeyPanel');
@@ -212,19 +225,19 @@ $('.closeBtn').click(function(e){
         case 'routesCloseBtn':
             closePanel('#routesPanel');
             break;
-    
+
         default:
             break;
     }
 });
-$('#hideAllBtn').click(function(){
+$('#hideAllBtn').click(function () {
     allRoutesArray.forEach(route => {
         route.remove();
     });
-    
+
 
 });
-$('#showAllBtn').click(function(){
+$('#showAllBtn').click(function () {
     allRoutesArray.forEach(route => {
         route.setStyle({ //para ma refresh
             weight: 6
@@ -232,19 +245,19 @@ $('#showAllBtn').click(function(){
         route.addTo(map);
     });
 });
-function removeRoute(input){
+function removeRoute(input) {
     let id = input;
     for (let i = 0; i < allRoutesArray.length; i++) {
-        if(allRoutesArray[i].layer_id == id){
+        if (allRoutesArray[i].layer_id == id) {
             allRoutesArray[i].remove();
         }
     }
 }
-$(document).on('click', '.itemClickZone', function(e){
+$(document).on('click', '.itemClickZone', function (e) {
     let id = e.currentTarget.id;
     //console.log(e.currentTarget.id);
     for (let i = 0; i < allRoutesArray.length; i++) {
-        if(allRoutesArray[i].layer_id == id){
+        if (allRoutesArray[i].layer_id == id) {
             highlight(allRoutesArray[i]);
         }
     }
@@ -308,3 +321,13 @@ var dDrag = function (e) {
     var center = map.getCenter()
     destination.setLatLng(center)
 }
+
+/*
+map.on('click', addMarker);
+});
+
+function addMarker(e){
+    // Add marker to map at click location; add popup window
+    var newMarker = new L.marker(e.latlng).addTo(map);
+}*/
+// test

@@ -1,20 +1,30 @@
-const db = require('./db')
+with routes as(select * from routes)
+select leg1, r.the_geom, leg99
+from routes r,
+	lateral ST_ShortestLine(st_setsrid(st_makepoint(124.62158918380739,8.49143051788561),4326),r.the_geom) leg1,
+	ST_ShortestLine(st_setsrid(st_makepoint(124.64174866676332,8.483960142007458),4326),r.the_geom) leg99,
+	lateral (select the_geom ) route
+	WHERE true
+from routes r
+on true
+left join lateral
+	ST_ShortestLine(r.the_geom,leg1.the_geom) leg99
+on true
+where (select ST_Length(ST_Transform(leg1,26986)) <= 350 )
+order by id desc
 
-module.exports = async (uuid, olon, olat, dlon, dlat, maxwalk = 250) => {
 
-    const result = await db.query(`
- 
-    WITH leg1 as (
-        select e.route_code, e.route_name, e.route_id as itinerary, leg1 as the_geom, '${uuid}'::uuid as uuid, 'walk1' as leg_type
+WITH leg1 as (
+        select * -- e.route_code, e.route_name, e.route_id as itinerary, leg1 as the_geom, '${uuid}'::uuid as uuid, 'walk1' as leg_type
         from (
         SELECT *
         FROM routes
-        ORDER BY the_geom <-> st_setsrid(st_makepoint($1,$2),4326)
+        --ORDER BY the_geom <-> st_setsrid(st_makepoint($1,$2),4326)
         ) e
         left join lateral
-        ST_ShortestLine(st_setsrid(st_makepoint($1,$2),4326),e.the_geom) leg1
+        ST_ShortestLine(st_setsrid(st_makepoint(124.62158918380739,8.49143051788561),4326),e.the_geom) leg1
         on true
-        where (select ST_Length(ST_Transform(leg1,26986)) <= ${maxwalk} )
+        where (select ST_Length(ST_Transform(leg1,26986)) <= 300 )
         order by id desc
     ), route as (
         SELECT route_code, route_name, route_id as itenerary, the_geom, '${uuid}'::uuid as uuid, 'route' as leg_type
@@ -40,9 +50,5 @@ module.exports = async (uuid, olon, olat, dlon, dlat, maxwalk = 250) => {
     union
     select distinct * from leg99
         )
+		pgr_nodeNetwork('tedges', 0.00005
     
-    `, [olon, olat, dlon, dlat]);
-
-};
-
-//query above will draw lines from a point to all routes that are less than 3500 meters away on the closest point/edge
