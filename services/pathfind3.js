@@ -11,12 +11,12 @@ module.exports = async (olon, olat, dlon, dlat, maxwalk = 300) => {
         db = await dbPool.connect();
         var uuid = await uuidv4();
         // const uuid = await uuidv4().replace(/-/g,'');
-        uuidNoHyphen = 'x'+ uuid.replace(/-/g,'').replace(/[^A-Za-z]/g, '').substring(0,3)
+        uuidNoHyphen = 'x' + uuid.replace(/-/g, '').replace(/[^A-Za-z]/g, '').substring(0, 3)
         // uuidNoHyphen = 'xyzxyz'
         console.log(uuidNoHyphen);
         const result = await db.query(`
         
-                select route_code,route_id, route_name, the_geom, xx*cosd($4), leg1, leg99
+                select distinct route_code,route_id, route_name, the_geom, xx*cosd($4), leg1, leg99
                 from
                     (select *  from routes) r
                 INNER JOIN lateral --ST_Length(ST_Transform(leg1,26986))
@@ -56,7 +56,7 @@ module.exports = async (olon, olat, dlon, dlat, maxwalk = 300) => {
                 (${row.route_id}, '${row.route_code}', '${row.route_name}', '${row.the_geom}'::geometry, 'route', '${uuid}'::uuid); --route
                 SELECT pgr_nodeNetwork('${uuidNoHyphen}', 0.0005, 'id', 'the_geom', 'noded');
                 commit;
-                SELECT pgr_createTopology('${uuidNoHyphen}_noded', 0.00005);
+                SELECT pgr_createTopology('${uuidNoHyphen}_noded', 0.00005, clean:=true);
                 begin;
                 ALTER TABLE ${uuidNoHyphen}_noded ADD COLUMN IF NOT EXISTS distance FLOAT8;
                 ALTER TABLE ${uuidNoHyphen}_noded ADD COLUMN IF NOT EXISTS rcost FLOAT8;
@@ -112,7 +112,12 @@ module.exports = async (olon, olat, dlon, dlat, maxwalk = 300) => {
             `);
             console.log('dijkstra-ed');
             itinerary.push(dijkstra.rows[0]);
-            await db.query(`ROLLBACK;`);
+            // await db.query(`ROLLBACK;`);
+            await db.query(`
+            DROP TABLE ${uuidNoHyphen};
+            DROP TABLE ${uuidNoHyphen}_noded;
+            DROP TABLE ${uuidNoHyphen}_noded_vertices_pgr;
+            `);
         }
     } catch (err) {
         await db.query(`ROLLBACK;`);
@@ -124,15 +129,20 @@ module.exports = async (olon, olat, dlon, dlat, maxwalk = 300) => {
         // console.log(itinerary);
         // console.log('itinerary');
         // console.log(JSON.stringify(itinerary));
-        await db.query(`
-        DROP TABLE ${uuidNoHyphen};
-        DROP TABLE ${uuidNoHyphen}_noded;
-        DROP TABLE ${uuidNoHyphen}_noded_vertices_pgr;
-        `);
+        itinerary.forEach(r => {
+            var le = r.json.features.length
+            console.log(`route:${r.json.features[0].properties.route_code} cost: ${r.json.features[le-1].properties.agg_cost}`);
+        })
         itinerary.sort((a, b) => {
-           var l = a.json.features.length
-            return (a.json.features[l-1].properties.agg_cost - a.json.features[l-1].properties.agg_cost ? 1 : -1)
+            var l = a.json.features.length
+            var ll = b.json.features.length
+            return (a.json.features[l - 1].properties.agg_cost > b.json.features[ll - 1].properties.agg_cost)  ? 1 : -1
         });
+        console.log(`\n`);
+        itinerary.forEach(r => {
+            var le = r.json.features.length
+            console.log(`route:${r.json.features[0].properties.route_code} cost: ${r.json.features[le-1].properties.agg_cost}`);
+        })
         // console.log(itinerary);
         return itinerary
     }
