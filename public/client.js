@@ -69,9 +69,9 @@ const fetchroutes = fetch('/routes')
             let elementID = 'route_' + cleanString(text);
             // console.log(elementID);
             if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
-                $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
+                $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem"  id="div_'+elementID+'"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
             } else {
-                $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
+                $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_'+elementID+'"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
             }
         }
         allRoutesArray.forEach(route => {
@@ -165,9 +165,9 @@ function getItineraries(o, d){
                 let elementID = 'itirenary_' + cleanString(text);
                 console.log('added' + elementID);
                 if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
-                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
+                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_'+elementID+'"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
                 } else {
-                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
+                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_'+elementID+'"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
                 }
 
             }
@@ -332,26 +332,41 @@ function removeRoute(input) {
 }
 $(document).on('click', '.routes_ItemClickZone', function (e) {
     let id = e.currentTarget.id;
-    console.log(e.currentTarget.id);
+    activeButton(e.currentTarget.id);
     for (let i = 0; i < allRoutesArray.length; i++) {
         if (allRoutesArray[i].layer_id == id) {
-            console.log(allRoutesArray[i]);
             highlight(allRoutesArray[i]);
+            activeButton(allRoutesArray[i].layer_id);
+        }else{
+            inActiveButton(allRoutesArray[i].layer_id);
         }
     }
 });
 $(document).on('click', '.journey_ItemClickZone', function (e) {
     let id = e.currentTarget.id;
-    console.log(e.currentTarget.id);
     for (let i = 0; i < allItirenariesArray.length; i++) {
         if (allItirenariesArray[i].layer_id == id) {
             highlight(allItirenariesArray[i]);
+            activeButton(allItirenariesArray[i].layer_id);
             allItirenariesArray[i].addTo(map);
         }else{
+            inActiveButton(allItirenariesArray[i].layer_id);
             allItirenariesArray[i].remove();
         }
     }
 });
+function activeButton(str){
+    let id = 'div_'  + str;
+    $('#' + id).css({
+        'border': '3px solid #A8C0FF'
+    });
+}
+function inActiveButton(str){
+    let id = 'div_'  + str;
+    $('#' + id).css({
+        'border': '2px solid rgba(0, 0, 0, .3)'
+    });
+}
 function showAllItirenaryItem(){
     allItirenariesArray.forEach(itirenary => {
         $('#'+itirenary.layer_id).show();
