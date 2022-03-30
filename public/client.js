@@ -42,7 +42,7 @@ function cleanString(str){
 }
 var selected = null;
 var colors = ['#71ff34', '#ff3471', '#ff7b34', '#34aeff', '#ff4834']
-var allRoutesArray = []
+var allRoutesArray = [];
 const fetchroutes = fetch('/routes')
     .then(res => { return res.json() })
     .then(data => {
@@ -125,6 +125,7 @@ function getItineraries(o, d){
     hideAllRouteLayers();
     var o = origin.getLatLng();
     var d = destination.getLatLng();
+    var allItirenariesArray = [];
     fetch(`/itineraries?origin=${encodeURIComponent(`${o.lng} ${o.lat}`)}&destination=${encodeURIComponent(`${d.lng} ${d.lat}`)}`)
         .then(res => { return res.json() })
         .then(data => {
@@ -133,15 +134,30 @@ function getItineraries(o, d){
             console.log(data[0].json.features.length);
             console.log(data[0].json.features);
             for (let i = 0; i < data.length; ++i) { //loop for data[n]
-                console.log('loop level 1')
                 for (let j = 0; j < data[i].json.features.length; ++j) { //loop for data[n].json.features[n]
-                    console.log('loop level 2');
-                    L.geoJSON(data[i].json.features[j], {
-                        onEachFeature: popup,
+                    allItirenariesArray.push(L.geoJSON(data[i].json.features[j], {
+                        onEachFeature: function(feature, layer){
+                            layer.on({
+                                'click': function(e){
+                                    popup(feature, e.target);
+                                    highlight(e.target);
+                                }
+                            })
+                        },
                         style: stylistic(data[i].json.features[j].properties.leg_type, i)
-                    }).addTo(map)
+                    }));
+                    let text = data[i].json.features[j].properties.route_name;
+                    // console.log(text);
+                    // let splitted = text.split('Via');
+                    // let elementID = cleanString(text);
+                    // console.log(elementID);
+                    let skkrt = (data[i].json.features[j].properties.leg_type.startsWith("walk") ? "walk": data[i].json.features[j].properties.route_name);
+                    console.log(skkrt); //loop for data[n].json.features[n]
                 }
             }
+            allItirenariesArray.forEach(route => {
+                route.addTo(map);
+            });
         })
 }
 
