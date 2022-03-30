@@ -147,17 +147,15 @@ function getItineraries(o, d){
                         style: stylistic(data[i].json.features[j].properties.leg_type, i)
                     }));
                     let text = data[i].json.features[j].properties.route_name;
-                    // console.log(text);
+                    console.log(text);
                     // let splitted = text.split('Via');
                     // let elementID = cleanString(text);
                     // console.log(elementID);
-                    let skkrt = (data[i].json.features[j].properties.leg_type.startsWith("walk") ? "walk": data[i].json.features[j].properties.route_name);
-                    console.log(skkrt); //loop for data[n].json.features[n]
                 }
             }
-            allItirenariesArray.forEach(route => {
-                route.addTo(map);
-            });
+            // allItirenariesArray.forEach(route => {
+            //     route.addTo(map);
+            // });
         })
 }
 
