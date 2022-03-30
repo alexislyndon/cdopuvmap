@@ -69,9 +69,9 @@ const fetchroutes = fetch('/routes')
             let elementID = 'route_' + cleanString(text);
             // console.log(elementID);
             if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
-                $('#routesOutputList').append('<li><span class="itemClickZone" id="' + elementID + '"><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
+                $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
             } else {
-                $('#routesOutputList').append('<li><span class="itemClickZone" id="' + elementID + '"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
+                $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
             }
         }
         allRoutesArray.forEach(route => {
@@ -140,15 +140,11 @@ function getItineraries(o, d){
     fetch(`/itineraries?origin=${encodeURIComponent(`${o.lng} ${o.lat}`)}&destination=${encodeURIComponent(`${d.lng} ${d.lat}`)}`)
         .then(res => { return res.json() })
         .then(data => {
-            // console.log(data.length);
-            // console.log(data);
-            // console.log(data[0].json.features.length);
-            // console.log(data[0].json.features);
             for (let i = 0; i < data.length; ++i) { //loop for data[n]
                 let text = '';
-                allItirenariesArray[i] = L.layerGroup()  // 1 layer group = 2 walks, route's vertices/edges
+                allItirenariesArray[i] = L.featureGroup()  // 1 layer group = 2 walks, route's vertices/edges
                 for (let j = 0; j < data[i].json.features.length; ++j) { //loop for data[n].json.features[n]
-                    allItirenariesArray[i].addLayer(L.geoJSON(data[i].json.features[j], {
+                    let currentLayer  =  L.geoJSON(data[i].json.features[j], {
                         onEachFeature: function(feature, layer){
                             layer.on({
                                 'click': function(e){
@@ -158,7 +154,8 @@ function getItineraries(o, d){
                             })
                         },
                         style: stylistic(data[i].json.features[j].properties.leg_type, i)
-                    }));
+                    });
+                    currentLayer.addTo(allItirenariesArray[i]);
                     if (data[i].json.features[j].properties.route_name != null) { // get only the route_name
                         text = data[i].json.features[j].properties.route_name;
                     }
@@ -168,9 +165,9 @@ function getItineraries(o, d){
                 let elementID = 'itirenary_' + cleanString(text);
                 console.log('added' + elementID);
                 if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
-                    $('#journeyOutputList').append('<li><span class="itemClickZone" id="' + elementID + '"><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
+                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
                 } else {
-                    $('#journeyOutputList').append('<li><span class="itemClickZone" id="' + elementID + '"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
+                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
                 }
 
             }
@@ -333,12 +330,25 @@ function removeRoute(input) {
         }
     }
 }
-$(document).on('click', '.itemClickZone', function (e) {
+$(document).on('click', '.routes_ItemClickZone', function (e) {
     let id = e.currentTarget.id;
     console.log(e.currentTarget.id);
     for (let i = 0; i < allRoutesArray.length; i++) {
         if (allRoutesArray[i].layer_id == id) {
+            console.log(allRoutesArray[i]);
             highlight(allRoutesArray[i]);
+        }
+    }
+});
+$(document).on('click', '.journey_ItemClickZone', function (e) {
+    let id = e.currentTarget.id;
+    console.log(e.currentTarget.id);
+    for (let i = 0; i < allItirenariesArray.length; i++) {
+        if (allItirenariesArray[i].layer_id == id) {
+            highlight(allItirenariesArray[i]);
+            allItirenariesArray[i].addTo(map);
+        }else{
+            allItirenariesArray[i].remove();
         }
     }
 });
