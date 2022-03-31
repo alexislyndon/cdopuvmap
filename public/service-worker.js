@@ -15,7 +15,7 @@ workbox.routing.registerRoute(
         // Use a custom cache name.
         cacheName: 'image-cache',
         plugins: [
-            new workbox.expiration.Plugin({
+            new workbox.expiration.ExpirationPlugin({
                 // Cache only 20 images.
                 maxEntries: 1500,
                 // Cache for a maximum of a week.
