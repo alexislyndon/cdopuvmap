@@ -9,7 +9,7 @@ importScripts(
 
 workbox.routing.registerRoute(
     // Cache image files.
-    /\.(?:png|jpg|jpeg|svg|gif)$/,
+    /\.(?:png\?key=.+)$/,
     // Use the cache if it's available.
     new workbox.strategies.CacheFirst({
         // Use a custom cache name.
