@@ -280,9 +280,15 @@ $('.closeBtn').click(function (e) {
     switch (e.target.id) {
         case 'journeyCloseBtn':
             closePanel('#journeyPanel');
+            $('#journeyBtn').css({
+                'background-color': '#3F2B96'
+            });
             break;
         case 'routesCloseBtn':
             closePanel('#routesPanel');
+            $('#routesBtn').css({
+                'background-color': '#3F2B96'
+            });
             break;
 
         default:
