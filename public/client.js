@@ -346,11 +346,11 @@ var origin = {}
 var destination = {}
 
 var pinOrigin = function (e) {
-    if (e.id == 'd-pin') return
+    if (e.id == 'originBtnn') return
     if (origin.options) {
         if (map.listens('drag')) {
             var pin1 = origin.getLatLng()
-            document.getElementById("origin").value = Object.values(pin1).reverse().toString()
+            document.getElementById("originInput").value = Object.values(pin1).reverse().toString()
             map.off('drag')
         } else { map.on('drag', oDrag) }
         return
@@ -362,11 +362,11 @@ var pinOrigin = function (e) {
 };
 
 var pinDestination = function (e) {
-    if (e.id == 'o-pin') return
+    if (e.id == 'destinationBtnn') return
     if (destination.options) {
         if (map.listens('drag')) {
             var pin1 = destination.getLatLng()
-            document.getElementById("destination").value = Object.values(pin1).reverse().toString()
+            document.getElementById("destinationInput").value = Object.values(pin1).reverse().toString()
             map.off('drag')
         } else { map.on('drag', dDrag) }
         return
