@@ -1,3 +1,5 @@
+const spinner = document.getElementById("spinner");
+
 function popup(feature, layer) {
     if (feature.properties) {
         layer.bindPopup('Name: ' + feature.properties.route_name + '<br> Code: ' + feature.properties.route_code + '<br> leg: ' + feature.properties.leg_type);
@@ -30,59 +32,63 @@ function highlight(layer) {
         dehighlight(previous);
     }
 }
-function cleanString(str){
+function cleanString(str) {
     let newStr = '';
     newStr = str.replace(/\s/g, '_'); //replace whitespace with '_'
-    newStr = newStr.replace(/\//g,'_');
-    newStr = newStr.replace(/\(/g,'_');
-    newStr = newStr.replace(/\)/g,'_');
-    newStr = newStr.replace(/\./g,'_');
+    newStr = newStr.replace(/\//g, '_');
+    newStr = newStr.replace(/\(/g, '_');
+    newStr = newStr.replace(/\)/g, '_');
+    newStr = newStr.replace(/\./g, '_');
     newStr = newStr.toLocaleLowerCase();
     return newStr;
 }
 var selected = null;
 var colors = ['#71ff34', '#ff3471', '#ff7b34', '#34aeff', '#ff4834']
 var allRoutesArray = [];
-const fetchroutes = fetch('/routes')
-    .then(res => { return res.json() })
-    .then(data => {
-        data = data.features
-        for (let i = 0; i < data.length; ++i) {
+const fetchroutes = function () {
+    spinner.removeAttribute('hidden');
+    fetch('/routes')
+        .then(res => { return res.json() })
+        .then(data => {
+            spinner.setAttribute('hidden', '');
+            data = data.features
+            for (let i = 0; i < data.length; ++i) {
 
-            allRoutesArray.push(L.geoJSON(data[i], {
-                onEachFeature: function (feature, layer) {
-                    layer.on({
-                        'click': function (e) {
-                            popup(feature, e.target);
-                            highlight(e.target); //e.target is layer
-                        }
-                    })
-                },
-                style: {
-                    opacity: 0.65,
-                    color: colors[i % colors.length],
-                    weight: 10
+                allRoutesArray.push(L.geoJSON(data[i], {
+                    onEachFeature: function (feature, layer) {
+                        layer.on({
+                            'click': function (e) {
+                                popup(feature, e.target);
+                                highlight(e.target); //e.target is layer
+                            }
+                        })
+                    },
+                    style: {
+                        opacity: 0.65,
+                        color: colors[i % colors.length],
+                        weight: 10
+                    }
+                }));
+                let text = data[i].properties.route_name;
+                let splitted = text.split('Via');
+                let elementID = 'route_' + cleanString(text);
+                // console.log(elementID);
+                if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
+                    $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem"  id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
+                } else {
+                    $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
                 }
-            }));
-            let text = data[i].properties.route_name;
-            let splitted = text.split('Via');
-            let elementID = 'route_' + cleanString(text);
-            // console.log(elementID);
-            if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
-                $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem"  id="div_'+elementID+'"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
-            } else {
-                $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_'+elementID+'"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
             }
-        }
-        allRoutesArray.forEach(route => {
-            route.addTo(map);
-        });
+            allRoutesArray.forEach(route => {
+                route.addTo(map);
+            });
 
-        //need to add allRoutesLayers to map first before doing this loop
-        for (let i = 0; i < data.length; i++) {
-            allRoutesArray[i].layer_id = 'route_' + cleanString(data[i].properties.route_name); //adds new attribute 'layer_id'
-        }
-    })
+            //need to add allRoutesLayers to map first before doing this loop
+            for (let i = 0; i < data.length; i++) {
+                allRoutesArray[i].layer_id = 'route_' + cleanString(data[i].properties.route_name); //adds new attribute 'layer_id'
+            }
+        })
+}();
 
 function pathfind(opoint, dpoint) {
     var opoint = document.getElementById("origin").value
@@ -119,8 +125,8 @@ var stylistic = (leg_type, index) => {
         dashArray: "12 3 9"
     }
 }
-function clearItirenary(){
-    if (allItirenariesArray.length > 0) { 
+function clearItirenary() {
+    if (allItirenariesArray.length > 0) {
         removeAllItirenaryItem();
         allItirenariesArray.forEach(itirenary => {
             itirenary.remove();
@@ -129,25 +135,27 @@ function clearItirenary(){
 }
 var allItirenariesArray = [];
 var itirenaryNames = [];
-function getItineraries(o, d){
+function getItineraries(o, d) {
+    spinner.removeAttribute('hidden');
     hideAllRouteItem();
     hideAllRouteLayers();
     console.log('check length' + allItirenariesArray.length);
     clearItirenary();
     var o = origin.getLatLng();
     var d = destination.getLatLng();
-    
+
     fetch(`/itineraries?origin=${encodeURIComponent(`${o.lng} ${o.lat}`)}&destination=${encodeURIComponent(`${d.lng} ${d.lat}`)}`)
         .then(res => { return res.json() })
         .then(data => {
+            spinner.setAttribute('hidden', '');
             for (let i = 0; i < data.length; ++i) { //loop for data[n]
                 let text = '';
                 allItirenariesArray[i] = L.featureGroup()  // 1 layer group = 2 walks, route's vertices/edges
                 for (let j = 0; j < data[i].json.features.length; ++j) { //loop for data[n].json.features[n]
-                    let currentLayer  =  L.geoJSON(data[i].json.features[j], {
-                        onEachFeature: function(feature, layer){
+                    let currentLayer = L.geoJSON(data[i].json.features[j], {
+                        onEachFeature: function (feature, layer) {
                             layer.on({
-                                'click': function(e){
+                                'click': function (e) {
                                     popup(feature, e.target);
                                     highlight(e.target);
                                 }
@@ -165,9 +173,9 @@ function getItineraries(o, d){
                 let elementID = 'itirenary_' + cleanString(text);
                 console.log('added' + elementID);
                 if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
-                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_'+elementID+'"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
+                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
                 } else {
-                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_'+elementID+'"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
+                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
                 }
 
             }
@@ -295,7 +303,7 @@ $('.closeBtn').click(function (e) {
             break;
     }
 });
-function hideAllRouteLayers(){
+function hideAllRouteLayers() {
     allRoutesArray.forEach(route => {
         route.remove();
     });
@@ -304,7 +312,7 @@ $('#hideAllBtn').click(function () {
     hideAllRouteItem();
     hideAllRouteLayers();
 });
-function showAllRouteLayers(){
+function showAllRouteLayers() {
     allRoutesArray.forEach(route => {
         route.addTo(map);
     });
@@ -319,12 +327,12 @@ $('#searchBtn').click(function () {
     inputStr = inputStr.toLocaleLowerCase();
     let elementID = '';
     allRoutesArray.forEach(route => {
-        if(route.layer_id.search(inputStr) == -1){
+        if (route.layer_id.search(inputStr) == -1) {
             elementID = cleanString(route.layer_id);
-            $('#'+elementID).hide();
-        }else{
+            $('#' + elementID).hide();
+        } else {
             elementID = cleanString(route.layer_id);
-            $('#'+elementID).show();
+            $('#' + elementID).show();
         }
     });
 });
@@ -343,7 +351,7 @@ $(document).on('click', '.routes_ItemClickZone', function (e) {
         if (allRoutesArray[i].layer_id == id) {
             highlight(allRoutesArray[i]);
             activeButton(allRoutesArray[i].layer_id);
-        }else{
+        } else {
             inActiveButton(allRoutesArray[i].layer_id);
         }
     }
@@ -355,52 +363,52 @@ $(document).on('click', '.journey_ItemClickZone', function (e) {
             highlight(allItirenariesArray[i]);
             activeButton(allItirenariesArray[i].layer_id);
             allItirenariesArray[i].addTo(map);
-        }else{
+        } else {
             inActiveButton(allItirenariesArray[i].layer_id);
             allItirenariesArray[i].remove();
         }
     }
 });
-function activeButton(str){
-    let id = 'div_'  + str;
+function activeButton(str) {
+    let id = 'div_' + str;
     $('#' + id).css({
         'border': '3px solid #A8C0FF'
     });
 }
-function inActiveButton(str){
-    let id = 'div_'  + str;
+function inActiveButton(str) {
+    let id = 'div_' + str;
     $('#' + id).css({
         'border': '2px solid rgba(0, 0, 0, .3)'
     });
 }
-function showAllItirenaryItem(){
+function showAllItirenaryItem() {
     allItirenariesArray.forEach(itirenary => {
-        $('#'+itirenary.layer_id).show();
+        $('#' + itirenary.layer_id).show();
     });
 }
-function hideAllItirenaryItem(){
+function hideAllItirenaryItem() {
     allItirenariesArray.forEach(itirenary => {
-        $('#'+itirenary.layer_id).hide();
+        $('#' + itirenary.layer_id).hide();
     });
 }
-function removeAllItirenaryItem(){
+function removeAllItirenaryItem() {
     allItirenariesArray.forEach(itirenary => {
         console.log('removed: ' + itirenary.layer_id);
-        $('#'+itirenary.layer_id).remove();
+        $('#' + itirenary.layer_id).remove();
 
     });
 }
-function showAllRouteItem(){
+function showAllRouteItem() {
     allRoutesArray.forEach(route => {
-        $('#'+route.layer_id).show();
+        $('#' + route.layer_id).show();
     });
 }
-function hideAllRouteItem(){
+function hideAllRouteItem() {
     allRoutesArray.forEach(route => {
-        $('#'+route.layer_id).hide();
+        $('#' + route.layer_id).hide();
     });
 }
-$("#searchInput").keyup(function(event) {
+$("#searchInput").keyup(function (event) {
     if (event.keyCode === 13) {
         $("#searchBtn").click();
     }
