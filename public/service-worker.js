@@ -27,10 +27,10 @@ importScripts(
 
 workbox.routing.registerRoute(
     /^https:\/\/api.maptiler.com\/.*/,
-    workbox.strategies.cacheFirst({
+    new workbox.strategies.CacheFirst({
         cacheName: 'tile-cache',
         plugins: [
-            new workbox.cacheableResponse.Plugin({
+            new workbox.cacheableResponse.CacheableResponsePlugin({
                 statuses: [0, 200]
             })
         ]
