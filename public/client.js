@@ -177,7 +177,7 @@ function getItineraries(o, d){
             for (let i = 0; i < allItirenariesArray.length; i++) { // assign layer_id with gathered route names
                 allItirenariesArray[i].layer_id = 'itirenary_' + cleanString(itirenaryNames[i]);
             }
-            console.log(allItirenariesArray);
+            $('#'+allItirenariesArray[0].layer_id).click();  // automatic focus 1 route
         })
 }
 
@@ -276,7 +276,6 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
 });
 
 $('.closeBtn').click(function (e) {
-
     switch (e.target.id) {
         case 'journeyCloseBtn':
             closePanel('#journeyPanel');
@@ -300,9 +299,10 @@ function hideAllRouteLayers(){
         route.remove();
     });
 }
+var selectSpecificRoute = false;
 $('#hideAllBtn').click(function () {
-    hideAllRouteItem();
     hideAllRouteLayers();
+    selectSpecificRoute = true;
 });
 function showAllRouteLayers(){
     allRoutesArray.forEach(route => {
@@ -312,6 +312,7 @@ function showAllRouteLayers(){
 $('#showAllBtn').click(function () {
     showAllRouteItem();
     showAllRouteLayers();
+    selectSpecificRoute = false;
 });
 
 $('#searchBtn').click(function () {
@@ -336,15 +337,22 @@ function removeRoute(input) {
         }
     }
 }
+
 $(document).on('click', '.routes_ItemClickZone', function (e) {
     let id = e.currentTarget.id;
     activeButton(e.currentTarget.id);
     for (let i = 0; i < allRoutesArray.length; i++) {
         if (allRoutesArray[i].layer_id == id) {
+            if(selectSpecificRoute){
+                allRoutesArray[i].addTo(map);
+            }
             highlight(allRoutesArray[i]);
             activeButton(allRoutesArray[i].layer_id);
         }else{
             inActiveButton(allRoutesArray[i].layer_id);
+            if(selectSpecificRoute){
+                allRoutesArray[i].remove();
+            }
         }
     }
 });
