@@ -294,6 +294,21 @@ $('.closeBtn').click(function (e) {
             break;
     }
 });
+
+$('#refreshBtn').click(function (){
+    sessionStorage.setItem("reloading", "true");
+    document.location.reload();
+});
+window.onload = function() {
+    var reloading = sessionStorage.getItem("reloading");
+    if (reloading) {
+        sessionStorage.removeItem("reloading");
+        openPanel('#journeyPanel');
+        $('#journeyBtn').css({
+            'background-color': '#A8C0FF'
+        });
+    }
+}
 function hideAllRouteLayers(){
     allRoutesArray.forEach(route => {
         route.remove();
@@ -471,12 +486,3 @@ var dDrag = function (e) {
     var center = map.getCenter()
     destination.setLatLng(center)
 }
-
-/*
-map.on('click', addMarker);
-});
-
-function addMarker(e){
-    // Add marker to map at click location; add popup window
-    var newMarker = new L.marker(e.latlng).addTo(map);
-}*/

@@ -112,20 +112,22 @@
             <h2 id="originLabel" class="inputLabel">Origin</h2>
             <div class="inputDiv">
                 <input type="text" name="origin" class="textInput"id="originInput" placeholder="Enter coordinates or use marker">
-                <button type="button" class="markerBtn" id="originBtn" onclick="pinOrigin(this)"></button>
+                <button type="button" class="smallBtn" id="originBtn" onclick="pinOrigin(this)"></button>
             </div>
             <h2 id="destinationLabel" class="inputLabel">Destination</h2>
             <div class="inputDiv">
                 <input type="text" name="destination" class="textInput"id="destinationInput" placeholder="Enter coordinates or use marker">
-                <button type="button" class="markerBtn" id="destinationBtn" onclick="pinDestination(this)"></button>
+                <button type="button" class="smallBtn" id="destinationBtn" onclick="pinDestination(this)"></button>
             </div> 
             <div id="goBtnDiv">
                 <button type="button" id="goBtn" onclick="getItineraries(originInput, destinationInput)"> GO </button>
+                
             </div>
         </form>
-        <h2 id="totalRide">
+        <h2 id="itineraries">
             Itineraries 
         </h2>
+        <button type="button" class="smallBtn" id="refreshBtn"></button>
         <div class="outputPanel" id="journeyOutputPanel">
             <ul id="journeyOutputList">
             </ul>
