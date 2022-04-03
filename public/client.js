@@ -205,7 +205,12 @@ var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.
 // map initialization
 var map = L.map('map', {
     center: [8.477703150412395, 124.64379231398955], // target is rizal monument
-    zoom: 18,
+    zoom: 14,
+    minZoom: 13,
+    maxBounds:[
+        [8.394092056350635, 124.55440521240234],
+        [8.554880391345993, 124.78597640991212]
+    ],
     layers: [ //route layer can be added directly if needed
         osmDefault
     ]
@@ -313,6 +318,7 @@ function hideAllRouteLayers(){
     allRoutesArray.forEach(route => {
         route.remove();
     });
+    console.log(map.getBounds);
 }
 var selectSpecificRoute = false;
 $('#hideAllBtn').click(function () {
