@@ -8,6 +8,10 @@
     <meta name="theme-color" content="#4285f4">
     <link rel="manifest" href="/manifest.json">
 
+    <!-- maptiler geocoding api -->
+    <script src="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.js"></script>
+    <link href="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.css" rel="stylesheet" />
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
@@ -90,42 +94,44 @@
 
 <body>
     <div id="map"></div>
-  <!--- <div id="floating">
+    <!--- <div id="floating">
         <form action="/pathfind" method="GET">
             <button type="button" id="o-pin" onclick="pinOrigin(this)">Pin</button><input type="text" name="origin" id="origin" placeholder="Origin"> <br>
             <button type="button" id="d-pin" onclick="pinDestination(this)">Pin</button><input type="text" name="destination" id="destination" placeholder="Destination"> <br>
             <button type="button" id="btnpathfind" onclick="getItineraries(origin, destination)">get me there!</button>
         </form>
-    </div>--> 
+    </div>-->
     <div class="buttonPanel">
-        <button class="toggles" id="journeyBtn" ></button>   
+        <button class="toggles" id="journeyBtn"></button>
         <button class="toggles" id="routesBtn"></button>
     </div>
-    
+
     <div class="panel" id="journeyPanel">
         <div class="headDiv">
             <h1 class="panelTitle">Journey Planner</h1>
             <button class="closeBtn" id="journeyCloseBtn"></button>
         </div>
-        
+
         <form action="/pathfind" method="GET" id="org_des_div">
             <h2 id="originLabel" class="inputLabel">Origin</h2>
             <div class="inputDiv">
-                <input type="text" name="origin" class="textInput"id="originInput" placeholder="Enter coordinates or use marker">
+                <input type="text" name="origin" class="textInput" id="originInput"
+                    placeholder="Enter coordinates or use marker">
                 <button type="button" class="smallBtn" id="originBtn" onclick="pinOrigin(this)"></button>
             </div>
             <h2 id="destinationLabel" class="inputLabel">Destination</h2>
             <div class="inputDiv">
-                <input type="text" name="destination" class="textInput"id="destinationInput" placeholder="Enter coordinates or use marker">
+                <input type="text" name="destination" class="textInput" id="destinationInput"
+                    placeholder="Enter coordinates or use marker">
                 <button type="button" class="smallBtn" id="destinationBtn" onclick="pinDestination(this)"></button>
-            </div> 
+            </div>
             <div id="goBtnDiv">
                 <button type="button" id="goBtn" onclick="getItineraries(originInput, destinationInput)"> GO </button>
-                
+
             </div>
         </form>
         <h2 id="itineraries">
-            Itineraries 
+            Itineraries
         </h2>
         <button type="button" class="smallBtn" id="refreshBtn"></button>
         <div class="outputPanel" id="journeyOutputPanel">
@@ -167,6 +173,30 @@
         charset="utf-8"></script>
 
     <script src="client.js"></script>
+    <script src="geocoding.js"></script>
+
+    <input autocomplete="on" id="search" type="text" />
+    <script>
+        var geocoder = new maptiler.Geocoder({
+            input: 'search',
+            key: 'Qd14bES0AWln0kUQZN5O',
+            bounds: [124.578094, 8.389507, 124.784431, 8.517873],
+            proximity: [124.643264, 8.477837]
+        });
+        // var dgeocoder = new maptiler.Geocoder({
+        //     input: 'destinationInput',
+        //     key: 'Qd14bES0AWln0kUQZN5O',
+        //     bounds: [124.578094, 8.389507, 124.784431, 8.517873],
+        //     proximity: [124.643264, 8.477837]
+        // });
+
+        geocoder.on('select', function (item) {
+            console.log('Selected', item);
+        });
+        // dgeocoder.on('select', function (item) {
+
+        // });
+    </script>
 
     <script>
         if ('serviceWorker' in navigator) {

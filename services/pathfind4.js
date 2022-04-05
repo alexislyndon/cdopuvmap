@@ -11,24 +11,39 @@ module.exports = async (olon, olat, dlon, dlat, maxwalk = 300) => {
         db = await dbPool.connect();
         var uuid = await uuidv4();
         // const uuid = await uuidv4().replace(/-/g,'');
-        uuidNoHyphen = 'x' + uuid.replace(/-/g, '').replace(/[^A-Za-z]/g, '').substring(0, 3)
+        uuidNoHyphen = 'x' + uuid.replace(/-/g, '').replace(/[^A-Za-z]/g, '').substring(0, 4)
         // uuidNoHyphen = 'xyzxyz'
         console.log(uuidNoHyphen);
         //
         const result = await db.query(`
         
-                select distinct route_code,route_id, route_name, the_geom, xx*cosd($4), leg1, leg99
-                from
-                    (select *  from routes) r
-                INNER JOIN lateral --ST_Length(ST_Transform(leg1,26986))
-                    ST_Distance(ST_Transform(st_setsrid(st_makepoint($3, $4),4326),3857), ST_Transform(r.the_geom,3857)) xx
-                on xx*cosd($4) < ${maxwalk} 
-                INNER JOIN
-                ST_ShortestLine(st_setsrid(st_makepoint($1,$2),4326), r.the_geom) leg1
-                on xx*cosd($4) < ${maxwalk}
-                INNER JOIN
-                ST_ShortestLine(r.the_geom, st_setsrid(st_makepoint($3,$4),4326)) leg99
-                on xx*cosd($4) < ${maxwalk}
+        WITH 
+        --Make a start point
+        start_pt as (
+                select st_setsrid(st_makepoint(124.7499918937683,8.500831949030873), 4326) as starting),
+        --Make a End Point
+        end_pt as (
+                select st_setsrid(st_makepoint(124.62920665740968,8.488172857640734), 4326) as ending),
+        --Select Closest source node and its geom for start point
+        source_code AS (
+                select source, the_geom from routes_noded order by st_distance(the_geom, (select starting from start_pt)) limit 1),
+        --Select closest target node and its geom for end point
+        target_code AS (
+                select target, the_geom  from routes_noded order by st_distance(the_geom, (select ending from end_pt)) limit 1), 
+        --Route Union from pgr_trsp()
+        route as (
+                SELECT route_name, the_geom, st_length(ST_Transform(the_geom, 4326)::geography)/10 as length from (
+                    SELECT route_name,the_geom FROM pgr_trsp(
+                        'SELECT id, source, target, distance cost, rcost reverse_cost, the_geom FROM routes_noded',
+                        (select source from source_code)::integer, (select target from target_code)::integer, true, true
+                        ) as di JOIN routes_noded
+                    ON di.id2 = routes_noded.id) as foo)
+    select * from route
+    --Finaly snap the route to precisely matach our start and end point  
+    select  route_name,length, ST_LineSubstring (the_geom,
+                                ST_LineLocatePoint(the_geom, (select starting from start_pt)),
+                                ST_LineLocatePoint(the_geom, (select ending from end_pt)))
+                                    from route
     
                 `, [olon, olat, dlon, dlat]);
 
@@ -147,5 +162,34 @@ module.exports = async (olon, olat, dlon, dlat, maxwalk = 300) => {
         // console.log(itinerary);
         return itinerary
     }
-
+str = `    WITH 
+--Make a start point
+start_pt as (
+        select st_setsrid(st_makepoint(124.7499918937683,8.500831949030873), 4326) as starting),
+--Make a End Point
+end_pt as (
+        select st_setsrid(st_makepoint(124.62920665740968,8.488172857640734), 4326) as ending),
+--Select Closest source node and its geom for start point
+source_code AS (
+        select source, the_geom from routes_noded order by st_distance(the_geom, (select starting from start_pt)) limit 1),
+--Select closest target node and its geom for end point
+target_code AS (
+        select target, the_geom  from routes_noded order by st_distance(the_geom, (select ending from end_pt)) limit 1), 
+--Route Union from pgr_trsp()
+route as (
+        SELECT seq,agg_cost,edge,route_name, the_geom, st_length(ST_Transform(the_geom, 4326)::geography)/10 as length from (
+            SELECT seq,agg_cost,edge,route_name,the_geom FROM pgr_KSP(
+                'SELECT id, source, target, distance cost, rcost reverse_cost, the_geom FROM routes_noded',
+                (select source from source_code)::integer, (select target from target_code)::integer, 2, true, true
+                ) as di left JOIN routes_noded
+            ON di.edge = routes_noded.id) as foo)
+-- select SUM(CASE WHEN edge=-1 THEN 1 ELSE 0 END) OVER (ORDER BY seq) as grp,* from route
+SELECT
+    SUM(CASE WHEN next_id=-1 THEN 1 ELSE 0 END) OVER (ORDER BY seq) as grp, *
+FROM (
+    SELECT
+        LAG(edge) OVER (ORDER BY seq) as next_id, *
+    FROM route r
+) s
+`
 }
