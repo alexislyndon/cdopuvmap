@@ -8,6 +8,13 @@
     <meta name="theme-color" content="#4285f4">
     <link rel="manifest" href="/manifest.json">
 
+    <!--  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/1.13.1/mapbox-gl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl-leaflet/0.0.15/leaflet-mapbox-gl.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/1.13.1/mapbox-gl.min.css" />
+
     <!-- maptiler geocoding api -->
     <script src="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.js"></script>
     <link href="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.css" rel="stylesheet" />
@@ -20,9 +27,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <!-- leaflet css-->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-        crossorigin="" />
+        crossorigin="" /> -->
     <!-- link for leaflet locateControl plugin (user location) -->
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.css" />
@@ -164,18 +171,17 @@
 
 
     <!-- leaflet js-->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    <!-- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script>
+        crossorigin=""></script> -->
 
     <!-- script for leaflet locateControl plugin (user location) -->
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.js"
         charset="utf-8"></script>
 
     <script src="client.js"></script>
-    <script src="geocoding.js"></script>
 
-    <input autocomplete="on" id="search" type="text" />
+    <!-- <input autocomplete="on" id="search" type="text" />
     <script>
         var geocoder = new maptiler.Geocoder({
             input: 'search',
@@ -196,7 +202,7 @@
         // dgeocoder.on('select', function (item) {
 
         // });
-    </script>
+    </script> -->
 
     <script>
         if ('serviceWorker' in navigator) {

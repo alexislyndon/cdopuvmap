@@ -204,18 +204,22 @@ var pathfind2 = (o, d) => {
 var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeAqyxwLGSnrFq', {
     attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
 });
+var     gl = L.mapboxGL({
+    attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
+    style: 'https://api.maptiler.com/maps/streets/style.json?key=Qd14bES0AWln0kUQZN5O'
+})//.addTo(map);
 
 // map initialization
 var map = L.map('map', {
     center: [8.477703150412395, 124.64379231398955], // target is rizal monument
     zoom: 14,
     minZoom: 13,
-    maxBounds: [
-        [8.394092056350635, 124.55440521240234],
-        [8.554880391345993, 124.78597640991212]
-    ],
+    // maxBounds: [
+    //     [8.394092056350635, 124.55440521240234],
+    //     [8.554880391345993, 124.78597640991212]
+    // ],
     layers: [ //route layer can be added directly if needed
-        osmDefault
+        gl
     ]
 });
 
