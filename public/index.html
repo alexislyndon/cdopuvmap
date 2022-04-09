@@ -93,13 +93,13 @@
 <body>
     <div hidden id="spinner"></div>
     <div id="map"></div>
-    <div id="floating">
+  <!--- <div id="floating">
         <form action="/pathfind" method="GET">
             <button type="button" id="o-pin" onclick="pinOrigin(this)">Pin</button><input type="text" name="origin" id="origin" placeholder="Origin"> <br>
             <button type="button" id="d-pin" onclick="pinDestination(this)">Pin</button><input type="text" name="destination" id="destination" placeholder="Destination"> <br>
             <button type="button" id="btnpathfind" onclick="getItineraries(origin, destination)">get me there!</button>
         </form>
-    </div>
+    </div>--> 
     <div class="buttonPanel">
         <button class="toggles" id="journeyBtn" ></button>   
         <button class="toggles" id="routesBtn"></button>
@@ -110,25 +110,27 @@
             <h1 class="panelTitle">Journey Planner</h1>
             <button class="closeBtn" id="journeyCloseBtn"></button>
         </div>
-
-        <div id="org_des_div">
+        
+        <form action="/pathfind" method="GET" id="org_des_div">
             <h2 id="originLabel" class="inputLabel">Origin</h2>
             <div class="inputDiv">
                 <input type="text" name="origin" class="textInput"id="originInput" placeholder="Enter coordinates or use marker">
-                <button class="markerBtn" id="originBtn"></button>
+                <button type="button" class="smallBtn" id="originBtn" onclick="pinOrigin(this)"></button>
             </div>
             <h2 id="destinationLabel" class="inputLabel">Destination</h2>
             <div class="inputDiv">
                 <input type="text" name="destination" class="textInput"id="destinationInput" placeholder="Enter coordinates or use marker">
-                <button class="markerBtn" id="destinationBtn"></button>
-            </div>
+                <button type="button" class="smallBtn" id="destinationBtn" onclick="pinDestination(this)"></button>
+            </div> 
             <div id="goBtnDiv">
-                <button id="goBtn"> GO </button>
+                <button type="button" id="goBtn" onclick="getItineraries(originInput, destinationInput)"> GO </button>
+                
             </div>
-        </div>
-        <h2 id="totalRide">
+        </form>
+        <h2 id="itineraries">
             Itineraries 
         </h2>
+        <button type="button" class="smallBtn" id="refreshBtn"></button>
         <div class="outputPanel" id="journeyOutputPanel">
             <ul id="journeyOutputList">
             </ul>

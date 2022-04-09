@@ -185,7 +185,7 @@ function getItineraries(o, d) {
             for (let i = 0; i < allItirenariesArray.length; i++) { // assign layer_id with gathered route names
                 allItirenariesArray[i].layer_id = 'itirenary_' + cleanString(itirenaryNames[i]);
             }
-            console.log(allItirenariesArray);
+            $('#'+allItirenariesArray[0].layer_id).click();  // automatic focus 1 route
         })
 }
 
@@ -213,7 +213,12 @@ var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.
 // map initialization
 var map = L.map('map', {
     center: [8.477703150412395, 124.64379231398955], // target is rizal monument
-    zoom: 18,
+    zoom: 14,
+    minZoom: 13,
+    maxBounds:[
+        [8.394092056350635, 124.55440521240234],
+        [8.554880391345993, 124.78597640991212]
+    ],
     layers: [ //route layer can be added directly if needed
         osmDefault
     ]
@@ -284,7 +289,6 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
 });
 
 $('.closeBtn').click(function (e) {
-
     switch (e.target.id) {
         case 'journeyCloseBtn':
             closePanel('#journeyPanel');
@@ -303,14 +307,31 @@ $('.closeBtn').click(function (e) {
             break;
     }
 });
-function hideAllRouteLayers() {
+
+$('#refreshBtn').click(function (){
+    sessionStorage.setItem("reloading", "true");
+    document.location.reload();
+});
+window.onload = function() {
+    var reloading = sessionStorage.getItem("reloading");
+    if (reloading) {
+        sessionStorage.removeItem("reloading");
+        openPanel('#journeyPanel');
+        $('#journeyBtn').css({
+            'background-color': '#A8C0FF'
+        });
+    }
+}
+function hideAllRouteLayers(){
     allRoutesArray.forEach(route => {
         route.remove();
     });
+    console.log(map.getBounds);
 }
+var selectSpecificRoute = false;
 $('#hideAllBtn').click(function () {
-    hideAllRouteItem();
     hideAllRouteLayers();
+    selectSpecificRoute = true;
 });
 function showAllRouteLayers() {
     allRoutesArray.forEach(route => {
@@ -320,6 +341,7 @@ function showAllRouteLayers() {
 $('#showAllBtn').click(function () {
     showAllRouteItem();
     showAllRouteLayers();
+    selectSpecificRoute = false;
 });
 
 $('#searchBtn').click(function () {
@@ -344,15 +366,22 @@ function removeRoute(input) {
         }
     }
 }
+
 $(document).on('click', '.routes_ItemClickZone', function (e) {
     let id = e.currentTarget.id;
     activeButton(e.currentTarget.id);
     for (let i = 0; i < allRoutesArray.length; i++) {
         if (allRoutesArray[i].layer_id == id) {
+            if(selectSpecificRoute){
+                allRoutesArray[i].addTo(map);
+            }
             highlight(allRoutesArray[i]);
             activeButton(allRoutesArray[i].layer_id);
         } else {
             inActiveButton(allRoutesArray[i].layer_id);
+            if(selectSpecificRoute){
+                allRoutesArray[i].remove();
+            }
         }
     }
 });
@@ -431,11 +460,11 @@ var origin = {}
 var destination = {}
 
 var pinOrigin = function (e) {
-    if (e.id == 'd-pin') return
+    if (e.id == 'originBtnn') return
     if (origin.options) {
         if (map.listens('drag')) {
             var pin1 = origin.getLatLng()
-            document.getElementById("origin").value = Object.values(pin1).reverse().toString()
+            document.getElementById("originInput").value = Object.values(pin1).reverse().toString()
             map.off('drag')
         } else { map.on('drag', oDrag) }
         return
@@ -447,11 +476,11 @@ var pinOrigin = function (e) {
 };
 
 var pinDestination = function (e) {
-    if (e.id == 'o-pin') return
+    if (e.id == 'destinationBtnn') return
     if (destination.options) {
         if (map.listens('drag')) {
             var pin1 = destination.getLatLng()
-            document.getElementById("destination").value = Object.values(pin1).reverse().toString()
+            document.getElementById("destinationInput").value = Object.values(pin1).reverse().toString()
             map.off('drag')
         } else { map.on('drag', dDrag) }
         return
@@ -471,12 +500,3 @@ var dDrag = function (e) {
     var center = map.getCenter()
     destination.setLatLng(center)
 }
-
-/*
-map.on('click', addMarker);
-});
-
-function addMarker(e){
-    // Add marker to map at click location; add popup window
-    var newMarker = new L.marker(e.latlng).addTo(map);
-}*/
