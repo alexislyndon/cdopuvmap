@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- My CSS -->
+	<link rel="stylesheet" href="style.css">
+
+	<title>Admin</title>
+</head>
+<body>
+<div class="full-page">
+    <div class="top-menu">
+        <nav class="nav-menu">
+            <ul id="menu_items">
+            <li><a href="report.html">Report</a></li>
+            <li><a href="#">Map</a></li>
+            <li><button class='loginbtn'onclick="document.getElementById
+            ('login-form').style.display='block'" style="width: auto;">Login</button></li>
+            </ul>
+        </nav> 
+    </div>
+
+    <!---login form-->
+    <div id="login-form" class="login-page">
+        <div class="form-box">
+            <div class="button-box">
+                <div id="btn"></div>
+                <button type="button" onclick="login()" class="togglebtn">Sign In</button>
+                <button type="button" onclick="register()" class="togglebtn">Sign Up</button>
+            </div>
+
+            <form id="login" class="input-login">
+                <input type="email" class="input-field" placeholder="Email" required>
+                <input type="password" class="input-field" placeholder="Password" required>
+                <br>
+                <br>
+                <br>
+                <button type="submit" class="submitbtn">Sign in</button>
+            </form>
+
+            <form id="register" class="input-register">
+                <input type="text" class="input-field" placeholder="First Name" required>
+                <input type="text" class="input-field" placeholder="Last Name" required>
+                <input type="email" class="input-field" placeholder="Email" required>
+                <input type="username" class="input-field" placeholder="Username" required>
+                <input type="password" class="input-field" placeholder="Password" required>
+                <input type="text" class="input-field" placeholder="Contact number" required>
+                <br>
+                <br>
+                <button type="submit" class="submitbtn">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!---script to move the signup and signin button-->
+<script>
+    var x=document.getElementById('login');
+    var y=document.getElementById('register');
+    var z=document.getElementById('btn');
+    function register() {
+        x.style.left='-400px'
+        y.style.left='50px'
+        z.style.left='110px'
+    }
+    function login() {
+        x.style.left='50px'
+        y.style.left='450px'
+        z.style.left='0px'
+    }
+</script>
+<!--click the Signin or signup page form--->
+<script>
+    var modal = document.getElementById('login-form');
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>
