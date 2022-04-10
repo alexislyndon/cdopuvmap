@@ -35,15 +35,18 @@
     top: 45%;
 }
 .toggles{
+    color: #ffffff;
+    padding-top: 45px;
     position: relative;
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     top: 40%;
     background-color: #3F2B96;
     border-radius: 10px;
     border: 0;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: top;
+    font-size: 10px;
 }
 #journeyBtn{
     background-image: url('../icons/journey.svg');
