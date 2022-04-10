@@ -200,6 +200,30 @@ var pathfind2 = (o, d) => {
         })
 }
 
+//withpoints pathfind
+var pathfind3 = () => {
+    hideAllRouteItem();
+    hideAllRouteLayers();
+    fetch(`/withpoints`)
+        .then(res => { return res.json() })
+        .then(data => {
+            data = data.features
+            for (let index = 0; index < data.length; ++index) {
+                console.log(data[index].properties.route_name);
+                L.geoJSON(data[index], {
+                    onEachFeature: popup,
+                    style: {
+                        opacity: 0.65,
+                        color: '#F6179E',
+                        weight: 15,
+                        dashArray: '4 1 2',
+                        dashOffset: '3'
+                    }
+                }).addTo(map)
+            }
+        })
+}
+
 // open street map layer (maptiler api)
 var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeAqyxwLGSnrFq', {
     attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'

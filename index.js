@@ -11,11 +11,12 @@ const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 const router = express.Router();
 
-const port = process.env.PORT || 3232;
+const port = process.env.PORT || 8080;
 
 var http = require('http');
 var fs = require('fs');
 const pathfind3 = require('./services/pathfind3');
+const withPoints = require('./services/withPoints');
 
 function parseHrtimeToSeconds(hrtime) {
     var seconds = (hrtime[0] + (hrtime[1] / 1e9)).toFixed(4);
@@ -59,20 +60,12 @@ app
         console.log('/test ---' + elapsedSeconds + 'seconds');
     })
 
-    .get('/asdf', async (req, res) => {
-        const uuid = await uuidv4().replace(/-/g,'');
-        const result = await db.query(`
-        CREATE TABLE "${uuid}" (
-            id serial PRIMARY KEY,
-            route_id integer,
-            route_code varchar,
-            the_geom geometry(Geometry,4326),
-            route_name varchar,
-            leg_type varchar,
-            distance float,
-            uuid uuid );
-	    `);
-        res.json(Object.values(result));
+    .get('/withpoints', async (req, res) => {
+        var startTime = process.hrtime();
+        const result = await withPoints();
+        res.json(Object.values(result)[0]);
+        var elapsedSeconds = parseHrtimeToSeconds(process.hrtime(startTime));
+        console.log('/withpoints ---' + elapsedSeconds + 'seconds');
     })
 
 
