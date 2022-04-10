@@ -1,338 +1,671 @@
-*{
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
+@media screen and (max-width: 600px) {
+    *{
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    #map{
+        position: absolute; 
+        top: 0; 
+        bottom: 0; 
+        left: 0; 
+        right: 0; 
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        /**
+        filter: blur(8px);
+        -webkit-filter: blur(8px);
+        */
+    }
+    .maincontainer{
+        position: absolute;
+        box-sizing: border-box;
+        height: 100%;
+        width: 10%;  
+    }
+    .buttonPanel{
+        position: absolute;
+        box-sizing: border-box;
+        height: auto;
+        width: 60px;
+        display: inline-block;
+        /* background-color: #3F2B96; */
+        border-radius: 5px;
+        top: 45%;
+    }
+    .toggles{
+        color: #ffffff;
+        padding-top: 45px;
+        position: relative;
+        width: 70px;
+        height: 70px;
+        top: 40%;
+        background-color: #3F2B96;
+        border-radius: 10px;
+        border: 0;
+        background-repeat: no-repeat;
+        background-position: top;
+        font-size: 10px;
+    }
+    #journeyBtn{
+        background-image: url('../icons/journey.svg');
+        background-size: 50px 50px;
+    }
+    #routesBtn{
+        background-image: url('../icons/arrow_leftright.svg');
+        background-size: 50px 50px;
+    }
+    .toggles:hover{
+        background-color: #A8C0FF;
+        cursor: pointer;
+    }
+    .toggleIcons{
+        width: 40px;
+        height: 40px;
+    }
+    .panel{
+        position: absolute;
+        display: inline-block;
+        box-sizing: border-box;
+        border: 5px solid #A8C0FF;
+        height: 55%;
+        width: 0px;
+        left: 65px;
+        top: 45%;
+        background: linear-gradient(#A8C0FF, #3F2B96);
+        border-radius: 10px;
+        transition: 0.2s;
+        overflow: scroll;
+        visibility: hidden;
+    }
+    .headDiv{
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        position: relative;
+        width: 100%;
+        height: 12%;
+        min-height: 12%;
+        background-color: #3F2B96;
+        border-radius: 10px 10px 0px 0px;
+        overflow: hidden;
+    }
+    .panelTitle{
+        margin-top: auto;
+        margin-bottom: 10px;
+        margin-left: 5px;
+        font-weight: normal;
+        color: #ffffff;
+        font-size: 20px;
+        top: 33px;
+        left: 10px;
+        white-space: nowrap;
+    }
+    .closeBtn{
+        position: relative;
+        background-color: #3F2B96;
+        border: 0px;
+        width: 30px;
+        height: 30px;
+        top: 5px;
+        background-image: url('../icons/close_x.svg');
+        background-size: 25px 25px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    #journeyCloseBtn{
+        right: -208px;
+    }
+    #routesCloseBtn{
+        right: -240px;
+    }
+    .closeBtn:hover{
+        cursor: pointer;
+    }
+    h2{
+        font-weight: normal;
+        color: #ffffff;
+        font-size: 15px;
+        white-space: nowrap;
+    }
+    #org_des_div{
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 210px;
+    }
+    #searchRouteDiv{
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .inputDiv{
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+    #goBtnDiv{
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        overflow: hidden;
+    }
+    .textInput{
+        margin-left: 15px;
+        display: inline-block;
+        width: 275px;
+        height: 40px;
+        border: 0px;
+        border-radius: 10px;
+        outline: 0;
+        font-size: 15px;
+        padding: 0px 10px 0px 10px;
+        box-shadow: -6px 10px 8px -6px #808080 inset;
+    }
+    .smallBtn, #searchBtn {
+        background-color: #3F2B96;
+        color: #ffffff;
+        border: 0px;
+        width: 40px;
+        height: 40px;
+        float: right;
+        margin-right: 15px;
+        border-radius: 10px;
+        background-size: 25px 25px;
+        background-repeat: no-repeat;
+        background-position: center;
+        box-shadow: -6px 10px 8px -6px #808080;
+    }
+    #destinationBtn, #originBtn{
+        background-image: url('../icons/marker.svg');
+    }
+    #refreshBtn{
+        position: relative;
+        background-image: url('../icons/refresh.svg');
+        bottom: 20px;
+    }
+    .smallBtn:hover{
+        background-color: #A8C0FF;
+        cursor: pointer;
+    }
+    #searchBtn{
+        background-image: url('../icons/search_slim.svg');
+    }
+    #searchBtn:hover{
+        background-color: #A8C0FF;
+        cursor: pointer;
+    }
+    .inputLabel{
+        margin-left: 20px;
+    }
+    #goBtn{
+        background-color: #3F2B96;
+        border: 0px;
+        color: #ffffff;
+        border-radius: 10px;
+        width: 121px;
+        height: 40px;
+        font-size: 15px;
+        box-shadow: -6px 10px 8px -6px #808080;
+        margin-bottom: 10px;
+    }
+    #goBtn:hover{
+        background-color: #A8C0FF;
+        cursor: pointer;
+    }
+    #itineraries{
+        position: relative;
+        top: 25px;
+        left: 20px;
+    }
+    .outputPanel{
+        padding-top: 10px;
+        position: relative;
+        box-sizing: border-box;
+        background-color: #ffffff;
+        width: 94%;
+        border-radius: 10px;
+        margin-right: auto;
+        box-shadow: -6px 10px 8px -6px #808080 inset;
+        display: flex;
+        flex-direction: column;
+        margin-left: 15px;
+        overflow: auto;
+    }
+    #journeyOutputPanel{
+        top: -10px;
+        height: 59%;
+    }
+    #routesOutputPanel{
+        height: 74%;
+    }
+    ul{
+        list-style-type: none;
+        padding: 0;
+    }
+    .outputItem{
+        margin-top: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 15px;
+        color: #3F2B96;
+        width: 90%;
+        border-radius: 5px;
+        box-shadow: -6px 10px 8px -6px #808080;
+        border: 2px solid rgba(0, 0, 0, .3);
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+    .outputItem:hover{
+        cursor: pointer;
+    }
+    .jeepneyIcon{
+        display: inline-block;
+        background-color: #3F2B96;
+        width: 50px;
+        height: 54px;
+        border-radius: 5px 0px 0px 5px;
+    }
+    .routeName{
+        position: relative;
+        display: inline-block;
+        font-size: 15px;
+        flex-grow: 3;
+        text-align: center;
+        white-space: nowrap;
+    }
+    #hideShowDiv{
+        margin-top: 20px;
+        margin-bottom: 7px;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        padding: 0px 15px 0px 15px;
+    }
+    #searchInput{
+        margin-bottom: 10px;
+    }
+    .toggleRouteBtn{
+        overflow: hidden;
+        white-space: nowrap;
+        background-color: #3F2B96;
+        border: 0px;
+        height: 40px;
+        width: 70px;
+        color: #ffffff;
+        border-radius: 10px;
+        box-shadow: -6px 10px 8px -6px #808080;
+        margin-bottom: 10px;
+    }
+    #hideAllBtn{
+        margin-left: 5px;
+    }
+    .toggleRouteBtn:hover{
+        background-color: #A8C0FF;
+        cursor: pointer;
+    }
+    ::-webkit-scrollbar {
+        width: 10px; /*vertical scroll bar*/
+        height: 10px; /*horizontal scroll bar*/
+    }
+    ::-webkit-scrollbar-track {
+        border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #3F2B96; 
+        border-radius: 10px;
+        border: 2px solid #A8C0FF;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #A8C0FF; 
+    }
+    
+    .dropbtn{
+        text-align: left;
+    }
+    
+    #floating {
+        float: right;
+        width: 300px;
+        border: 1px salmon;
+        padding: 5px;
+    }
 }
-#map{
-    position: absolute; 
-    top: 0; 
-    bottom: 0; 
-    left: 0; 
-    right: 0; 
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    /**
-    filter: blur(8px);
-    -webkit-filter: blur(8px);
-    */
-}
-.maincontainer{
-    position: absolute;
-    box-sizing: border-box;
-    height: 100%;
-    width: 10%;
 
-}
-.buttonPanel{
-    position: absolute;
-    box-sizing: border-box;
-    height: auto;
-    width: 60px;
-    display: inline-block;
-    /* background-color: #3F2B96; */
-    border-radius: 5px;
-    top: 45%;
-}
-.toggles{
-    color: #ffffff;
-    padding-top: 45px;
-    position: relative;
-    width: 70px;
-    height: 70px;
-    top: 40%;
-    background-color: #3F2B96;
-    border-radius: 10px;
-    border: 0;
-    background-repeat: no-repeat;
-    background-position: top;
-    font-size: 10px;
-}
-#journeyBtn{
-    background-image: url('../icons/journey.svg');
-    background-size: 50px 50px;
-}
-#routesBtn{
-    background-image: url('../icons/arrow_leftright.svg');
-    background-size: 50px 50px;
-}
-.toggles:hover{
-    background-color: #A8C0FF;
-    cursor: pointer;
-}
-.toggleIcons{
-    width: 40px;
-    height: 40px;
-}
-.panel{
-    position: absolute;
-    display: inline-block;
-    box-sizing: border-box;
-    border: 5px solid #A8C0FF;
-    height: 90%;
-    width: 0px;
-    left: 65px;
-    top: 5%;
-    background: linear-gradient(#A8C0FF, #3F2B96);
-    border-radius: 10px;
-    transition: 0.2s;
-    overflow: hidden;
-    visibility: hidden;
-}
-.headDiv{
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    position: relative;
-    width: 100%;
-    height: 7%;
-    min-height: 7%;
-    background-color: #3F2B96;
-    border-radius: 10px 10px 0px 0px;
-    overflow: hidden;
-}
-.panelTitle{
-    margin-top: auto;
-    margin-bottom: 10px;
-    margin-left: 5px;
-    font-weight: normal;
-    color: #ffffff;
-    font-size: 20px;
-    top: 33px;
-    left: 10px;
-    white-space: nowrap;
-}
-.closeBtn{
-    position: relative;
-    background-color: #3F2B96;
-    border: 0px;
-    width: 30px;
-    height: 30px;
-    top: 5px;
-    right: -160px;
-    background-image: url('../icons/close_x.svg');
-    background-size: 25px 25px;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-#journeyCloseBtn{
-    right: -160px;
-}
-#routesCloseBtn{
-    right: -195px;
-}
-.closeBtn:hover{
-    cursor: pointer;
-}
-h2{
-    font-weight: normal;
-    color: #ffffff;
-    font-size: 15px;
-    white-space: nowrap;
-}
-#org_des_div{
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 210px;
-}
-#searchRouteDiv{
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.inputDiv{
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-}
-#goBtnDiv{
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    overflow: hidden;
-}
-.textInput{
-    margin-left: 15px;
-    display: inline-block;
-    width: 230px;
-    height: 40px;
-    border: 0px;
-    border-radius: 10px;
-    outline: 0;
-    font-size: 15px;
-    padding: 0px 10px 0px 10px;
-    box-shadow: -6px 10px 8px -6px #808080 inset;
-}
-.smallBtn, #searchBtn {
-    background-color: #3F2B96;
-    color: #ffffff;
-    border: 0px;
-    width: 40px;
-    height: 40px;
-    float: right;
-    margin-right: 15px;
-    border-radius: 10px;
-    background-size: 25px 25px;
-    background-repeat: no-repeat;
-    background-position: center;
-    box-shadow: -6px 10px 8px -6px #808080;
-}
-#destinationBtn, #originBtn{
-    background-image: url('../icons/marker.svg');
-}
-#refreshBtn{
-    position: relative;
-    background-image: url('../icons/refresh.svg');
-    bottom: 20px;
-}
-.smallBtn:hover{
-    background-color: #A8C0FF;
-    cursor: pointer;
-}
-#searchBtn{
-    background-image: url('../icons/search_slim.svg');
-}
-#searchBtn:hover{
-    background-color: #A8C0FF;
-    cursor: pointer;
-}
-.inputLabel{
-    margin-left: 20px;
-}
-#goBtn{
-    background-color: #3F2B96;
-    border: 0px;
-    color: #ffffff;
-    border-radius: 10px;
-    width: 121px;
-    height: 40px;
-    font-size: 15px;
-    box-shadow: -6px 10px 8px -6px #808080;
-    margin-bottom: 10px;
-}
-#goBtn:hover{
-    background-color: #A8C0FF;
-    cursor: pointer;
-}
-#itineraries{
-    position: relative;
-    top: 25px;
-    left: 20px;
-}
-.outputPanel{
-    padding-top: 10px;
-    position: relative;
-    box-sizing: border-box;
-    background-color: #ffffff;
-    width: 310px;
-    border-radius: 10px;
-    margin-right: auto;
-    box-shadow: -6px 10px 8px -6px #808080 inset;
-    display: flex;
-    flex-direction: column;
-    margin-left: 15px;
-    overflow: auto;
-}
-#journeyOutputPanel{
-    top: -10px;
-    height: 59%;
-}
-#routesOutputPanel{
-    height: 74%;
-}
-ul{
-    list-style-type: none;
-    padding: 0;
-}
-.outputItem{
-    margin-top: 15px;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 15px;
-    color: #3F2B96;
-    width: 290px;
-    border-radius: 5px;
-    box-shadow: -6px 10px 8px -6px #808080;
-    border: 2px solid rgba(0, 0, 0, .3);
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-}
-.outputItem:hover{
-    cursor: pointer;
-}
-.jeepneyIcon{
-    display: inline-block;
-    background-color: #3F2B96;
-    width: 50px;
-    height: 54px;
-    border-radius: 5px 0px 0px 5px;
-}
-.routeName{
-    position: relative;
-    display: inline-block;
-    font-size: 15px;
-    flex-grow: 3;
-    text-align: center;
-    white-space: nowrap;
-}
-#hideShowDiv{
-    margin-top: 20px;
-    margin-bottom: 7px;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    padding: 0px 15px 0px 15px;
-}
-#searchInput{
-    margin-bottom: 10px;
-}
-.toggleRouteBtn{
-    overflow: hidden;
-    white-space: nowrap;
-    background-color: #3F2B96;
-    border: 0px;
-    height: 40px;
-    width: 70px;
-    color: #ffffff;
-    border-radius: 10px;
-    box-shadow: -6px 10px 8px -6px #808080;
-    margin-bottom: 10px;
-}
-#hideAllBtn{
-    margin-left: 5px;
-}
-.toggleRouteBtn:hover{
-    background-color: #A8C0FF;
-    cursor: pointer;
-}
-::-webkit-scrollbar {
-    width: 10px; /*vertical scroll bar*/
-    height: 10px; /*horizontal scroll bar*/
-}
-::-webkit-scrollbar-track {
-    border-radius: 10px;
-}
-::-webkit-scrollbar-thumb {
-    background: #3F2B96; 
-    border-radius: 10px;
-    border: 2px solid #A8C0FF;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #A8C0FF; 
-}
-
-.dropbtn{
-    text-align: left;
-}
-
-#floating {
-    float: right;
-    width: 300px;
-    border: 1px salmon;
-    padding: 5px;
+@media screen and (min-width: 601px) {
+    *{
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    #map{
+        position: absolute; 
+        top: 0; 
+        bottom: 0; 
+        left: 0; 
+        right: 0; 
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        /**
+        filter: blur(8px);
+        -webkit-filter: blur(8px);
+        */
+    }
+    .maincontainer{
+        position: absolute;
+        box-sizing: border-box;
+        height: 100%;
+        width: 10%;
+    
+    }
+    .buttonPanel{
+        position: absolute;
+        box-sizing: border-box;
+        height: auto;
+        width: 60px;
+        display: inline-block;
+        /* background-color: #3F2B96; */
+        border-radius: 5px;
+        top: 45%;
+    }
+    .toggles{
+        color: #ffffff;
+        padding-top: 45px;
+        position: relative;
+        width: 70px;
+        height: 70px;
+        top: 40%;
+        background-color: #3F2B96;
+        border-radius: 10px;
+        border: 0;
+        background-repeat: no-repeat;
+        background-position: top;
+        font-size: 10px;
+    }
+    #journeyBtn{
+        background-image: url('../icons/journey.svg');
+        background-size: 50px 50px;
+    }
+    #routesBtn{
+        background-image: url('../icons/arrow_leftright.svg');
+        background-size: 50px 50px;
+    }
+    .toggles:hover{
+        background-color: #A8C0FF;
+        cursor: pointer;
+    }
+    .toggleIcons{
+        width: 40px;
+        height: 40px;
+    }
+    .panel{
+        position: absolute;
+        display: inline-block;
+        box-sizing: border-box;
+        border: 5px solid #A8C0FF;
+        height: 90%;
+        width: 0px;
+        left: 65px;
+        top: 5%;
+        background: linear-gradient(#A8C0FF, #3F2B96);
+        border-radius: 10px;
+        transition: 0.2s;
+        overflow: hidden;
+        visibility: hidden;
+    }
+    .headDiv{
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        position: relative;
+        width: 100%;
+        height: 7%;
+        min-height: 7%;
+        background-color: #3F2B96;
+        border-radius: 10px 10px 0px 0px;
+        overflow: hidden;
+    }
+    .panelTitle{
+        margin-top: auto;
+        margin-bottom: 10px;
+        margin-left: 5px;
+        font-weight: normal;
+        color: #ffffff;
+        font-size: 20px;
+        top: 33px;
+        left: 10px;
+        white-space: nowrap;
+    }
+    .closeBtn{
+        position: relative;
+        background-color: #3F2B96;
+        border: 0px;
+        width: 30px;
+        height: 30px;
+        top: 5px;
+        background-image: url('../icons/close_x.svg');
+        background-size: 25px 25px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    #journeyCloseBtn{
+        right: -160px;
+    }
+    #routesCloseBtn{
+        right: -195px;
+    }
+    .closeBtn:hover{
+        cursor: pointer;
+    }
+    h2{
+        font-weight: normal;
+        color: #ffffff;
+        font-size: 15px;
+        white-space: nowrap;
+    }
+    #org_des_div{
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 210px;
+    }
+    #searchRouteDiv{
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .inputDiv{
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+    #goBtnDiv{
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        overflow: hidden;
+    }
+    .textInput{
+        margin-left: 15px;
+        display: inline-block;
+        width: 230px;
+        height: 40px;
+        border: 0px;
+        border-radius: 10px;
+        outline: 0;
+        font-size: 15px;
+        padding: 0px 10px 0px 10px;
+        box-shadow: -6px 10px 8px -6px #808080 inset;
+    }
+    .smallBtn, #searchBtn {
+        background-color: #3F2B96;
+        color: #ffffff;
+        border: 0px;
+        width: 40px;
+        height: 40px;
+        float: right;
+        margin-right: 15px;
+        border-radius: 10px;
+        background-size: 25px 25px;
+        background-repeat: no-repeat;
+        background-position: center;
+        box-shadow: -6px 10px 8px -6px #808080;
+    }
+    #destinationBtn, #originBtn{
+        background-image: url('../icons/marker.svg');
+    }
+    #refreshBtn{
+        position: relative;
+        background-image: url('../icons/refresh.svg');
+        bottom: 20px;
+    }
+    .smallBtn:hover{
+        background-color: #A8C0FF;
+        cursor: pointer;
+    }
+    #searchBtn{
+        background-image: url('../icons/search_slim.svg');
+    }
+    #searchBtn:hover{
+        background-color: #A8C0FF;
+        cursor: pointer;
+    }
+    .inputLabel{
+        margin-left: 20px;
+    }
+    #goBtn{
+        background-color: #3F2B96;
+        border: 0px;
+        color: #ffffff;
+        border-radius: 10px;
+        width: 121px;
+        height: 40px;
+        font-size: 15px;
+        box-shadow: -6px 10px 8px -6px #808080;
+        margin-bottom: 10px;
+    }
+    #goBtn:hover{
+        background-color: #A8C0FF;
+        cursor: pointer;
+    }
+    #itineraries{
+        position: relative;
+        top: 25px;
+        left: 20px;
+    }
+    .outputPanel{
+        padding-top: 10px;
+        position: relative;
+        box-sizing: border-box;
+        background-color: #ffffff;
+        width: 310px;
+        border-radius: 10px;
+        margin-right: auto;
+        box-shadow: -6px 10px 8px -6px #808080 inset;
+        display: flex;
+        flex-direction: column;
+        margin-left: 15px;
+        overflow: auto;
+    }
+    #journeyOutputPanel{
+        top: -10px;
+        height: 59%;
+    }
+    #routesOutputPanel{
+        height: 74%;
+    }
+    ul{
+        list-style-type: none;
+        padding: 0;
+    }
+    .outputItem{
+        margin-top: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 15px;
+        color: #3F2B96;
+        width: 290px;
+        border-radius: 5px;
+        box-shadow: -6px 10px 8px -6px #808080;
+        border: 2px solid rgba(0, 0, 0, .3);
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+    .outputItem:hover{
+        cursor: pointer;
+    }
+    .jeepneyIcon{
+        display: inline-block;
+        background-color: #3F2B96;
+        width: 50px;
+        height: 54px;
+        border-radius: 5px 0px 0px 5px;
+    }
+    .routeName{
+        position: relative;
+        display: inline-block;
+        font-size: 15px;
+        flex-grow: 3;
+        text-align: center;
+        white-space: nowrap;
+    }
+    #hideShowDiv{
+        margin-top: 20px;
+        margin-bottom: 7px;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        padding: 0px 15px 0px 15px;
+    }
+    #searchInput{
+        margin-bottom: 10px;
+    }
+    .toggleRouteBtn{
+        overflow: hidden;
+        white-space: nowrap;
+        background-color: #3F2B96;
+        border: 0px;
+        height: 40px;
+        width: 70px;
+        color: #ffffff;
+        border-radius: 10px;
+        box-shadow: -6px 10px 8px -6px #808080;
+        margin-bottom: 10px;
+    }
+    #hideAllBtn{
+        margin-left: 5px;
+    }
+    .toggleRouteBtn:hover{
+        background-color: #A8C0FF;
+        cursor: pointer;
+    }
+    ::-webkit-scrollbar {
+        width: 10px; /*vertical scroll bar*/
+        height: 10px; /*horizontal scroll bar*/
+    }
+    ::-webkit-scrollbar-track {
+        border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #3F2B96; 
+        border-radius: 10px;
+        border: 2px solid #A8C0FF;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #A8C0FF; 
+    }
+    
+    .dropbtn{
+        text-align: left;
+    }
 }

@@ -230,11 +230,56 @@ var userMarker = L.marker([8.477703150412395, 124.64379231398955]);
 
 L.control.locate().addTo(map); //check top left corner for added button/control
 
+
+//this will update panel width if user changes screen size while panel is still open
+$( window ).resize(function() {
+    if($('#routesPanel').width() > 0 || $('#journeyPanel').width() > 0){
+        if($('#routesPanel').width() > 0){
+            openPanel('#routesPanel');
+        }else if($('#journeyPanel').width() > 0){
+            openPanel('#journeyPanel');
+        }
+    }else{
+
+    }
+    // if (window.matchMedia('(max-width: 600px)').matches) {
+    //     if($('#routesPanel').width() > 0 || $('#journeyPanel').width() > 0){
+    //         if($('#routesPanel').width() > 0){
+    //             openPanel('#routesPanel');
+    //         }else if($('#journeyPanel').width() > 0){
+    //             openPanel('#journeyPanel');
+    //         }
+    //     }else{
+    //         console.log('wlay abri');
+    //     }
+    // } else { 
+    //     if($('#routesPanel').width() > 0 || $('#journeyPanel').width() > 0){
+    //         if($('#routesPanel').width() > 0){
+    //             openPanel('#routesPanel');
+    //         }else if($('#journeyPanel').width() > 0){
+    //             openPanel('#journeyPanel');
+    //         }
+    //     }else{
+    //         console.log('wlay abri');
+    //     }
+    // }
+});
 function openPanel(id) {
-    $(id).css({
-        'width': '350px',
-        'visibility': 'visible'
-    });
+    // $(id).css({
+    //     'width': '350px',
+    //     'visibility': 'visible'
+    // });
+    if (window.matchMedia('(max-width: 600px)').matches) {
+        $(id).css({
+            'width': '85%',
+            'visibility': 'visible'
+        });
+    } else {
+        $(id).css({
+            'width': '350px',
+            'visibility': 'visible'
+        });
+    }
 }
 function closePanel(id) {
     $(id).css({
