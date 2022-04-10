@@ -1,5 +1,6 @@
 const originInput = document.getElementById("originInput");
 const destinationInput = document.getElementById("destinationInput");
+const spinner = document.getElementById("spinner");
 
 function popup(feature, layer) {
     if (feature.properties) {
@@ -46,27 +47,40 @@ function cleanString(str) {
 var selected = null;
 var colors = ['#71ff34', '#ff3471', '#ff7b34', '#34aeff', '#ff4834']
 var allRoutesArray = [];
-const fetchroutes = fetch('/routes')
-    .then(res => { return res.json() })
-    .then(data => {
-        data = data.features
-        for (let i = 0; i < data.length; ++i) {
+const fetchroutes = function () {
+    spinner.removeAttribute('hidden');
+    fetch('/routes')
+        .then(res => { return res.json() })
+        .then(data => {
+            spinner.setAttribute('hidden', '');
+            data = data.features
+            for (let i = 0; i < data.length; ++i) {
 
-            allRoutesArray.push(L.geoJSON(data[i], {
-                onEachFeature: function (feature, layer) {
-                    layer.on({
-                        'click': function (e) {
-                            popup(feature, e.target);
-                            highlight(e.target); //e.target is layer
-                        }
-                    })
-                },
-                style: {
-                    opacity: 0.65,
-                    color: colors[i % colors.length],
-                    weight: 10
+                allRoutesArray.push(L.geoJSON(data[i], {
+                    onEachFeature: function (feature, layer) {
+                        layer.on({
+                            'click': function (e) {
+                                popup(feature, e.target);
+                                highlight(e.target); //e.target is layer
+                            }
+                        })
+                    },
+                    style: {
+                        opacity: 0.65,
+                        color: colors[i % colors.length],
+                        weight: 10
+                    }
+                }));
+                let text = data[i].properties.route_name;
+                let splitted = text.split('Via');
+                let elementID = 'route_' + cleanString(text);
+                // console.log(elementID);
+                if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
+                    $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem"  id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
+                } else {
+                    $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
                 }
-            }));
+            }
             let text = data[i].properties.route_name;
             let splitted = text.split('Via');
             let elementID = 'route_' + cleanString(text);
@@ -76,16 +90,16 @@ const fetchroutes = fetch('/routes')
             } else {
                 $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
             }
-        }
-        allRoutesArray.forEach(route => {
-            route.addTo(map);
-        });
+            allRoutesArray.forEach(route => {
+                route.addTo(map);
+            });
 
-        //need to add allRoutesLayers to map first before doing this loop
-        for (let i = 0; i < data.length; i++) {
-            allRoutesArray[i].layer_id = 'route_' + cleanString(data[i].properties.route_name); //adds new attribute 'layer_id'
-        }
-    })
+            //need to add allRoutesLayers to map first before doing this loop
+            for (let i = 0; i < data.length; i++) {
+                allRoutesArray[i].layer_id = 'route_' + cleanString(data[i].properties.route_name); //adds new attribute 'layer_id'
+            }
+        });
+}();
 
 function pathfind(opoint, dpoint) {
     var opoint = document.getElementById("origin").value
@@ -133,6 +147,7 @@ function clearItirenary() {
 var allItirenariesArray = [];
 var itirenaryNames = [];
 function getItineraries(o, d) {
+    spinner.removeAttribute('hidden');
     hideAllRouteItem();
     hideAllRouteLayers();
     console.log('check length' + allItirenariesArray.length);
@@ -143,6 +158,7 @@ function getItineraries(o, d) {
     fetch(`/itineraries?origin=${encodeURIComponent(`${o.lng} ${o.lat}`)}&destination=${encodeURIComponent(`${d.lng} ${d.lat}`)}`)
         .then(res => { return res.json() })
         .then(data => {
+            spinner.setAttribute('hidden', '');
             for (let i = 0; i < data.length; ++i) { //loop for data[n]
                 let text = '';
                 allItirenariesArray[i] = L.featureGroup()  // 1 layer group = 2 walks, route's vertices/edges
@@ -237,11 +253,11 @@ var gl = L.mapboxGL({
 var map = L.map('map', {
     center: [8.477703150412395, 124.64379231398955], // target is rizal monument
     zoom: 14,
-    minZoom: 12,
-    // maxBounds: [
-    //     [8.394092056350635, 124.55440521240234],
-    //     [8.554880391345993, 124.78597640991212]
-    // ],
+    minZoom: 14,
+    maxBounds:[
+        [8.786011072628465, 124.94613647460939],
+        [8.142844225655255, 124.34532165527345]
+    ],
     layers: [ //route layer can be added directly if needed
         gl
     ]
@@ -252,11 +268,56 @@ var userMarker = L.marker([8.477703150412395, 124.64379231398955]);
 
 L.control.locate().addTo(map); //check top left corner for added button/control
 
+
+//this will update panel width if user changes screen size while panel is still open
+$( window ).resize(function() {
+    if($('#routesPanel').width() > 0 || $('#journeyPanel').width() > 0){
+        if($('#routesPanel').width() > 0){
+            openPanel('#routesPanel');
+        }else if($('#journeyPanel').width() > 0){
+            openPanel('#journeyPanel');
+        }
+    }else{
+
+    }
+    // if (window.matchMedia('(max-width: 600px)').matches) {
+    //     if($('#routesPanel').width() > 0 || $('#journeyPanel').width() > 0){
+    //         if($('#routesPanel').width() > 0){
+    //             openPanel('#routesPanel');
+    //         }else if($('#journeyPanel').width() > 0){
+    //             openPanel('#journeyPanel');
+    //         }
+    //     }else{
+    //         console.log('wlay abri');
+    //     }
+    // } else { 
+    //     if($('#routesPanel').width() > 0 || $('#journeyPanel').width() > 0){
+    //         if($('#routesPanel').width() > 0){
+    //             openPanel('#routesPanel');
+    //         }else if($('#journeyPanel').width() > 0){
+    //             openPanel('#journeyPanel');
+    //         }
+    //     }else{
+    //         console.log('wlay abri');
+    //     }
+    // }
+});
 function openPanel(id) {
-    $(id).css({
-        'width': '350px',
-        'visibility': 'visible'
-    });
+    // $(id).css({
+    //     'width': '350px',
+    //     'visibility': 'visible'
+    // });
+    if (window.matchMedia('(max-width: 600px)').matches) {
+        $(id).css({
+            'width': '85%',
+            'visibility': 'visible'
+        });
+    } else {
+        $(id).css({
+            'width': '350px',
+            'visibility': 'visible'
+        });
+    }
 }
 function closePanel(id) {
     $(id).css({
@@ -357,6 +418,7 @@ $('#hideAllBtn').click(function () {
     hideAllRouteLayers();
     selectSpecificRoute = true;
 });
+
 function showAllRouteLayers() {
     allRoutesArray.forEach(route => {
         route.addTo(map);
