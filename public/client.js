@@ -214,25 +214,72 @@ var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.
 var map = L.map('map', {
     center: [8.477703150412395, 124.64379231398955], // target is rizal monument
     zoom: 14,
-    minZoom: 13,
+    minZoom: 14,
     maxBounds:[
-        [8.394092056350635, 124.55440521240234],
-        [8.554880391345993, 124.78597640991212]
+        [8.786011072628465, 124.94613647460939],
+        [8.142844225655255, 124.34532165527345]
     ],
     layers: [ //route layer can be added directly if needed
         osmDefault
     ]
 });
-
+// map.on('moveend', function() { 
+//     console.log(map.getBounds());
+// });
 var userMarker = L.marker([8.477703150412395, 124.64379231398955]);
 
 L.control.locate().addTo(map); //check top left corner for added button/control
 
+
+//this will update panel width if user changes screen size while panel is still open
+$( window ).resize(function() {
+    if($('#routesPanel').width() > 0 || $('#journeyPanel').width() > 0){
+        if($('#routesPanel').width() > 0){
+            openPanel('#routesPanel');
+        }else if($('#journeyPanel').width() > 0){
+            openPanel('#journeyPanel');
+        }
+    }else{
+
+    }
+    // if (window.matchMedia('(max-width: 600px)').matches) {
+    //     if($('#routesPanel').width() > 0 || $('#journeyPanel').width() > 0){
+    //         if($('#routesPanel').width() > 0){
+    //             openPanel('#routesPanel');
+    //         }else if($('#journeyPanel').width() > 0){
+    //             openPanel('#journeyPanel');
+    //         }
+    //     }else{
+    //         console.log('wlay abri');
+    //     }
+    // } else { 
+    //     if($('#routesPanel').width() > 0 || $('#journeyPanel').width() > 0){
+    //         if($('#routesPanel').width() > 0){
+    //             openPanel('#routesPanel');
+    //         }else if($('#journeyPanel').width() > 0){
+    //             openPanel('#journeyPanel');
+    //         }
+    //     }else{
+    //         console.log('wlay abri');
+    //     }
+    // }
+});
 function openPanel(id) {
-    $(id).css({
-        'width': '350px',
-        'visibility': 'visible'
-    });
+    // $(id).css({
+    //     'width': '350px',
+    //     'visibility': 'visible'
+    // });
+    if (window.matchMedia('(max-width: 600px)').matches) {
+        $(id).css({
+            'width': '85%',
+            'visibility': 'visible'
+        });
+    } else {
+        $(id).css({
+            'width': '350px',
+            'visibility': 'visible'
+        });
+    }
 }
 function closePanel(id) {
     $(id).css({
@@ -333,6 +380,7 @@ $('#hideAllBtn').click(function () {
     hideAllRouteLayers();
     selectSpecificRoute = true;
 });
+
 function showAllRouteLayers() {
     allRoutesArray.forEach(route => {
         route.addTo(map);
