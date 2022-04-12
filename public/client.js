@@ -81,15 +81,6 @@ const fetchroutes = function () {
                     $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
                 }
             }
-            let text = data[i].properties.route_name;
-            let splitted = text.split('Via');
-            let elementID = 'route_' + cleanString(text);
-            // console.log(elementID);
-            if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
-                $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem"  id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
-            } else {
-                $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
-            }
             allRoutesArray.forEach(route => {
                 route.addTo(map);
             });
