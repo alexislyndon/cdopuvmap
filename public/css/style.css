@@ -329,6 +329,7 @@ ul{
     border: 1px salmon;
     padding: 5px;
 }
+
 /*Report&admin*/
 .banner{
     margin-left: 85%;
@@ -363,59 +364,4 @@ ul{
 }
 .banner ul li:hover::after{
     width: 100%;
-}
-/*Report*/
-.user_container{
-    width: 100%;
-    height: 87vh;
-    background-image:linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),
-    url('../icons/map1.jpg');
-    background-position: center;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-form{
-    width: 90%;
-    max-width: 600px;
-}
-.input-box{
-    margin-bottom: 30px;
-    position: relative;
-}
-input, textarea{
-    width: 100%;
-    padding: 10px;
-    outline: 0;
-    border: 1px solid #fff;
-    color: #fff;
-    background: transparent;
-    font-size: 15px;
-}
-label{
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    padding: 10px;
-    color: #fff;
-    cursor: text;
-    transition: 0.2s;
-}
-button{
-    padding: 10px 0;
-    color: #fff;
-    outline: none;
-    background: transparent;
-    border: 1px solid #fff;
-    width: 104%;
-    cursor: pointer;
-}
-input:focus~label,
-input:valid~label,
-textarea:focus~label,
-textarea:valid~label{
-    top: -35px;
-    font-size: 14px;
 }
