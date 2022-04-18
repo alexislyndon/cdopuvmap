@@ -1,15 +1,30 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.app {
+    height: 100vh;
+    width: 100vw;
+}
+
 @media screen and (max-width: 600px) {
-    *{
+    * {
         font-family: 'Roboto', sans-serif;
         margin: 0;
         padding: 0;
     }
-    #map{
-        position: absolute; 
-        top: 0; 
-        bottom: 0; 
-        left: 0; 
-        right: 0; 
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
         width: 100%;
         height: 100%;
         z-index: -1;
@@ -18,13 +33,13 @@
         -webkit-filter: blur(8px);
         */
     }
-    .maincontainer{
+    .maincontainer {
         position: absolute;
         box-sizing: border-box;
         height: 100%;
-        width: 10%;  
+        width: 10%;
     }
-    .buttonPanel{
+    .buttonPanel {
         position: absolute;
         box-sizing: border-box;
         height: auto;
@@ -34,7 +49,7 @@
         border-radius: 5px;
         top: 45%;
     }
-    .toggles{
+    .toggles {
         color: #ffffff;
         padding-top: 45px;
         position: relative;
@@ -48,23 +63,23 @@
         background-position: top;
         font-size: 10px;
     }
-    #journeyBtn{
+    #journeyBtn {
         background-image: url('../icons/journey.svg');
         background-size: 50px 50px;
     }
-    #routesBtn{
+    #routesBtn {
         background-image: url('../icons/arrow_leftright.svg');
         background-size: 50px 50px;
     }
-    .toggles:hover{
+    .toggles:hover {
         background-color: #A8C0FF;
         cursor: pointer;
     }
-    .toggleIcons{
+    .toggleIcons {
         width: 40px;
         height: 40px;
     }
-    .panel{
+    .panel {
         position: absolute;
         display: inline-block;
         box-sizing: border-box;
@@ -79,7 +94,7 @@
         overflow: scroll;
         visibility: hidden;
     }
-    .headDiv{
+    .headDiv {
         display: flex;
         flex-wrap: nowrap;
         flex-direction: row;
@@ -91,7 +106,7 @@
         border-radius: 10px 10px 0px 0px;
         overflow: hidden;
     }
-    .panelTitle{
+    .panelTitle {
         margin-top: auto;
         margin-bottom: 10px;
         margin-left: 5px;
@@ -102,7 +117,7 @@
         left: 10px;
         white-space: nowrap;
     }
-    .closeBtn{
+    .closeBtn {
         position: relative;
         background-color: #3F2B96;
         border: 0px;
@@ -114,46 +129,46 @@
         background-repeat: no-repeat;
         background-position: center;
     }
-    #journeyCloseBtn{
+    #journeyCloseBtn {
         right: -208px;
     }
-    #routesCloseBtn{
+    #routesCloseBtn {
         right: -240px;
     }
-    .closeBtn:hover{
+    .closeBtn:hover {
         cursor: pointer;
     }
-    h2{
+    h2 {
         font-weight: normal;
         color: #ffffff;
         font-size: 15px;
         white-space: nowrap;
     }
-    #org_des_div{
+    #org_des_div {
         margin-top: 15px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         height: 210px;
     }
-    #searchRouteDiv{
+    #searchRouteDiv {
         margin-top: 15px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
     }
-    .inputDiv{
+    .inputDiv {
         display: flex;
         flex-wrap: nowrap;
         justify-content: space-between;
     }
-    #goBtnDiv{
+    #goBtnDiv {
         display: flex;
         flex-wrap: nowrap;
         justify-content: center;
         overflow: hidden;
     }
-    .textInput{
+    .textInput {
         margin-left: 15px;
         display: inline-block;
         width: 275px;
@@ -165,7 +180,8 @@
         padding: 0px 10px 0px 10px;
         box-shadow: -6px 10px 8px -6px #808080 inset;
     }
-    .smallBtn, #searchBtn {
+    .smallBtn,
+    #searchBtn {
         background-color: #3F2B96;
         color: #ffffff;
         border: 0px;
@@ -179,29 +195,30 @@
         background-position: center;
         box-shadow: -6px 10px 8px -6px #808080;
     }
-    #destinationBtn, #originBtn{
+    #destinationBtn,
+    #originBtn {
         background-image: url('../icons/marker.svg');
     }
-    #refreshBtn{
+    #refreshBtn {
         position: relative;
         background-image: url('../icons/refresh.svg');
         bottom: 20px;
     }
-    .smallBtn:hover{
+    .smallBtn:hover {
         background-color: #A8C0FF;
         cursor: pointer;
     }
-    #searchBtn{
+    #searchBtn {
         background-image: url('../icons/search_slim.svg');
     }
-    #searchBtn:hover{
+    #searchBtn:hover {
         background-color: #A8C0FF;
         cursor: pointer;
     }
-    .inputLabel{
+    .inputLabel {
         margin-left: 20px;
     }
-    #goBtn{
+    #goBtn {
         background-color: #3F2B96;
         border: 0px;
         color: #ffffff;
@@ -212,16 +229,16 @@
         box-shadow: -6px 10px 8px -6px #808080;
         margin-bottom: 10px;
     }
-    #goBtn:hover{
+    #goBtn:hover {
         background-color: #A8C0FF;
         cursor: pointer;
     }
-    #itineraries{
+    #itineraries {
         position: relative;
         top: 25px;
         left: 20px;
     }
-    .outputPanel{
+    .outputPanel {
         padding-top: 10px;
         position: relative;
         box-sizing: border-box;
@@ -235,18 +252,18 @@
         margin-left: 15px;
         overflow: auto;
     }
-    #journeyOutputPanel{
+    #journeyOutputPanel {
         top: -10px;
         height: 59%;
     }
-    #routesOutputPanel{
+    #routesOutputPanel {
         height: 74%;
     }
-    ul{
+    ul {
         list-style-type: none;
         padding: 0;
     }
-    .outputItem{
+    .outputItem {
         margin-top: 15px;
         margin-left: auto;
         margin-right: auto;
@@ -261,17 +278,17 @@
         flex-wrap: nowrap;
         align-items: center;
     }
-    .outputItem:hover{
+    .outputItem:hover {
         cursor: pointer;
     }
-    .jeepneyIcon{
+    .jeepneyIcon {
         display: inline-block;
         background-color: #3F2B96;
         width: 50px;
         height: 54px;
         border-radius: 5px 0px 0px 5px;
     }
-    .routeName{
+    .routeName {
         position: relative;
         display: inline-block;
         font-size: 15px;
@@ -279,7 +296,7 @@
         text-align: center;
         white-space: nowrap;
     }
-    #hideShowDiv{
+    #hideShowDiv {
         margin-top: 20px;
         margin-bottom: 7px;
         display: flex;
@@ -287,10 +304,10 @@
         width: 100%;
         padding: 0px 15px 0px 15px;
     }
-    #searchInput{
+    #searchInput {
         margin-bottom: 10px;
     }
-    .toggleRouteBtn{
+    .toggleRouteBtn {
         overflow: hidden;
         white-space: nowrap;
         background-color: #3F2B96;
@@ -302,33 +319,33 @@
         box-shadow: -6px 10px 8px -6px #808080;
         margin-bottom: 10px;
     }
-    #hideAllBtn{
+    #hideAllBtn {
         margin-left: 5px;
     }
-    .toggleRouteBtn:hover{
+    .toggleRouteBtn:hover {
         background-color: #A8C0FF;
         cursor: pointer;
     }
-    ::-webkit-scrollbar {
-        width: 10px; /*vertical scroll bar*/
-        height: 10px; /*horizontal scroll bar*/
+     ::-webkit-scrollbar {
+        width: 10px;
+        /*vertical scroll bar*/
+        height: 10px;
+        /*horizontal scroll bar*/
     }
-    ::-webkit-scrollbar-track {
+     ::-webkit-scrollbar-track {
         border-radius: 10px;
     }
-    ::-webkit-scrollbar-thumb {
-        background: #3F2B96; 
+     ::-webkit-scrollbar-thumb {
+        background: #3F2B96;
         border-radius: 10px;
         border: 2px solid #A8C0FF;
     }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #A8C0FF; 
+     ::-webkit-scrollbar-thumb:hover {
+        background: #A8C0FF;
     }
-    
-    .dropbtn{
+    .dropbtn {
         text-align: left;
     }
-    
     #floating {
         float: right;
         width: 300px;
@@ -338,33 +355,55 @@
 }
 
 @media screen and (min-width: 601px) {
-    *{
+    * {
         font-family: 'Roboto', sans-serif;
         margin: 0;
         padding: 0;
     }
-    #map{
-        position: absolute; 
+    .panelxxx {
+        height: inherit;
+        width: 250px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        /* padding-top: 60px; */
+    }
+    #map {
+        transition: margin-left .5s;
+        /* padding: 16px; */
+        height: 100vh;
+        margin-left: 20vw;
+        overflow: hidden;
+    }
+    #map {
+        /* position: absolute; 
         top: 0; 
         bottom: 0; 
         left: 0; 
         right: 0; 
         width: 100%;
         height: 100%;
-        z-index: -1;
+        z-index: -1; */
         /**
         filter: blur(8px);
         -webkit-filter: blur(8px);
         */
+        /* transition: margin-left .5s;
+        padding: 16px;
+        width: 80vw;
+        position: fixed; */
     }
-    .maincontainer{
+    .maincontainer {
         position: absolute;
         box-sizing: border-box;
         height: 100%;
         width: 10%;
-    
     }
-    .buttonPanel{
+    .buttonPanel {
         position: absolute;
         box-sizing: border-box;
         height: auto;
@@ -374,7 +413,7 @@
         border-radius: 5px;
         top: 45%;
     }
-    .toggles{
+    .toggles {
         color: #ffffff;
         padding-top: 45px;
         position: relative;
@@ -388,38 +427,46 @@
         background-position: top;
         font-size: 10px;
     }
-    #journeyBtn{
+    #journeyBtn {
         background-image: url('../icons/journey.svg');
         background-size: 50px 50px;
     }
-    #routesBtn{
+    #routesBtn {
         background-image: url('../icons/arrow_leftright.svg');
         background-size: 50px 50px;
     }
-    .toggles:hover{
+    .toggles:hover {
         background-color: #A8C0FF;
         cursor: pointer;
     }
-    .toggleIcons{
+    .toggleIcons {
         width: 40px;
         height: 40px;
     }
-    .panel{
-        position: absolute;
+    .panel {
+        position: fixed;
         display: inline-block;
         box-sizing: border-box;
         border: 5px solid #A8C0FF;
-        height: 90%;
-        width: 0px;
-        left: 65px;
-        top: 5%;
+        height: 100%;
+        width: 20vw;
+        left: 0;
+        top: 0;
         background: linear-gradient(#A8C0FF, #3F2B96);
         border-radius: 10px;
         transition: 0.2s;
         overflow: hidden;
-        visibility: hidden;
+        /* visibility: hidden; */
+        overflow-x: hidden;
+        /* height: inherit; */
+        /* width: 250px; */
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        transition: 0.5s;
     }
-    .headDiv{
+    .headDiv {
         display: flex;
         flex-wrap: nowrap;
         flex-direction: row;
@@ -431,7 +478,7 @@
         border-radius: 10px 10px 0px 0px;
         overflow: hidden;
     }
-    .panelTitle{
+    .panelTitle {
         margin-top: auto;
         margin-bottom: 10px;
         margin-left: 5px;
@@ -442,7 +489,7 @@
         left: 10px;
         white-space: nowrap;
     }
-    .closeBtn{
+    .closeBtn {
         position: relative;
         background-color: #3F2B96;
         border: 0px;
@@ -454,46 +501,46 @@
         background-repeat: no-repeat;
         background-position: center;
     }
-    #journeyCloseBtn{
+    #journeyCloseBtn {
         right: -160px;
     }
-    #routesCloseBtn{
+    #routesCloseBtn {
         right: -195px;
     }
-    .closeBtn:hover{
+    .closeBtn:hover {
         cursor: pointer;
     }
-    h2{
+    h2 {
         font-weight: normal;
         color: #ffffff;
         font-size: 15px;
         white-space: nowrap;
     }
-    #org_des_div{
+    #org_des_div {
         margin-top: 15px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         height: 210px;
     }
-    #searchRouteDiv{
+    #searchRouteDiv {
         margin-top: 15px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
     }
-    .inputDiv{
+    .inputDiv {
         display: flex;
         flex-wrap: nowrap;
         justify-content: space-between;
     }
-    #goBtnDiv{
+    #goBtnDiv {
         display: flex;
         flex-wrap: nowrap;
         justify-content: center;
         overflow: hidden;
     }
-    .textInput{
+    .textInput {
         margin-left: 15px;
         display: inline-block;
         width: 230px;
@@ -505,7 +552,8 @@
         padding: 0px 10px 0px 10px;
         box-shadow: -6px 10px 8px -6px #808080 inset;
     }
-    .smallBtn, #searchBtn {
+    .smallBtn,
+    #searchBtn {
         background-color: #3F2B96;
         color: #ffffff;
         border: 0px;
@@ -519,29 +567,30 @@
         background-position: center;
         box-shadow: -6px 10px 8px -6px #808080;
     }
-    #destinationBtn, #originBtn{
+    #destinationBtn,
+    #originBtn {
         background-image: url('../icons/marker.svg');
     }
-    #refreshBtn{
+    #refreshBtn {
         position: relative;
         background-image: url('../icons/refresh.svg');
         bottom: 20px;
     }
-    .smallBtn:hover{
+    .smallBtn:hover {
         background-color: #A8C0FF;
         cursor: pointer;
     }
-    #searchBtn{
+    #searchBtn {
         background-image: url('../icons/search_slim.svg');
     }
-    #searchBtn:hover{
+    #searchBtn:hover {
         background-color: #A8C0FF;
         cursor: pointer;
     }
-    .inputLabel{
+    .inputLabel {
         margin-left: 20px;
     }
-    #goBtn{
+    #goBtn {
         background-color: #3F2B96;
         border: 0px;
         color: #ffffff;
@@ -552,16 +601,16 @@
         box-shadow: -6px 10px 8px -6px #808080;
         margin-bottom: 10px;
     }
-    #goBtn:hover{
+    #goBtn:hover {
         background-color: #A8C0FF;
         cursor: pointer;
     }
-    #itineraries{
+    #itineraries {
         position: relative;
         top: 25px;
         left: 20px;
     }
-    .outputPanel{
+    .outputPanel {
         padding-top: 10px;
         position: relative;
         box-sizing: border-box;
@@ -575,18 +624,18 @@
         margin-left: 15px;
         overflow: auto;
     }
-    #journeyOutputPanel{
+    #journeyOutputPanel {
         top: -10px;
         height: 59%;
     }
-    #routesOutputPanel{
+    #routesOutputPanel {
         height: 74%;
     }
-    ul{
+    ul {
         list-style-type: none;
         padding: 0;
     }
-    .outputItem{
+    .outputItem {
         margin-top: 15px;
         margin-left: auto;
         margin-right: auto;
@@ -601,17 +650,17 @@
         flex-wrap: nowrap;
         align-items: center;
     }
-    .outputItem:hover{
+    .outputItem:hover {
         cursor: pointer;
     }
-    .jeepneyIcon{
+    .jeepneyIcon {
         display: inline-block;
         background-color: #3F2B96;
         width: 50px;
         height: 54px;
         border-radius: 5px 0px 0px 5px;
     }
-    .routeName{
+    .routeName {
         position: relative;
         display: inline-block;
         font-size: 15px;
@@ -619,7 +668,7 @@
         text-align: center;
         white-space: nowrap;
     }
-    #hideShowDiv{
+    #hideShowDiv {
         margin-top: 20px;
         margin-bottom: 7px;
         display: flex;
@@ -627,10 +676,10 @@
         width: 100%;
         padding: 0px 15px 0px 15px;
     }
-    #searchInput{
+    #searchInput {
         margin-bottom: 10px;
     }
-    .toggleRouteBtn{
+    .toggleRouteBtn {
         overflow: hidden;
         white-space: nowrap;
         background-color: #3F2B96;
@@ -642,30 +691,31 @@
         box-shadow: -6px 10px 8px -6px #808080;
         margin-bottom: 10px;
     }
-    #hideAllBtn{
+    #hideAllBtn {
         margin-left: 5px;
     }
-    .toggleRouteBtn:hover{
+    .toggleRouteBtn:hover {
         background-color: #A8C0FF;
         cursor: pointer;
     }
-    ::-webkit-scrollbar {
-        width: 10px; /*vertical scroll bar*/
-        height: 10px; /*horizontal scroll bar*/
+     ::-webkit-scrollbar {
+        width: 10px;
+        /*vertical scroll bar*/
+        height: 10px;
+        /*horizontal scroll bar*/
     }
-    ::-webkit-scrollbar-track {
+     ::-webkit-scrollbar-track {
         border-radius: 10px;
     }
-    ::-webkit-scrollbar-thumb {
-        background: #3F2B96; 
+     ::-webkit-scrollbar-thumb {
+        background: #3F2B96;
         border-radius: 10px;
         border: 2px solid #A8C0FF;
     }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #A8C0FF; 
+     ::-webkit-scrollbar-thumb:hover {
+        background: #A8C0FF;
     }
-    
-    .dropbtn{
+    .dropbtn {
         text-align: left;
     }
 }
