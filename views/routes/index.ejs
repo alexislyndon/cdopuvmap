@@ -1,0 +1,59 @@
+<span>
+    <div hidden class="success-msg">This is a success message.</div>
+  </span>
+<table class="main-tbl" id="routes">
+    <thead>
+        <tr>
+            <th>Route Code</th>
+            <th>Route Name</th>
+            <th>Shortname</th>
+            <th>Via</th>
+            <th>Structure</th>
+            <th>Start/End</th>
+            <th>Length</th>
+            <th>Color</th>
+            <th>Active</th>
+            <th>Actions <button class="add">Add new</button></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% routes?.map((i) =>{ %>
+            <tr data-id="<%= i.id%>">
+                <td>
+                    <%= i.route_code %>
+                </td>
+                <td>
+                    <%= i.route_name %>
+                </td>
+                <td>
+                    <%= i.shortname %>
+                </td>
+                <td>
+                    <%= i.via %>
+                </td>
+                <td>
+                    <%= i.structure %>
+                </td>
+                <td>
+                    <%= i.start_end %>
+                </td>
+                <td>
+                    <%= i.Length %>
+                </td>
+                <td>
+                    <%= i.Color %>
+                </td>
+                <td>
+                    <%= i.Active %>
+                </td>
+                <td>
+                    <button class="save">Save</button>
+                    <button class="edit">Edit</button>
+                    <button class="delete">Delete</button>
+                  </td>
+            </tr>
+            <% }) %>
+    </tbody>
+</table>
+<!-- <script src="app.js"></script> -->
+<link rel="stylesheet" href="admin.css">
