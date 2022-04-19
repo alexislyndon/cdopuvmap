@@ -283,12 +283,26 @@ function openPanel(id) {
             'width': '350px',
             'visibility': 'visible'
         });
+        $('#map').css({
+            'margin-left': '350px',
+            'width': 'calc(100% - 350px)'
+        });
+        $('.toggles').css({
+            'left': '350px'
+        });
     }
 }
 function closePanel(id) {
     $(id).css({
         'width': '0px',
         'visibility': 'hidden',
+    });
+    $('#map').css({
+        'margin-left': '0px',
+        'width': '100%'
+    });
+    $('.toggles').css({
+        'left': '0px'
     });
 }
 $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
