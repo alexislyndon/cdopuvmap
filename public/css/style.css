@@ -29,7 +29,7 @@ html {
         z-index: 2;
     }
     .buttonPanel {
-        display: flex;
+        /* display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: center;
@@ -37,10 +37,19 @@ html {
         box-sizing: border-box;
         height: auto;
         width: auto;
-        /* background-color: #3F2B96; */
         border-radius: 5px;
         bottom: 1%;
-        z-index: 3;
+        z-index: 3; */
+        transition: 0.2s;
+        position: absolute;
+        box-sizing: border-box;
+        height: auto;
+        width: 60px;
+        top: 40%;
+        display: inline-block;
+        border-radius: 5px;
+        top: 45%;
+        left: 0%;
     }
     .toggles {
         color: #ffffff;
@@ -48,7 +57,6 @@ html {
         position: relative;
         width: 70px;
         height: 70px;
-        left: 0px;
         background-color: #3F2B96;
         border-radius: 10px;
         border: 0;
@@ -377,7 +385,6 @@ html {
         width: 60px;
         top: 40%;
         display: inline-block;
-        /* background-color: #3F2B96; */
         border-radius: 5px;
         top: 45%;
         left: 0%;
@@ -593,8 +600,7 @@ html {
         display: flex;
         flex-direction: column;
         margin-left: 15px;
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow: auto;
     }
     #journeyOutputPanel {
         top: -10px;
