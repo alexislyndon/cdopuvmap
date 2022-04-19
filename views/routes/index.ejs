@@ -8,7 +8,6 @@
             <th>Route Name</th>
             <th>Shortname</th>
             <th>Via</th>
-            <th>Structure</th>
             <th>Start/End</th>
             <th>Length</th>
             <th>Color</th>
@@ -19,31 +18,28 @@
     <tbody>
         <% routes?.map((i) =>{ %>
             <tr data-id="<%= i.id%>">
-                <td>
+                <td class="data">
                     <%= i.route_code %>
                 </td>
-                <td>
+                <td class="data">
                     <%= i.route_name %>
                 </td>
-                <td>
+                <td class="data">
                     <%= i.shortname %>
                 </td>
-                <td>
+                <td class="data">
                     <%= i.via %>
                 </td>
-                <td>
-                    <%= i.structure %>
-                </td>
-                <td>
+                <td class="data">
                     <%= i.start_end %>
                 </td>
-                <td>
+                <td class="data">
                     <%= i.Length %>
                 </td>
-                <td>
+                <td class="data">
                     <%= i.Color %>
                 </td>
-                <td>
+                <td >
                     <%= i.Active %>
                 </td>
                 <td>
