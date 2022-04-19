@@ -745,7 +745,12 @@ html {
     border-radius: 0.5rem;
 }
 .trigger {
+    position: absolute;
+    right: 20px;
+    top: 20px;
   margin-left: 94%;
+  z-index: 999999;
+  padding: 3px;
 }
 .close-button {
     float: right;
@@ -766,6 +771,7 @@ html {
     visibility: visible;
     transform: scale(1.0);
     transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+    z-index: 9999999999;
 }
  .user_container{
       width: 95%;
