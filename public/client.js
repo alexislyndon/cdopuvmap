@@ -243,67 +243,95 @@ $( window ).resize(function() {
         }else if($('#journeyPanel').width() > 0){
             openPanel('#journeyPanel');
         }
+        resizeMap(true);
     }else{
 
     }
-    // if (window.matchMedia('(max-width: 600px)').matches) {
-    //     if($('#routesPanel').width() > 0 || $('#journeyPanel').width() > 0){
-    //         if($('#routesPanel').width() > 0){
-    //             openPanel('#routesPanel');
-    //         }else if($('#journeyPanel').width() > 0){
-    //             openPanel('#journeyPanel');
-    //         }
-    //     }else{
-    //         console.log('wlay abri');
-    //     }
-    // } else { 
-    //     if($('#routesPanel').width() > 0 || $('#journeyPanel').width() > 0){
-    //         if($('#routesPanel').width() > 0){
-    //             openPanel('#routesPanel');
-    //         }else if($('#journeyPanel').width() > 0){
-    //             openPanel('#journeyPanel');
-    //         }
-    //     }else{
-    //         console.log('wlay abri');
-    //     }
-    // }
 });
-function openPanel(id) {
-    // $(id).css({
-    //     'width': '350px',
-    //     'visibility': 'visible'
-    // });
+function resizeMap(panelOpen){
     if (window.matchMedia('(max-width: 600px)').matches) {
-        $(id).css({
-            'width': '85%',
-            'visibility': 'visible'
-        });
+        // narrow
+        if(panelOpen){
+            $('#map').css({
+                'margin-bottom': '50%',
+                'margin-left': '0%',
+                'width': '100%',
+                'height': '50%'
+            });
+        }else{
+            $('#map').css({
+                'margin-bottom': '0%',
+                'margin-left': '0%',
+                'width': '100%',
+                'height': '100%'
+            });
+        }
     } else {
+        // wide
+        if(panelOpen){
+            $('#map').css({
+                'margin-left': '18.3%',
+                'width': 'calc(100% - 18.3%)',
+                'height': '100%'
+            });
+        }else{
+            $('#map').css({
+                'margin-left': '0%',
+                'width': '100%',
+                'height': '100%'
+            });
+        }
+        
+    }
+}
+function openPanel(id) {
+    if (window.matchMedia('(max-width: 600px)').matches) {
+        // narrow
         $(id).css({
-            'width': '350px',
+            'width': '100%',
+            'height': '50%',
             'visibility': 'visible'
         });
-        $('#map').css({
-            'margin-left': '350px',
-            'width': 'calc(100% - 350px)'
+        $('.buttonPanel').css({
+            'bottom': '50%'
         });
-        $('.toggles').css({
-            'left': '350px'
+        resizeMap(true);
+    } else {
+        // wide
+        $(id).css({
+            'width': '18.3%',
+            'height': '100%',
+            'visibility': 'visible'
         });
+        $('.buttonPanel').css({
+            'left': '18.3%'
+        });
+        resizeMap(true);
     }
 }
 function closePanel(id) {
-    $(id).css({
-        'width': '0px',
-        'visibility': 'hidden',
-    });
-    $('#map').css({
-        'margin-left': '0px',
-        'width': '100%'
-    });
-    $('.toggles').css({
-        'left': '0px'
-    });
+    if (window.matchMedia('(max-width: 600px)').matches) {
+        // narrow
+        $(id).css({
+            'height': '0%',
+            'visibility': 'hidden',
+        });
+        $('.buttonPanel').css({
+            'left': '0%',
+            'bottom': '1%'
+        });
+        resizeMap(false);
+    } else {
+        // wide
+        $(id).css({
+            'width': '0%',
+            'visibility': 'hidden',
+        });
+        $('.buttonPanel').css({
+            'left': '0%'
+        });
+        resizeMap(false);
+    }
 }
 $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
     switch (e.target.id) {
