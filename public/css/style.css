@@ -379,8 +379,8 @@ html {
         margin-left: 20vw;
         overflow: hidden;
     }
-    #map {
-        /* position: absolute; 
+   /* #map {
+         position: absolute; 
         top: 0; 
         bottom: 0; 
         left: 0; 
@@ -395,8 +395,8 @@ html {
         /* transition: margin-left .5s;
         padding: 16px;
         width: 80vw;
-        position: fixed; */
-    }
+        position: fixed; 
+    }*/
     .maincontainer {
         position: absolute;
         box-sizing: border-box;
@@ -719,3 +719,173 @@ html {
         text-align: left;
     }
 }
+
+/*user report*/
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+.modal-content h1 {
+    margin-bottom: 10%;
+    margin-left: 3%;
+}
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1rem 1.5rem;
+    width: 24rem;
+    border-radius: 0.5rem;
+}
+.trigger {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    margin-left: 94%;
+    z-index: 999999;
+    padding: 3px;
+    /*background-color:#2C5364;*/
+    color: #fff;
+    border:none;
+    border-radius:10px;
+    background: linear-gradient(90deg, #1e39a5, #c50e07);
+    background-size: auto;
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-size: 300% 300%;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    font-size: 15px;
+    display: block;
+    width: 9%;
+    font-weight: bold;
+
+}
+
+.trigger::after{
+    content: '';
+    height: 3px;
+    width: 0;
+    background: #a8c0ff;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #3f2b96, #a8c0ff);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #3f2b96, #a8c0ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.5s;
+}
+.trigger:hover::after{
+    width: 100%;
+}
+/*.trigger:hover {
+    background-color: #2c3e50;  
+    color: -webkit-linear-gradient(to right, #3f2b96, #a8c0ff);  
+    color: linear-gradient(to right, #3f2b96, #a8c0ff); 
+  }*/
+.mes {
+    margin-left: -3%;
+}
+.type {
+    margin-left: 3%;
+}
+.close-button {
+    float: right;
+    width: 1.5rem;
+    line-height: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    background-color: lightgray;
+}
+
+.close-button:hover {
+    background-color: darkgray;
+}
+
+.show-modal {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1.0);
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+    z-index: 9999999999;
+}
+ .user_container{
+      width: 95%;
+     /* height: 87vh;
+     /* background-image:linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),
+      url('../icons/map1.jpg');*/
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+  .report-form{
+      width: 90%;
+      max-width: 600px;
+  }
+  .input-box, .select{
+      margin-bottom: 30px;
+      position: relative;
+  }
+  .repIn, #standard-select{
+      width: 100%;
+      padding: 10px;
+      outline: 0;
+      border: 1px solid rgb(5, 5, 5);
+      color: rgb(0, 0, 0);
+      background: transparent;
+      font-size: 15px;
+  }
+  #standard-select, .input-box {
+    width: 105%;
+    margin-left: 3%;
+  }
+
+.repbtn {
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+    background: #2C5364;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 105%;
+    margin-bottom: 20px;
+    margin-left: 3%;
+  }
+  .repbtn:hover {
+    background-color: #2c3e50;  
+    color: -webkit-linear-gradient(to right, #3f2b96, #a8c0ff);  
+    color: linear-gradient(to right, #3f2b96, #a8c0ff); 
+  }
+  .input-box label{
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      padding: 10px;
+      color: rgb(8, 8, 8);
+      cursor: text;
+      transition: 0.2s;
+  }
+  input:focus~label,
+  input:valid~label,
+  textarea:focus~label,
+  textarea:valid~label {
+      top: -35px;
+      font-size: 14px;
+  }
