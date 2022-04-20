@@ -572,3 +572,19 @@ function windowOnClick(event) {
 trigger.addEventListener("click", toggleModal);
 closeButton.addEventListener("click", toggleModal);
 window.addEventListener("click", windowOnClick);
+
+$('form.report-form').on('submit',function(e){
+    console.log('form');
+    e.preventDefault();
+    spinner.removeAttribute('hidden');
+    $.ajax({
+        url: '/reports',
+        type: 'post',
+        data:$(this).serialize(),
+        success:function(){
+            toggleModal();
+            spinner.setAttribute('hidden', '');
+            console.log('successed');
+        }
+    });
+});

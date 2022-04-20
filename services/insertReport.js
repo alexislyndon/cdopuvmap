@@ -1,10 +1,10 @@
 const db = require("./db");
 
 module.exports = async ({ summary, desc, type, name, email }) => {
-
+console.log('asdf');
     const result = await db.query(`
   
-  INSERT INTO reports (summary, desc, type, name, email, resolved)
+  INSERT INTO reports (summary, descrip, type, name, email, resolved)
   values ($1,$2,$3,$4,$5, true)
   
   `, [

@@ -68,21 +68,21 @@
     <div class="modal-content">
         <span class="close-button">&times;</span>
         <h1>Report Issues </h1>
-      <form class="report-form">
+      <form class="report-form" action="javascript:void(0);">
 
                         <div class="input-box">
-                            <input type="text" id="name" class="repIn" required>
+                            <input type="text" id="name" class="repIn" name="summary" required>
                             <label for="Summary">Summary</label>
                         </div>
                         
                         <div class="input-box">
-                            <textarea name="message" id="message" class="repIn" rows="4"></textarea>
+                            <textarea name="desc" id="message" class="repIn" rows="4"></textarea>
                             <label for="message" class="mes">Description/Message</label>
                         </div>
 
                         <label for="report" class="type">Type</label>
                         <div class="select">
-                        <select id="standard-select" required>
+                        <select id="standard-select" name="type" required>
                             <option value="#"></option>
                             <option value="Missing Routes">Missing Routes</option>
                             <option value="Wrong Routes">Wrong Routes</option>
@@ -93,12 +93,12 @@
                         </div>
 
                         <div class="input-box">
-                            <input type="text" id="name" class="repIn" required>
+                            <input type="text" id="name" class="repIn" name="name">
                             <label for="name">Name</label>
                         </div>
          
                         <div class="input-box">
-                         <input type="text" id="email" class="repIn" required>
+                         <input type="email" id="email" class="repIn" name="email">
                          <label for="email">Email</label>
                      </div>
          

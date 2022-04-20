@@ -83,8 +83,8 @@ router.get("/pathfind", async (req, res) => {
 
 router.post("/reports", async (req, res) => {
     var { summary, desc, type, name, email } = req.body
-    res.json({ summary, desc, type, name, email })
-    // const result = await insertReport(req.body);
+    const result = await insertReport(req.body);
+    res.sendStatus(200)
 
 });
 
