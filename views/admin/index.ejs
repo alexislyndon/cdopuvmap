@@ -1,26 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/admin.css" type="text/css">
-    <link rel="stylesheet" href="css/spinner.css" type="text/css">
-    <title>Admin Panel</title>
-</head>
+<%- include('../partials/header') %>
 
 <body>
+  <header>
+    <a href="/admin"><h1>Admin Panel</h1></a>
     <div hidden id="spinner"></div>
-    <h1>Admin Panel</h1>
     <div class="tabs">
-        <a id="routes" href="javascript:void(0);">Routes</a>
-        <a id="reports" href="javascript:void(0);">Reports</a>
+      <a id="routes" href="javascript:void(0);">Routes</a>
+      <a id="reports" href="javascript:void(0);">Reports</a>
     </div>
-    <div id="main"></div>
+  </header>
+  <div id="main"></div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="admin.js"></script>
+  <%- include('../partials/footer') %>
 </body>
-
-</html>

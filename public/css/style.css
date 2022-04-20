@@ -748,6 +748,7 @@ html {
     border-radius: 0.5rem;
 }
 .trigger {
+    cursor: pointer;
     position: absolute;
     right: 20px;
     top: 20px;
