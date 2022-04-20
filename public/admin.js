@@ -24,7 +24,7 @@ $(function () {
     $('#reports').on('click', (params) => {
         $('#main').load('/admin/reports')
     })
-});
+
 
 $(document).on('click', '.edit', function () {
     $(this).parent().siblings('td.data').each(function () {
@@ -62,4 +62,21 @@ $(document).on('click', '.delete', function () {
 
 $('.add').click(function () {
     $(this).parents('table').append('<tr><td class="data"></td><td class="data"></td><td class="data"></td><td><button class="save">Save</button><button class="edit">Edit</button> <button class="delete">Delete</button></td></tr>');
+});
+
+var tabs = document.getElementsByClassName('Tab');
+
+Array.prototype.forEach.call(tabs, function(tab) {
+	tab.addEventListener('click', setActiveClass);
+});
+
+function setActiveClass(evt) {
+	Array.prototype.forEach.call(tabs, function(tab) {
+		tab.classList.remove('active');
+	});
+	
+	evt.currentTarget.classList.add('active');
+}
+
+$('#routes').click()
 });
