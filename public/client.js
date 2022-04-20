@@ -265,65 +265,133 @@ L.control.locate().addTo(map); //check top left corner for added button/control
 
 
 //this will update panel width if user changes screen size while panel is still open
-$( window ).resize(function() {
-    if($('#routesPanel').width() > 0 || $('#journeyPanel').width() > 0){
-        if($('#routesPanel').width() > 0){
-            openPanel('#routesPanel');
-        }else if($('#journeyPanel').width() > 0){
-            openPanel('#journeyPanel');
-        }
-    }else{
+// $( window ).resize(function() {
+//     if($('#routesPanel').width() > 0 || $('#journeyPanel').width() > 0){
+//         if($('#routesPanel').width() > 0){
+//             openPanel('#routesPanel');
+//         }else if($('#journeyPanel').width() > 0){
+//             openPanel('#journeyPanel');
+//         }
+//     }else{
 
-    }
-    // if (window.matchMedia('(max-width: 600px)').matches) {
-    //     if($('#routesPanel').width() > 0 || $('#journeyPanel').width() > 0){
-    //         if($('#routesPanel').width() > 0){
-    //             openPanel('#routesPanel');
-    //         }else if($('#journeyPanel').width() > 0){
-    //             openPanel('#journeyPanel');
-    //         }
-    //     }else{
-    //         console.log('wlay abri');
-    //     }
-    // } else { 
-    //     if($('#routesPanel').width() > 0 || $('#journeyPanel').width() > 0){
-    //         if($('#routesPanel').width() > 0){
-    //             openPanel('#routesPanel');
-    //         }else if($('#journeyPanel').width() > 0){
-    //             openPanel('#journeyPanel');
-    //         }
-    //     }else{
-    //         console.log('wlay abri');
-    //     }
-    // }
-});
+//     }
+// });
+// function resizeMap(panelOpen){
+//     if (window.matchMedia('(max-width: 600px)').matches) {
+//         // narrow
+//         if(panelOpen){
+//             $('#map').css({
+//                 'margin-bottom': '50%',
+//                 'margin-left': '0%',
+//                 'width': '100%',
+//                 'height': '50%'
+//             });
+//         }else{
+//             $('#map').css({
+//                 'margin-bottom': '0%',
+//                 'margin-left': '0%',
+//                 'width': '100%',
+//                 'height': '100%'
+//             });
+//             console.log('here');
+//         }
+//     } else {
+//         // wide
+//         if(panelOpen){
+//             $('#map').css({
+//                 'margin-left': '18.3%',
+//                 'width': 'calc(100% - 18.3%)',
+//                 'height': '100%'
+//             });
+//         }else{
+//             $('#map').css({
+//                 'margin-left': '0%',
+//                 'width': '100%',
+//                 'height': '100%'
+//             });
+//         }
+        
+//     }
+// }
 function openPanel(id) {
-    // $(id).css({
-    //     'width': '350px',
-    //     'visibility': 'visible'
-    // });
+    // console.log(window.innerWidth);
+    // if (window.matchMedia('(max-width: 600px)').matches) {
+    //     console.log('narrow');
+    // } else {
+    //     console.log('wide');
+    // }
     if (window.matchMedia('(max-width: 600px)').matches) {
+        // narrow
         $(id).css({
-            'width': '85%',
+            'width': '100%',
+            'height': '50%',
             'visibility': 'visible'
         });
+        $('#map').css({
+            'margin-bottom': '0%',
+            'margin-left': '0%',
+            'width': '100%',
+            'height': '100%'
+        });
+        $('.buttonPanel').css({
+            'bottom': '50%'
+        });
+        console.log('help')
     } else {
+        // wide
         $(id).css({
-            'width': '350px',
+            'width': '18.3%',
+            'height': '100%',
             'visibility': 'visible'
         });
+        $('#map').css({
+            'margin-left': '18.3%',
+            'width': 'calc(100% - 18.3%)',
+            'height': '100%'
+        });
+        $('.buttonPanel').css({
+            'left': '18.3%'
+        });
+        console.log('tabang');
     }
 }
 function closePanel(id) {
-    $(id).css({
-        'width': '0px',
-        'visibility': 'hidden',
-    });
+    if (window.matchMedia('(max-width: 600px)').matches) {
+        // narrow
+        $(id).css({
+            'height': '0%',
+            'visibility': 'hidden',
+        });
+        $('.buttonPanel').css({
+            'left': '0%',
+            'bottom': '1%'
+        });
+        $('#map').css({
+            'margin-bottom': '0%',
+            'margin-left': '0%',
+            'width': '100%',
+            'height': '100%'
+        });
+    } else {
+        // wide
+        $(id).css({
+            'width': '0%',
+            'visibility': 'hidden',
+        });
+        $('.buttonPanel').css({
+            'left': '0%'
+        });
+        $('#map').css({
+            'margin-left': '0%',
+            'width': '100%',
+            'height': '100%'
+        });
+    }
 }
 $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
     switch (e.target.id) {
         case "journeyBtn":
-            // console.log(buttonClicked('#'+e.target.id));
+            // console.log('#'+e.target.id);
             if ($('#journeyPanel').width() > 0) { //check if open already
                 closePanel('#journeyPanel');
                 $('#journeyBtn').css({
