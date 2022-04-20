@@ -839,7 +839,7 @@ html {
       margin-bottom: 30px;
       position: relative;
   }
-  .repIn, #standard-select{
+  .repIn {
       width: 100%;
       padding: 10px;
       outline: 0;
@@ -847,6 +847,15 @@ html {
       color: rgb(0, 0, 0);
       background: transparent;
       font-size: 15px;
+  }
+  #standard-select {
+    width: 100%;
+    padding: 10px;
+    outline: 0;
+    border: 1px solid rgb(5, 5, 5);
+    color: rgb(0, 0, 0);
+    background: transparent;
+    font-size: 15px;
   }
   #standard-select, .input-box {
     width: 105%;

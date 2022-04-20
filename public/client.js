@@ -572,3 +572,9 @@ function windowOnClick(event) {
 trigger.addEventListener("click", toggleModal);
 closeButton.addEventListener("click", toggleModal);
 window.addEventListener("click", windowOnClick);
+
+//popup message for user report
+function myPopup() {
+    alert("Your report is submitted successfully!");
+  }
+
