@@ -15,6 +15,7 @@ function dehighlight(layer) {
         });
     }
 }
+
 function highlight(layer) {
     if (selected !== null) { //check if there is a layer already selected prior to this
         var previous = selected;
@@ -34,6 +35,7 @@ function highlight(layer) {
         dehighlight(previous);
     }
 }
+
 function cleanString(str) {
     let newStr = '';
     newStr = str.replace(/\s/g, '_'); //replace whitespace with '_'
@@ -47,7 +49,7 @@ function cleanString(str) {
 var selected = null;
 var colors = ['#71ff34', '#ff3471', '#ff7b34', '#34aeff', '#ff4834']
 var allRoutesArray = [];
-const fetchroutes = function () {
+const fetchroutes = function() {
     spinner.removeAttribute('hidden');
     fetch('/routes')
         .then(res => { return res.json() })
@@ -57,9 +59,9 @@ const fetchroutes = function () {
             for (let i = 0; i < data.length; ++i) {
 
                 allRoutesArray.push(L.geoJSON(data[i], {
-                    onEachFeature: function (feature, layer) {
+                    onEachFeature: function(feature, layer) {
                         layer.on({
-                            'click': function (e) {
+                            'click': function(e) {
                                 popup(feature, e.target);
                                 highlight(e.target); //e.target is layer
                             }
@@ -127,6 +129,7 @@ var stylistic = (leg_type, index) => {
         dashArray: "12 3 9"
     }
 }
+
 function clearItirenary() {
     if (allItirenariesArray.length > 0) {
         removeAllItirenaryItem();
@@ -137,6 +140,7 @@ function clearItirenary() {
 }
 var allItirenariesArray = [];
 var itirenaryNames = [];
+
 function getItineraries(o, d) {
     spinner.removeAttribute('hidden');
     hideAllRouteItem();
@@ -626,3 +630,38 @@ function reverseGeocode(latlng, inputE) {
 // );
 
 // window.onscroll = function () { console.log('scrolled'); }
+//script for the modal user report
+
+const modal = document.querySelector(".modal");
+const trigger = document.querySelector(".trigger");
+const closeButton = document.querySelector(".close-button");
+
+function toggleModal() {
+    modal.classList.toggle("show-modal");
+}
+
+function windowOnClick(event) {
+    if (event.target === modal) {
+        toggleModal();
+    }
+}
+
+trigger.addEventListener("click", toggleModal);
+closeButton.addEventListener("click", toggleModal);
+window.addEventListener("click", windowOnClick);
+
+$('form.report-form').on('submit',function(e){
+    console.log('form');
+    e.preventDefault();
+    spinner.removeAttribute('hidden');
+    $.ajax({
+        url: '/reports',
+        type: 'post',
+        data:$(this).serialize(),
+        success:function(){
+            toggleModal();
+            spinner.setAttribute('hidden', '');
+            console.log('successed');
+        }
+    });
+});

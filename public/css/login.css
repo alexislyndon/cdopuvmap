@@ -1,0 +1,5 @@
+.container {
+    border: 5px solid limegreen;
+    width: min(100% - 2rem, 400px);
+    margin-inline: auto;
+}

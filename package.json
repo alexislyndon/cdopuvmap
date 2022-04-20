@@ -19,7 +19,11 @@
   "homepage": "https://github.com/alexislyndon/cdo-puv-map-test1#readme",
   "keywords": [],
   "dependencies": {
+    "@types/jquery": "^3.5.14",
+    "cookie-parser": "^1.4.6",
+    "ejs": "^3.1.6",
     "express": "^4.17.3",
+    "express-session": "^1.17.2",
     "leaflet": "^1.7.1",
     "pg": "^8.7.3",
     "uuid": "^8.3.2"

@@ -23,3 +23,9 @@ GET http://localhost:8080/itineraries?origin=124.62075233459474 8.50522486379240
 
 ###
 GET http://localhost:8080/withpoints
+
+###
+GET http://localhost:3232/admin/routes
+
+###
+GET http://localhost:3232/admin/reports
