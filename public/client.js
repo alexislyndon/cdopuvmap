@@ -261,7 +261,7 @@ function closePanel(id) {
         });
         $('.buttonPanel').css({
             'left': '0%',
-            'bottom': '1%'
+            'bottom': '0.1%'
         });
         $('#map').css({
             'margin-bottom': '0%',
@@ -291,6 +291,7 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
             // console.log('#'+e.target.id);
             if (window.matchMedia('(max-width: 600px)').matches) {
                 // narrow
+                console.log('narrow');
                 if ($('#journeyPanel').height() > 0) { //check if open already
                     closePanel('#journeyPanel');
                     $('#journeyBtn').css({
@@ -310,6 +311,7 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
                 }
             } else {
                 // wide
+                console.log('wide');
                 if ($('#journeyPanel').width() > 0) { //check if open already
                     closePanel('#journeyPanel');
                     $('#journeyBtn').css({
