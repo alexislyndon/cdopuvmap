@@ -152,7 +152,9 @@ function getItineraries(o, d) {
     var o = origin.getLatLng();
     var d = destination.getLatLng();
     if (o.lng < 124.579983 || o.lng > 124.784260 || o.lat < 8.396130 || o.lat > 8.524154 || d.lng < 124.579983 || d.lng > 124.784260 || d.lat < 8.396130 || d.lat > 8.524154) {
-
+        spinner.setAttribute('hidden', '');
+        snack('error','Origin/destination points must be within CDO');
+        return
     }
     fetch(`/itineraries?origin=${encodeURIComponent(`${o.lng} ${o.lat}`)}&destination=${encodeURIComponent(`${d.lng} ${d.lat}`)}`)
         .then(res => { return res.json() })
@@ -692,7 +694,7 @@ $('form.report-form').on('submit', function (e) {
             toggleModal();
             spinner.setAttribute('hidden', '');
             console.log('successed');
-            snack();
+            snack('success','Successfully submitted form.');
         }
     });
 });
