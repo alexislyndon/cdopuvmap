@@ -6,6 +6,7 @@ const getPathsAtoB = require('../services/getPathsAtoB');
 const router = Router();
 
 const { v4: uuidv4 } = require('uuid');
+const insertReport = require('../services/insertReport');
 
 function parseHrtimeToSeconds(hrtime) {
     var seconds = (hrtime[0] + (hrtime[1] / 1e9)).toFixed(4);
@@ -79,5 +80,12 @@ router.get("/pathfind", async (req, res) => {
     var elapsedSeconds = parseHrtimeToSeconds(process.hrtime(startTime));
     console.log('/pathfind ' + elapsedSeconds + 'seconds');
 })
+
+router.post("/reports", async (req, res) => {
+    var { summary, desc, type, name, email } = req.body
+    const result = await insertReport(req.body);
+    res.sendStatus(200)
+
+});
 
 module.exports = router

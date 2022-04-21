@@ -3,7 +3,7 @@ importScripts(
 );
 
 workbox.routing.registerRoute(
-    /^https:\/\/api.maptiler.com\/.*/,
+    /^https:\/\/api.maptiler.com\/maps.*/,
     new workbox.strategies.CacheFirst({
         cacheName: 'tile-cache',
         plugins: [

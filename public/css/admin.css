@@ -1,19 +1,32 @@
 /* google fonts */
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
-body{
+/* body{
   margin: 20px 40px;
   font-size: 1.2rem;
   letter-spacing: 1px;
   background: #fafafa;
-}
-h1, h2, h3, h4, ul, li, a, p, input, label, button, div, footer{
+} */
+h1,
+h2,
+h3,
+h4,
+ul,
+li,
+a,
+p,
+input,
+label,
+button,
+div,
+footer {
   margin: 0;
   padding: 0;
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   color: #444;
+  text-decoration: none;
 }
-ul{
+/* ul{
   list-style-type: none;
 }
 a{
@@ -131,9 +144,231 @@ header .btn{
 .recipe img{
   width: 100px;
   margin: -30px auto 20px;
+} */
+
+header {
+  display: flex;
+  align-items: center;
 }
-footer{
+footer {
   text-align: center;
   margin-top: 120px;
   color: #aaa;
 }
+
+.tabs {
+  /* display: inline-block; */
+  padding: 20px;
+  letter-spacing: 2px;
+}
+.tabs > a {
+  text-decoration: none;
+  margin: 7px;
+}
+
+.tabs > a:hover {
+  
+}
+
+/* table style */
+table {
+  width: 100%;
+}
+table thead th {
+  padding: 10px 10px;
+  background: #00adee;
+  font-size: 15px;
+  text-transform: uppercase;
+  vertical-align: top;
+  color: #1d4a5a;
+  font-weight: normal;
+  text-align: left;
+}
+table tbody tr td {
+  padding: 10px;
+  background: #f2f2f2;
+  font-size: 14px;
+}
+
+.add,
+.edit,
+.save,
+.delete {
+  outline: none;
+  background: none;
+  border: none;
+}
+
+.edit,
+.save,
+.delete {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.add {
+  float: right;
+  background: transparent;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  font-size: 13px;
+  padding: 0;
+  padding: 3px 5px;
+  cursor: pointer;
+}
+.add:hover {
+  background: #ffffff;
+  color: #00adee;
+}
+
+.save {
+  display: none;
+  background: #32ad60;
+  color: #ffffff;
+}
+.save:hover {
+  background: #27854a;
+}
+
+.edit {
+  background: #2199e8;
+  color: #ffffff;
+}
+.edit:hover {
+  background: #147dc2;
+}
+
+.delete {
+  background: #ec5840;
+  color: #ffffff;
+}
+.delete:hover {
+  background: #e23317;
+}
+
+/* ------------------- */
+
+
+.Panel {
+	width: 100%;
+	max-width: 600px;
+	margin: 30px auto;
+}
+
+.Panel__body {
+		background-color: #f2f2f2;
+		padding: 10px 20px;
+	}
+
+.Tabs {
+	position: relative;
+	background-color: #fff;
+	
+	/**
+	 * OLD CODE (for reference)
+	 * It's a bit easier to understand with "left",
+	 * but the animation is not as smooth
+	 */
+
+	/* &__tab {
+		float: left;
+		width: 33.333%;
+		text-align: center;
+		&:first-child.active ~ .Tabs__presentation-slider {
+			left: 0;
+		}
+		&:nth-child(2).active ~ .Tabs__presentation-slider {
+			left: 33.333%;
+		}
+		&:nth-child(3).active ~ .Tabs__presentation-slider {
+			left: calc(33.333% * 2);
+		}
+	}
+	&__presentation-slider {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 33.333%;
+		height: 2px;
+		background-color: #4A66F4;
+		transform-origin: 0 0;
+		transition: left .25s;
+	} */
+}
+
+.Tabs:after {
+		content: ' ';
+		display: table;
+		clear: both;
+	}
+
+.Tabs {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/**
+	 * UPDATE: better to animate "transform" property than "left"
+	 * property. You can see old code lower down for reference.
+	 */
+
+.Tabs__tab {
+		float: left;
+		width: 33.333%;
+		text-align: center;
+	}
+
+.Tabs__tab:first-child.active ~ .Tabs__presentation-slider {
+			transform: translateX(0) scaleX(0.333);
+		}
+
+.Tabs__tab:nth-child(2).active ~ .Tabs__presentation-slider {
+			transform: translateX(33.333%) scaleX(0.333);
+		}
+
+.Tabs__tab:nth-child(3).active ~ .Tabs__presentation-slider {
+			transform: translateX(calc(33.333% * 2)) scaleX(0.333);
+		}
+
+.Tabs__presentation-slider {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 2px;
+		background-color: #4A66F4;
+		transform-origin: 0 0;
+		transition: transform .25s;
+	}
+
+  .slider {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 2px;
+		background-color: #4A66F4;
+		transform-origin: 0 0;
+		transition: transform .25s;
+	}
+
+.Tab {
+	font-family: 'Roboto Slab';
+}
+
+.Tab > a {
+		display: block;
+		padding: 10px 12px;
+		text-decoration: none;
+		color: #666;
+		transition: color .15s;
+	}
+
+.Tab.active > a {
+			color: #222;
+		}
+
+.Tab:hover > a {
+			color: #222;
+		}

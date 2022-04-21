@@ -19,7 +19,13 @@ POST http://localhost:3232/pathfind/124.64405905455351 8.476703511625551/124.657
 
 
 ###
-GET http://localhost:3232/test?origin=124.64642643928529 8.477327939396453&destination=124.6568548679352 8.481530116258243
+GET http://localhost:8080/itineraries?origin=124.62075233459474 8.505224863792407&destination=124.64272499084474 8.48188029558921
 
 ###
-GET http://localhost:3232/asdf
+GET http://localhost:8080/withpoints
+
+###
+GET http://localhost:3232/admin/routes
+
+###
+GET http://localhost:3232/admin/reports

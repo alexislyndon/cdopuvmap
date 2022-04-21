@@ -1,3 +1,6 @@
+#spinner {
+  z-index: 9999999999;
+}
 #spinner:not([hidden]) {
     position: fixed;
     top: 0;

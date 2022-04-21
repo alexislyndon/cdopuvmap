@@ -1,0 +1,38 @@
+<span>
+  <!-- <button id="add-colleague" style="margin: 20px; width: 40px; height: 25px">
+      Add
+    </button> -->
+  <div class="success-msg" hidden>This is a success message.</div>
+</span>
+<h2>Reports</h2>
+<table class="main-tbl" id="reports">
+  <thead>
+    <tr>
+      <th>Summary</th>
+      <th>Description</th>
+      <th>Type</th>
+      <th>Reported by</th>
+      <th>Email Address</th>
+      <th>Resolved</th>
+      <th>Actions <button class="add">Add new</button></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% reports?.map((i) =>{ %>
+    <tr data-id="<%= i.id%>">
+      <td><%= i.summary %></td>
+      <td><%= i.desc %></td>
+      <td><%= i.type %></td>
+      <td><%= i.name %></td>
+      <td><%= i.email %></td>
+      <td><%= i.resolved %></td>
+      <td>
+        <button class="save">Save</button>
+        <button class="edit">Edit</button>
+        <button class="delete">Delete</button>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+<!-- <script src="app.js"></script> -->
