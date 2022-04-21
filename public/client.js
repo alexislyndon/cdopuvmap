@@ -438,6 +438,7 @@ function hideAllRouteLayers() {
 }
 var selectSpecificRoute = false;
 $('#hideAllBtn').click(function () {
+    $('div.route-info').each(function () { $(this).hide() })
     hideAllRouteLayers();
     selectSpecificRoute = true;
 });
