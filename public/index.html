@@ -8,102 +8,184 @@
     <meta name="theme-color" content="#4285f4">
     <link rel="manifest" href="/manifest.json">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- mapbox-gl-leaflet -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/1.13.1/mapbox-gl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl-leaflet/0.0.15/leaflet-mapbox-gl.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/1.13.1/mapbox-gl.min.css" />
+
+
+    <!-- maptiler geocoding api -->
+    <script src="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.js"></script>
+    <link href="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <!-- fonts api-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <!-- leaflet css-->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-        crossorigin="" />
-    <!-- link for leaflet locateControl plugin (user location) -->
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.css" />
     <!-- cdn for additional fonts/icons (used in several icon)-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="css/spinner.css" type="text/css">
+    <!-- <link rel="stylesheet" href="css/test.css"> -->
 
 
     <!-- pwa stuff -->
     <link rel="apple-touch-icon" href="icons/apple-icon-180.png">
-
     <meta name="apple-mobile-web-app-capable" content="yes">
-
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-2048-2732.jpg"
-        media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-2732-2048.jpg"
-        media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-1668-2388.jpg"
-        media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-2388-1668.jpg"
-        media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-1536-2048.jpg"
-        media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-2048-1536.jpg"
-        media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-1668-2224.jpg"
-        media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-2224-1668.jpg"
-        media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-1620-2160.jpg"
-        media="(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-2160-1620.jpg"
-        media="(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-1284-2778.jpg"
-        media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-2778-1284.jpg"
-        media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-1170-2532.jpg"
-        media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-2532-1170.jpg"
-        media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-1125-2436.jpg"
-        media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-2436-1125.jpg"
-        media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-1242-2688.jpg"
-        media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-2688-1242.jpg"
-        media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-828-1792.jpg"
-        media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-1792-828.jpg"
-        media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-1242-2208.jpg"
-        media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-2208-1242.jpg"
-        media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-750-1334.jpg"
-        media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-1334-750.jpg"
-        media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-640-1136.jpg"
-        media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/apple-splash-1136-640.jpg"
-        media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-2048-2732.jpg" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-2732-2048.jpg" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-1668-2388.jpg" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-2388-1668.jpg" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-1536-2048.jpg" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-2048-1536.jpg" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-1668-2224.jpg" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-2224-1668.jpg" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-1620-2160.jpg" media="(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-2160-1620.jpg" media="(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-1284-2778.jpg" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-2778-1284.jpg" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-1170-2532.jpg" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-2532-1170.jpg" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-1125-2436.jpg" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-2436-1125.jpg" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-1242-2688.jpg" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-2688-1242.jpg" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-828-1792.jpg" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-1792-828.jpg" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-1242-2208.jpg" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-2208-1242.jpg" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-750-1334.jpg" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-1334-750.jpg" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-640-1136.jpg" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/apple-splash-1136-640.jpg" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
     <!--end pwa stuff -->
     <title>CDO PUVMAP</title>
 </head>
 
 <body>
-    <div hidden id="spinner"></div>
-    <div id="map"></div>
+     <!----modal for the user report-->
+     <button class="trigger">Report an issue</button>
+<div class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h1>Report Issues </h1>
+      <form class="report-form" action="javascript:void(0);">
+
+                        <div class="input-box">
+                            <input type="text" id="name" class="repIn" name="summary" required>
+                            <label for="Summary">Summary</label>
+                        </div>
+                        
+                        <div class="input-box">
+                            <textarea name="desc" id="message" class="repIn" rows="4"></textarea>
+                            <label for="message" class="mes">Description/Message</label>
+                        </div>
+
+                        <label for="report" class="type">Type</label>
+                        <div class="select">
+                        <select id="standard-select" name="type" required>
+                            <option value="#"></option>
+                            <option value="Missing Routes">Missing Routes</option>
+                            <option value="Wrong Routes">Wrong Routes</option>
+                            <option value="Wrong Itenerary">Wrong Itenerary</option>
+                            <option value="UI/System Bug">UI/System Bug</option>
+                            <option value="Others">Others</option>
+                        </select>
+                        </div>
+
+                        <div class="input-box">
+                            <input type="text" id="name" class="repIn" name="name">
+                            <label for="name">Name</label>
+                        </div>
+         
+                        <div class="input-box">
+                         <input type="email" id="email" class="repIn" name="email">
+                         <label for="email">Email</label>
+                     </div>
+         
+                     <button class="repbtn" type="submit">SUBMIT</button>
+                </form>
+             </div>
+    </div> 
+</div>
+
+    <!--end for the user report-->
+    <div class="app">
+        <div class="panel" id="journeyPanel">
+            <div class="headDiv">
+                <h1 class="panelTitle">Journey Planner</h1>
+                <button class="closeBtn" id="journeyCloseBtn"></button>
+            </div>
+
+            <form action="/pathfind" method="GET" id="org_des_div">
+                <h2 id="originLabel" class="inputLabel">Origin</h2>
+                <div class="inputDiv">
+                    <input type="text" name="origin" class="textInput" id="originInput" placeholder="Search place or use marker">
+                    <button type="button" class="smallBtn" id="originBtn" onclick="pinOrigin(this)"></button>
+                </div>
+                <h2 id="destinationLabel" class="inputLabel">Destination</h2>
+                <div class="inputDiv">
+                    <input type="text" name="destination" class="textInput" id="destinationInput" placeholder="Search place or use marker">
+                    <button type="button" class="smallBtn" id="destinationBtn" onclick="pinDestination(this)"></button>
+                </div>
+                <div id="goBtnDiv">
+                    <button type="button" id="goBtn" onclick="getItineraries(originInput, destinationInput)"> GO
+                    </button>
+
+                </div>
+            </form>
+            <h2 id="itineraries">
+                Itineraries
+            </h2>
+            <button type="button" class="smallBtn" id="refreshBtn"></button>
+            <div class="outputPanel" id="journeyOutputPanel">
+                <ul id="journeyOutputList">
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel" id="routesPanel" hidden>
+            <div class="headDiv">
+                <h1 class="panelTitle">View Routes</h1>
+                <button class="closeBtn" id="routesCloseBtn"></button>
+            </div>
+
+            <div id="searchRouteDiv">
+                <div class="inputDiv">
+                    <input type="text" class="textInput" id="searchInput" placeholder="Search specific route">
+                    <button id="searchBtn"></button>
+                </div>
+            </div>
+            <div id="hideShowDiv">
+                <button id="showAllBtn" class="toggleRouteBtn">Show All</button>
+                <button id="hideAllBtn" class="toggleRouteBtn">Hide All</button>
+            </div>
+            <div class="outputPanel" id="routesOutputPanel">
+                <ul id="routesOutputList">
+                </ul>
+            </div>
+        </div>
+        <div hidden id="spinner"></div>
+        <div id="map"></div>
+    </div>
     <div class="buttonPanel">
-        <button class="toggles" id="journeyBtn" >Journey Planner</button>   
+        <button class="toggles" id="journeyBtn">Journey Planner</button>
         <button class="toggles" id="routesBtn">View Routes</button>
     </div>
-    
+
     <div class="panel" id="journeyPanel">
         <div class="headDiv">
             <h1 class="panelTitle">Journey Planner</h1>
             <button class="closeBtn" id="journeyCloseBtn"></button>
         </div>
-        
+
         <form action="/pathfind" method="GET" id="org_des_div">
             <h2 id="originLabel" class="inputLabel">Origin</h2>
             <div class="inputDiv">
@@ -114,14 +196,15 @@
             <div class="inputDiv">
                 <input type="text" name="destination" class="textInput"id="destinationInput" placeholder="Search place or use marker">
                 <button type="button" class="smallBtn" id="destinationBtn" onclick="pinDestination(this)"></button>
-            </div> 
+            </div>
             <div id="goBtnDiv">
                 <button type="button" id="goBtn" onclick="getItineraries(originInput, destinationInput)"> GO </button>
+                <button type="button" id="goBtn2" onclick="pathfind3()"> WITHPOINTS </button>
                 
             </div>
         </form>
         <h2 id="itineraries">
-            Itineraries 
+            Itineraries
         </h2>
         <button type="button" class="smallBtn" id="refreshBtn"></button>
         <div class="outputPanel" id="journeyOutputPanel">
@@ -152,15 +235,11 @@
         </div>
     </div>
 
-
     <!-- leaflet js-->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script>
+    <!-- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script> -->
 
     <!-- script for leaflet locateControl plugin (user location) -->
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.js"
-        charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
 
     <script src="client.js"></script>
 
