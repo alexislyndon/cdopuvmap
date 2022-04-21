@@ -196,7 +196,6 @@ function getItineraries(o, d) {
             $('#' + allItirenariesArray[0].layer_id).click();  // automatic focus 1 route
         })
 }
-
 L.control.locate().addTo(map); //check top left corner for added button/control
 
 
@@ -212,49 +211,13 @@ L.control.locate().addTo(map); //check top left corner for added button/control
 
 //     }
 // });
-// function resizeMap(panelOpen){
-//     if (window.matchMedia('(max-width: 600px)').matches) {
-//         // narrow
-//         if(panelOpen){
-//             $('#map').css({
-//                 'margin-bottom': '50%',
-//                 'margin-left': '0%',
-//                 'width': '100%',
-//                 'height': '50%'
-//             });
-//         }else{
-//             $('#map').css({
-//                 'margin-bottom': '0%',
-//                 'margin-left': '0%',
-//                 'width': '100%',
-//                 'height': '100%'
-//             });
-//             console.log('here');
-//         }
-//     } else {
-//         // wide
-//         if(panelOpen){
-//             $('#map').css({
-//                 'margin-left': '18.3%',
-//                 'width': 'calc(100% - 18.3%)',
-//                 'height': '100%'
-//             });
-//         }else{
-//             $('#map').css({
-//                 'margin-left': '0%',
-//                 'width': '100%',
-//                 'height': '100%'
-//             });
-//         }
 
-//     }
-// }
 function openPanel(id) {
     // console.log(window.innerWidth);
     // if (window.matchMedia('(max-width: 600px)').matches) {
-    //     console.log('narrow');
+    //     window.alert('narrow');
     // } else {
-    //     console.log('wide');
+    //     window.alert('wide');
     // }
     if (window.matchMedia('(max-width: 600px)').matches) {
         // narrow
@@ -264,15 +227,14 @@ function openPanel(id) {
             'visibility': 'visible'
         });
         $('#map').css({
-            'margin-bottom': '0%',
+            'margin-bottom': '50%',
             'margin-left': '0%',
             'width': '100%',
-            'height': '100%'
+            'height': '50%'
         });
         $('.buttonPanel').css({
             'bottom': '50%'
         });
-        console.log('help')
     } else {
         // wide
         $(id).css({
@@ -288,7 +250,6 @@ function openPanel(id) {
         $('.buttonPanel').css({
             'left': '18.3%'
         });
-        console.log('tabang');
     }
 }
 function closePanel(id) {
@@ -328,43 +289,84 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
     switch (e.target.id) {
         case "journeyBtn":
             // console.log('#'+e.target.id);
-            if ($('#journeyPanel').width() > 0) { //check if open already
-                closePanel('#journeyPanel');
-                $('#journeyBtn').css({
-                    'background-color': '#3F2B96'
-                });
+            if (window.matchMedia('(max-width: 600px)').matches) {
+                // narrow
+                if ($('#journeyPanel').height() > 0) { //check if open already
+                    closePanel('#journeyPanel');
+                    $('#journeyBtn').css({
+                        'background-color': '#3F2B96'
+                    });
+                } else {
+                    //close other panels first
+                    closePanel('#routesPanel');
+                    $('#routesBtn').css({
+                        'background-color': '#3F2B96'
+                    });
+                    //then open target panel
+                    openPanel('#journeyPanel');
+                    $('#journeyBtn').css({
+                        'background-color': '#A8C0FF'
+                    });
+                }
             } else {
-                //close other panels first
-                closePanel('#routesPanel');
-                $('#routesBtn').css({
-                    'background-color': '#3F2B96'
-                });
-                //then open target panel
-                openPanel('#journeyPanel');
-                $('#journeyBtn').css({
-                    'background-color': '#A8C0FF'
-                });
+                // wide
+                if ($('#journeyPanel').width() > 0) { //check if open already
+                    closePanel('#journeyPanel');
+                    $('#journeyBtn').css({
+                        'background-color': '#3F2B96'
+                    });
+                } else {
+                    //close other panels first
+                    closePanel('#routesPanel');
+                    $('#routesBtn').css({
+                        'background-color': '#3F2B96'
+                    });
+                    //then open target panel
+                    openPanel('#journeyPanel');
+                    $('#journeyBtn').css({
+                        'background-color': '#A8C0FF'
+                    });
+                }
             }
-
             break;
         case "routesBtn":
-            if ($('#routesPanel').width() > 0) { //check if open already
-                closePanel('#routesPanel');
-                $('#routesBtn').css({
-                    'background-color': '#3F2B96'
-                });
+            if (window.matchMedia('(max-width: 600px)').matches) {
+                // narrow
+                if ($('#routesPanel').height() > 0) { //check if open already
+                    closePanel('#routesPanel');
+                    $('#routesBtn').css({
+                        'background-color': '#3F2B96'
+                    });
+                } else {
+                    closePanel('#journeyPanel');
+                    $('#journeyBtn').css({
+                        'background-color': '#3F2B96'
+                    });
+    
+                    openPanel('#routesPanel');
+                    $('#routesBtn').css({
+                        'background-color': '#A8C0FF'
+                    });
+                }
             } else {
-                closePanel('#journeyPanel');
-                $('#journeyBtn').css({
-                    'background-color': '#3F2B96'
-                });
-
-                openPanel('#routesPanel');
-                $('#routesBtn').css({
-                    'background-color': '#A8C0FF'
-                });
+                // wide
+                if ($('#routesPanel').width() > 0) { //check if open already
+                    closePanel('#routesPanel');
+                    $('#routesBtn').css({
+                        'background-color': '#3F2B96'
+                    });
+                } else {
+                    closePanel('#journeyPanel');
+                    $('#journeyBtn').css({
+                        'background-color': '#3F2B96'
+                    });
+    
+                    openPanel('#routesPanel');
+                    $('#routesBtn').css({
+                        'background-color': '#A8C0FF'
+                    });
+                }
             }
-
             break;
         default:
             console.log('here');
