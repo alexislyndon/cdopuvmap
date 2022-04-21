@@ -264,14 +264,32 @@ L.control.locate().addTo(map); //check top left corner for added button/control
 
 //this will update panel width if user changes screen size while panel is still open
 // $( window ).resize(function() {
-//     if($('#routesPanel').width() > 0 || $('#journeyPanel').width() > 0){
-//         if($('#routesPanel').width() > 0){
-//             openPanel('#routesPanel');
-//         }else if($('#journeyPanel').width() > 0){
-//             openPanel('#journeyPanel');
-//         }
+//     $("#routesPanel").css("visibility");
+//     $("#journeyPanel").css("visibility");
+//     if($('#routesPanel').is(":visible") || $('#journeyPanel').is(":visible")){
+//         console.log('naay abri');
 //     }else{
-
+//         console.log('wlay abri');
+//         // if($('#routesPanel').is(":visible")){
+//         //     openPanel('#routesPanel');
+//         // }else if($('#journeyPanel').is(":visible")){
+//         //     openPanel('#journeyPanel');
+//         // }
+//     }
+//     console.log(window.innerWidth);
+//     if (window.matchMedia('(max-width: 600px)').matches) {
+//         if($('#routesPanel').is(":visible") || $('#journeyPanel').is(":visible")){
+//             console.log('naay abri');
+//         }else{
+//             console.log('wlay abri');
+//             // if($('#routesPanel').is(":visible")){
+//             //     openPanel('#routesPanel');
+//             // }else if($('#journeyPanel').is(":visible")){
+//             //     openPanel('#journeyPanel');
+//             // }
+//         }
+//     } else {
+//         window.alert('wide');
 //     }
 // });
 function openPanel(id) {
@@ -323,7 +341,7 @@ function closePanel(id) {
         });
         $('.buttonPanel').css({
             'left': '0%',
-            'bottom': '1%'
+            'bottom': '0.1%'
         });
         $('#map').css({
             'margin-bottom': '0%',
