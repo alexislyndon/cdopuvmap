@@ -362,7 +362,7 @@ html {
         /* padding: 16px; */
         height: 100%;
         width: 100%;
-        margin-left: 0px;
+        margin-left: 0%;
         z-index: 2;
     }
     .buttonPanel {
@@ -371,10 +371,9 @@ html {
         box-sizing: border-box;
         height: auto;
         width: 60px;
-        top: 40%;
+        bottom: 50%;
         display: inline-block;
         border-radius: 5px;
-        top: 45%;
         left: 0%;
     }
     .toggles {
