@@ -14,7 +14,7 @@ module.exports = async () => {
         'geometry',   ST_AsGeoJSON(the_geom)::jsonb,
         'properties', to_jsonb(inputs) - 'id' - 'the_geom'
       ) AS feature
-      FROM (SELECT * FROM routes) inputs) features;
+      FROM (SELECT * FROM routescopy order by id) inputs) features;
     
     `);
 
