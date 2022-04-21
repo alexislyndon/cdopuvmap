@@ -200,33 +200,33 @@ L.control.locate().addTo(map); //check top left corner for added button/control
 
 
 //this will update panel width if user changes screen size while panel is still open
-$( window ).resize(function() {
-    if($("#routesPanel").css("visibility") === "visible"){
-        openPanel('#routesPanel');
-    }else if ($("#journeyPanel").css("visibility") === "visible"){
-        openPanel('#journeyPanel');
-    } else{ // if all are close, only move the button panel and resize the map
-        if (window.matchMedia('(max-width: 600px)').matches) {
-            // narrow
-            $('.buttonPanel').css({
-                'left': '0%',
-                'bottom': '0.1%'
-            });
-        } else {
-            // wide
-            $('.buttonPanel').css({
-                'left': '0%',
-                'bottom': '50%'
-            });
-        }
-        $('#map').css({
-            'margin-bottom': '0%',
-            'margin-left': '0%',
-            'width': '100%',
-            'height': '100%'
-        });
-    }
-});
+// $( window ).resize(function() {
+//     if($("#routesPanel").css("visibility") === "visible"){
+//         openPanel('#routesPanel');
+//     }else if ($("#journeyPanel").css("visibility") === "visible"){
+//         openPanel('#journeyPanel');
+//     } else{ // if all are close, only move the button panel and resize the map
+//         if (window.matchMedia('(max-width: 600px)').matches) {
+//             // narrow
+//             $('.buttonPanel').css({
+//                 'left': '0%',
+//                 'bottom': '0.1%'
+//             });
+//         } else {
+//             // wide
+//             $('.buttonPanel').css({
+//                 'left': '0%',
+//                 'bottom': '50%'
+//             });
+//         }
+//         $('#map').css({
+//             'margin-bottom': '0%',
+//             'margin-left': '0%',
+//             'width': '100%',
+//             'height': '100%'
+//         });
+//     }
+// });
 
 function openPanel(id) {
     if (window.matchMedia('(max-width: 600px)').matches) {
