@@ -1,3 +1,25 @@
+var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeAqyxwLGSnrFq', {
+    attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
+});
+var gl = L.mapboxGL({
+    attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
+    style: 'https://api.maptiler.com/maps/streets/style.json?key=Qd14bES0AWln0kUQZN5O'
+})//.addTo(map);
+
+// map initialization
+var map = L.map('map', {
+    center: [8.477703150412395, 124.64379231398955], // target is rizal monument
+    zoom: 14,
+    minZoom: 14,
+    maxBounds: [
+        [8.786011072628465, 124.94613647460939],
+        [8.142844225655255, 124.34532165527345]
+    ],
+    layers: [ //route layer can be added directly if needed
+        gl
+    ]
+});
+
 const originInput = document.getElementById("originInput");
 const destinationInput = document.getElementById("destinationInput");
 const spinner = document.getElementById("spinner");
@@ -49,7 +71,7 @@ function cleanString(str) {
 var selected = null;
 var colors = ['#71ff34', '#ff3471', '#ff7b34', '#34aeff', '#ff4834']
 var allRoutesArray = [];
-const fetchroutes = function() {
+const fetchroutes = function () {
     spinner.removeAttribute('hidden');
     fetch('/routes')
         .then(res => { return res.json() })
@@ -59,9 +81,9 @@ const fetchroutes = function() {
             for (let i = 0; i < data.length; ++i) {
 
                 allRoutesArray.push(L.geoJSON(data[i], {
-                    onEachFeature: function(feature, layer) {
+                    onEachFeature: function (feature, layer) {
                         layer.on({
-                            'click': function(e) {
+                            'click': function (e) {
                                 popup(feature, e.target);
                                 highlight(e.target); //e.target is layer
                             }
@@ -69,19 +91,19 @@ const fetchroutes = function() {
                     },
                     style: {
                         opacity: 0.65,
-                        color: colors[i % colors.length],
+                        color: data[i].properties.color || colors[i % colors.length],
                         weight: 10
                     }
                 }));
-                let text = data[i].properties.route_name;
-                let splitted = text.split('Via');
-                let elementID = 'route_' + cleanString(text);
+                let text = data[i].properties.shortname;
+                // let splitted = text.split('Via');
+                let elementID = data[i].properties.route_code // 'route_' + cleanString(text);
                 // console.log(elementID);
-                if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
-                    $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem"  id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
-                } else {
-                    $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
-                }
+                // if (splitted.length == 200) { //check if 'route_name' have: 'Via westbound chuchu'
+                //     $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem"  id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
+                // } else {
+                $('#routesOutputList').append('<li><div id="div_' + elementID + '"><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + text + '<br></strong></p></div></span><div hidden class="route-info"><table class="info-tbl"><tr><td class="bold">Route name: </td><td>'+ data[i].properties.route_name +'</td></tr><tr><td class="bold">Length</td><td>'+ data[i].properties.length.toFixed(2) +' km</td></tr><tr><td class="bold">Signage</td><td>'+ data[i].properties.signage +'</td></tr></table></div></div></li>');
+                // }
             }
             allRoutesArray.forEach(route => {
                 route.addTo(map);
@@ -89,32 +111,12 @@ const fetchroutes = function() {
 
             //need to add allRoutesLayers to map first before doing this loop
             for (let i = 0; i < data.length; i++) {
-                allRoutesArray[i].layer_id = 'route_' + cleanString(data[i].properties.route_name); //adds new attribute 'layer_id'
+                allRoutesArray[i].layer_id = data[i].properties.route_code //'route_' + cleanString(data[i].properties.route_name); //adds new attribute 'layer_id'
             }
         });
 }();
 
-function pathfind(opoint, dpoint) {
-    var opoint = document.getElementById("origin").value
-    var dpoint = document.getElementById("destination").value
-    fetch(`/pathfind?origin=${encodeURIComponent(opoint)}&destination=${encodeURIComponent(dpoint)}`)
-        .then(res => { return res.json() })
-        .then(data => {
-            data = data.features
-            for (let index = 0; index < data.length; ++index) {
-                L.geoJSON(data[index], {
-                    onEachFeature: popup,
-                    style: {
-                        opacity: 0.65,
-                        color: '#F6179E',
-                        weight: 15,
-                        dashArray: '4 1 2',
-                        dashOffset: '3'
-                    }
-                }).addTo(map)
-            }
-        })
-}
+
 
 var stylistic = (leg_type, index) => {
     if (leg_type == 'route') return {
@@ -194,71 +196,6 @@ function getItineraries(o, d) {
             $('#' + allItirenariesArray[0].layer_id).click();  // automatic focus 1 route
         })
 }
-
-var pathfind2 = (o, d) => {
-    var o = origin.getLatLng();
-    var d = destination.getLatLng();
-    fetch(`/pathfind?origin=${encodeURIComponent(`${o.lng} ${o.lat}`)}&destination=${encodeURIComponent(`${d.lng} ${d.lat}`)}`)
-        .then(res => { return res.json() })
-        .then(data => {
-            data = data.features
-            for (let index = 0; index < data.length; ++index) {
-                L.geoJSON(data[index], {
-                    onEachFeature: popup,
-                    style: stylistic(data[index].properties.leg_type, index)
-                }).addTo(map)
-            }
-        })
-}
-
-//withpoints pathfind
-var pathfind3 = () => {
-    hideAllRouteItem();
-    hideAllRouteLayers();
-    fetch(`/withpoints`)
-        .then(res => { return res.json() })
-        .then(data => {
-            data = data.features
-            for (let index = 0; index < data.length; ++index) {
-                console.log(data[index].properties.route_name);
-                L.geoJSON(data[index], {
-                    onEachFeature: popup,
-                    style: {
-                        opacity: 0.65,
-                        color: '#F6179E',
-                        weight: 15,
-                        dashArray: '4 1 2',
-                        dashOffset: '3'
-                    }
-                }).addTo(map)
-            }
-        })
-}
-
-// open street map layer (maptiler api)
-var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=VhesJPHeAqyxwLGSnrFq', {
-    attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
-});
-var gl = L.mapboxGL({
-    attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
-    style: 'https://api.maptiler.com/maps/streets/style.json?key=Qd14bES0AWln0kUQZN5O'
-})//.addTo(map);
-
-// map initialization
-var map = L.map('map', {
-    center: [8.477703150412395, 124.64379231398955], // target is rizal monument
-    zoom: 14,
-    minZoom: 14,
-    maxBounds:[
-        [8.786011072628465, 124.94613647460939],
-        [8.142844225655255, 124.34532165527345]
-    ],
-    layers: [ //route layer can be added directly if needed
-        gl
-    ]
-});
-var userMarker = L.marker([8.477703150412395, 124.64379231398955]);
-
 L.control.locate().addTo(map); //check top left corner for added button/control
 
 
@@ -292,6 +229,7 @@ L.control.locate().addTo(map); //check top left corner for added button/control
 //         window.alert('wide');
 //     }
 // });
+
 function openPanel(id) {
     // console.log(window.innerWidth);
     // if (window.matchMedia('(max-width: 600px)').matches) {
@@ -537,6 +475,7 @@ function removeRoute(input) {
 $(document).on('click', '.routes_ItemClickZone', function (e) {
     let id = e.currentTarget.id;
     activeButton(e.currentTarget.id);
+    $('div.route-info').each(function () { $(this).hide()})
     for (let i = 0; i < allRoutesArray.length; i++) {
         if (allRoutesArray[i].layer_id == id) {
             if (selectSpecificRoute) {
@@ -544,8 +483,11 @@ $(document).on('click', '.routes_ItemClickZone', function (e) {
             }
             highlight(allRoutesArray[i]);
             activeButton(allRoutesArray[i].layer_id);
+            $(this).siblings('.route-info').slideDown(200)
         } else {
+
             inActiveButton(allRoutesArray[i].layer_id);
+
             if (selectSpecificRoute) {
                 allRoutesArray[i].remove();
             }
@@ -568,7 +510,7 @@ $(document).on('click', '.journey_ItemClickZone', function (e) {
 function activeButton(str) {
     let id = 'div_' + str;
     $('#' + id).css({
-        'border': '3px solid #A8C0FF'
+        'border': '3px solid #A8C0FF',
     });
 }
 function inActiveButton(str) {
@@ -736,15 +678,15 @@ trigger.addEventListener("click", toggleModal);
 closeButton.addEventListener("click", toggleModal);
 window.addEventListener("click", windowOnClick);
 
-$('form.report-form').on('submit',function(e){
+$('form.report-form').on('submit', function (e) {
     console.log('form');
     e.preventDefault();
     spinner.removeAttribute('hidden');
     $.ajax({
         url: '/reports',
         type: 'post',
-        data:$(this).serialize(),
-        success:function(){
+        data: $(this).serialize(),
+        success: function () {
             toggleModal();
             spinner.setAttribute('hidden', '');
             console.log('successed');
