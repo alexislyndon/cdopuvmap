@@ -102,7 +102,7 @@ const fetchroutes = function () {
                 // if (splitted.length == 200) { //check if 'route_name' have: 'Via westbound chuchu'
                 //     $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem"  id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
                 // } else {
-                $('#routesOutputList').append('<li><div id="div_' + elementID + '"><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + text + '<br></strong></p></div></span><div hidden class="route-info"><table class="info-tbl"><tr><td class="bold">Route name: </td><td>'+ data[i].properties.route_name +'</td></tr><tr><td class="bold">Length</td><td>'+ data[i].properties.length.toFixed(2) +' km</td></tr><tr><td class="bold">Signage</td><td>'+ data[i].properties.signage +'</td></tr></table></div></div></li>');
+                $('#routesOutputList').append('<li><div id="div_' + elementID + '"><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem" ><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + text + '<br></strong></p></div></span><div hidden class="route-info"><table class="info-tbl"><tr><td class="bold">Route name: </td><td>' + data[i].properties.route_name + '</td></tr><tr><td class="bold">Length</td><td>' + data[i].properties.length.toFixed(2) + ' km</td></tr><tr><td class="bold">Signage</td><td>' + data[i].properties.signage + '</td></tr></table></div></div></li>');
                 // }
             }
             allRoutesArray.forEach(route => {
@@ -151,7 +151,11 @@ function getItineraries(o, d) {
     clearItirenary();
     var o = origin.getLatLng();
     var d = destination.getLatLng();
-
+    if (o.lng < 124.579983 || o.lng > 124.784260 || o.lat < 8.396130 || o.lat > 8.524154 || d.lng < 124.579983 || d.lng > 124.784260 || d.lat < 8.396130 || d.lat > 8.524154) {
+        spinner.setAttribute('hidden', '');
+        snack('error','Origin/destination points must be within CDO');
+        return
+    }
     fetch(`/itineraries?origin=${encodeURIComponent(`${o.lng} ${o.lat}`)}&destination=${encodeURIComponent(`${d.lng} ${d.lat}`)}`)
         .then(res => { return res.json() })
         .then(data => {
@@ -360,7 +364,7 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
                     $('#journeyBtn').css({
                         'background-color': '#3F2B96'
                     });
-    
+
                     openPanel('#routesPanel');
                     $('#routesBtn').css({
                         'background-color': '#A8C0FF'
@@ -378,7 +382,7 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
                     $('#journeyBtn').css({
                         'background-color': '#3F2B96'
                     });
-    
+
                     openPanel('#routesPanel');
                     $('#routesBtn').css({
                         'background-color': '#A8C0FF'
@@ -475,7 +479,7 @@ function removeRoute(input) {
 $(document).on('click', '.routes_ItemClickZone', function (e) {
     let id = e.currentTarget.id;
     activeButton(e.currentTarget.id);
-    $('div.route-info').each(function () { $(this).hide()})
+    $('div.route-info').each(function () { $(this).hide() })
     for (let i = 0; i < allRoutesArray.length; i++) {
         if (allRoutesArray[i].layer_id == id) {
             if (selectSpecificRoute) {
@@ -690,6 +694,22 @@ $('form.report-form').on('submit', function (e) {
             toggleModal();
             spinner.setAttribute('hidden', '');
             console.log('successed');
+            snack('success','Successfully submitted form.');
         }
     });
 });
+
+function snack(type, text) {
+
+    // Get the snackbar DIV
+    // x.style.color = 'white'; x.style.backgroundColor = 'green';
+    var x = document.getElementById("snackbar");
+    if(type === 'success') {x.style.color = '#010201'; x.style.backgroundColor = '#C4F8B6'; x.innerHTML = text}
+    if(type === 'error'){ x.style.color = '#010201'; x.style.backgroundColor = '#FFB7B7'; x.innerHTML = text}
+
+    // Add the "show" class to DIV
+    x.className = "show";
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+}
