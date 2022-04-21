@@ -227,9 +227,6 @@ var map = L.map('map', {
         osmDefault
     ]
 });
-// map.on('moveend', function() { 
-//     console.log(map.getBounds());
-// });
 var userMarker = L.marker([8.477703150412395, 124.64379231398955]);
 
 L.control.locate().addTo(map); //check top left corner for added button/control
