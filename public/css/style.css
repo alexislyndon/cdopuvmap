@@ -29,7 +29,7 @@ html {
     z-index: 2;
   }
   .buttonPanel {
-    /* display: flex;
+        display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: center;
