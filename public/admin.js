@@ -1,21 +1,15 @@
-$.ajaxSetup({
-    beforeSend: function () {
-        $("#spinner").show();
-    },
-    complete: function () {
-        $("#spinner").fadeOut();
-    },
-});
-
 $(function () {
 
     $.ajaxSetup({
         beforeSend: function () {
             $("#spinner").removeAttr('hidden')
         },
+        complete: function () {
+            $("#spinner").fadeOut();
+        },
         always: function () {
             $("#spinner").attr('hidden')
-        },
+        }
     });
 
     $('#routes').on('click', (params) => {
@@ -26,57 +20,85 @@ $(function () {
     })
 
 
-$(document).on('click', '.edit', function () {
-    $(this).parent().siblings('td.data').each(function () {
-        if ($(this).hasClass('data')) {
-            // do stuff here to output to the page
-            var content = $(this).html().trim();
-            $(this).html('<input value="' + content + '" />');
+    $(document).on('click', 'button.edit', function () {
+        $(this).parent().siblings('td.data').each(function () {
+            if ($(this).hasClass('data')) {
+                // do stuff here to output to the page
+                var content = $(this).html().trim();
+                $(this).html('<input value="' + content + '" />');
+            }
+            if($(this).hasClass('path')) {
+                css("propertyname","value");
+            }
+        });
+
+        $(this).siblings('.save').show();
+        $(this).siblings('.delete').hide();
+        $(this).hide();
+    });
+
+    $(document).on('click', 'button.save', function () {
+        var row = $(this).closest('tr');
+        $(this).closest('tr').find('input').each(function () {
+            // if($(this).parent().parent() != row) return
+            var content = $(this).val();
+            if (!content) { $(this).remove(); return }
+            $(this).html(content);
+            $(this).contents().unwrap();
+        });
+        $(this).siblings('.edit').show();
+        $(this).siblings('.delete').show();
+        $(this).hide();
+
+    });
+
+
+    $(document).on('click', 'button.delete', function () {
+        $(this).parents('tr').remove();
+    });
+
+    $('.add').click(function () {
+        $(this).parents('table').append('<tr><td class="data"></td><td class="data"></td><td class="data"></td><td><button class="save">Save</button><button class="edit">Edit</button> <button class="delete">Delete</button></td></tr>');
+    });
+
+    var tabs = document.getElementsByClassName('Tab');
+
+    Array.prototype.forEach.call(tabs, function (tab) {
+        tab.addEventListener('click', setActiveClass);
+    });
+
+    function setActiveClass(evt) {
+        Array.prototype.forEach.call(tabs, function (tab) {
+            tab.classList.remove('active');
+        });
+
+        evt.currentTarget.classList.add('active');
+    }
+    $(document).on('click', 'li.path', function (e) {
+        var x = $(this).outerWidth() - 30 <= e.offsetX
+        if ($(this).outerWidth() - 30 <= e.offsetX) {
+            $(this).remove();
+            console.log('x');
         }
     });
 
-    $(this).siblings('.save').show();
-    $(this).siblings('.delete').hide();
-    $(this).hide();
-});
+    // $('tr').on('click', function (e) {
+    //     console.log('x');
+    // });
 
-$(document).on('click', '.save', function () {
-    var row = $(this).closest('tr');
-    $(this).closest('tr').find('input').each(function () {
-        // if($(this).parent().parent() != row) return
-        var content = $(this).val();
-        if(!content) {$(this).remove(); return}
-        $(this).html(content);
-        $(this).contents().unwrap();
-    });
-    $(this).siblings('.edit').show();
-    $(this).siblings('.delete').show();
-    $(this).hide();
+    // $().on('click', '.edit', function () {
+    //     $(this).parent().siblings('td.data').each(function () {
+    //         if ($(this).hasClass('data')) {
+    //             // do stuff here to output to the page
+    //             var content = $(this).html().trim();
+    //             $(this).html('<input value="' + content + '" />');
+    //         }
+    //     });
 
-});
+    //     $(this).siblings('.save').show();
+    //     $(this).siblings('.delete').hide();
+    //     $(this).hide();
+    // });
 
-
-$(document).on('click', '.delete', function () {
-    $(this).parents('tr').remove();
-});
-
-$('.add').click(function () {
-    $(this).parents('table').append('<tr><td class="data"></td><td class="data"></td><td class="data"></td><td><button class="save">Save</button><button class="edit">Edit</button> <button class="delete">Delete</button></td></tr>');
-});
-
-var tabs = document.getElementsByClassName('Tab');
-
-Array.prototype.forEach.call(tabs, function(tab) {
-	tab.addEventListener('click', setActiveClass);
-});
-
-function setActiveClass(evt) {
-	Array.prototype.forEach.call(tabs, function(tab) {
-		tab.classList.remove('active');
-	});
-	
-	evt.currentTarget.classList.add('active');
-}
-
-$('#routes').click()
+    $('#routes').trigger('click')
 });

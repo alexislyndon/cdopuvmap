@@ -619,13 +619,14 @@ html {
         margin-right: auto;
         font-size: 15px;
         color: #3F2B96;
-        width: 290px;
+        width: auto;
         border-radius: 5px;
         box-shadow: -6px 10px 8px -6px #808080;
         border: 2px solid rgba(0, 0, 0, .3);
         display: flex;
         flex-direction: row;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
+        overflow-wrap: break-word;
         align-items: center;
     }
     .outputItem:hover {
@@ -731,7 +732,7 @@ html {
     right: 20px;
     top: 20px;
     margin-left: 94%;
-    z-index: 999999;
+    z-index: 98;
     padding: 3px;
     /*background-color:#2C5364;*/
     color: #fff;
@@ -797,7 +798,7 @@ html {
     visibility: visible;
     transform: scale(1.0);
     transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
-    z-index: 9999999999;
+    z-index: 99;
 }
  .user_container{
       width: 95%;

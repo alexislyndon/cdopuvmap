@@ -8,7 +8,7 @@
       <th>Route Code</th>
       <th>Route Name</th>
       <th>Shortname</th>
-      <th>Via</th>
+      <th>Path</th>
       <th>Start/End</th>
       <th>Length</th>
       <th>Color</th>
@@ -22,7 +22,14 @@
       <td class="data"><%= i.route_code %></td>
       <td class="data"><%= i.route_name %></td>
       <td class="data"><%= i.shortname %></td>
-      <td class="data"><%= i.via %></td>
+      <td class="data-ul"> 
+        <ul class="list_sbar">
+
+      <% i?.path?.map((j,idx) => { %>
+        <li class="path" > <a href="#"><%= j %></a></li>
+      <% }) %>
+        </ul>
+      </td>
       <td class="data"><%= i.start_end %></td>
       <td class="data"><%= i.Length %></td>
       <td class="data"><%= i.Color %></td>
@@ -37,4 +44,4 @@
   </tbody>
 </table>
 <!-- <script src="app.js"></script> -->
-<link rel="stylesheet" href="admin.css" />
+<!-- <link rel="stylesheet" href="admin.css" /> -->
