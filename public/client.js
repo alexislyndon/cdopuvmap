@@ -153,7 +153,7 @@ function getItineraries(o, d) {
     var d = destination.getLatLng();
     if (o.lng < 124.579983 || o.lng > 124.784260 || o.lat < 8.396130 || o.lat > 8.524154 || d.lng < 124.579983 || d.lng > 124.784260 || d.lat < 8.396130 || d.lat > 8.524154) {
         spinner.setAttribute('hidden', '');
-        snack('error','Origin/destination points must be within CDO');
+        snack('error', 'Origin/destination points must be within CDO');
         return
     }
     fetch(`/itineraries?origin=${encodeURIComponent(`${o.lng} ${o.lat}`)}&destination=${encodeURIComponent(`${d.lng} ${d.lat}`)}`)
@@ -204,19 +204,20 @@ L.control.locate().addTo(map); //check top left corner for added button/control
 
 
 //this will update panel width if user changes screen size while panel is still open
-$( window ).resize(function() {
-    if($("#routesPanel").css("visibility") === "visible"){
+$(window).resize(function () {
+    console.log('resize');
+    if ($("#routesPanel").css("visibility") === "visible") {
         openPanel('#routesPanel');
-    }else if ($("#journeyPanel").css("visibility") === "visible"){
+    } else if ($("#journeyPanel").css("visibility") === "visible") {
         openPanel('#journeyPanel');
-    } else{ // if all are close, only move the button panel and resize the map
+    } else { // if all are close, only move the button panel and resize the map
         if (window.matchMedia('(min-width: 992px)').matches) {
             // large devices (laptops/desktops)
             $('.buttonPanel').css({
                 'left': '0%',
                 'bottom': '50%'
             });
-        } else if (window.matchMedia('(min-width: 768px)').matches){
+        } else if (window.matchMedia('(min-width: 768px)').matches) {
             // mediumDevices (landscape tablets)
             $('.buttonPanel').css({
                 'left': '0%',
@@ -228,7 +229,7 @@ $( window ).resize(function() {
                 'left': '0%',
                 'bottom': '0.1%'
             });
-        } 
+        }
         $('#map').css({
             'margin-bottom': '0%',
             'margin-left': '0%',
@@ -239,7 +240,8 @@ $( window ).resize(function() {
 });
 
 function openPanel(id) {
-    if (window.matchMedia('(min-width: 992px)').matches){
+    console.log('openpanel()');
+    if (window.matchMedia('(min-width: 992px)').matches) {
         // large devices (laptops/desktops)
         $(id).css({
             'width': '18.3%',
@@ -257,7 +259,7 @@ function openPanel(id) {
             'left': '18.3%'
         });
         $(id).show();
-    }  else if (window.matchMedia('(min-width: 768px)').matches){
+    } else if (window.matchMedia('(min-width: 768px)').matches) {
         // mediumDevices (landscape tablets)
         $(id).css({
             'width': '50%',
@@ -293,10 +295,11 @@ function openPanel(id) {
             'left': '0%'
         });
         $(id).show();
-    } 
+    }
+    // setTimeout(function () { map.invalidateSize() }, 400);
 }
 function closePanel(id) {
-    if (window.matchMedia('(min-width: 992px)').matches){
+    if (window.matchMedia('(min-width: 992px)').matches) {
         // large devices (laptops/desktops)
         $(id).css({
             'width': '0%',
@@ -312,7 +315,7 @@ function closePanel(id) {
             'height': '100%'
         });
         $(id).hide();
-    } else if (window.matchMedia('(min-width: 768px)').matches){
+    } else if (window.matchMedia('(min-width: 768px)').matches) {
         // mediumDevices (landscape tablets)
         $(id).css({
             'width': '0%',
@@ -346,6 +349,7 @@ function closePanel(id) {
         });
         $(id).hide();
     }
+    // setTimeout(function () { map.invalidateSize() }, 400);
 }
 $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
     switch (e.target.id) {
@@ -735,7 +739,7 @@ $('form.report-form').on('submit', function (e) {
             toggleModal();
             spinner.setAttribute('hidden', '');
             console.log('successed');
-            snack('success','Successfully submitted form.');
+            snack('success', 'Successfully submitted form.');
         }
     });
 });
@@ -745,8 +749,8 @@ function snack(type, text) {
     // Get the snackbar DIV
     // x.style.color = 'white'; x.style.backgroundColor = 'green';
     var x = document.getElementById("snackbar");
-    if(type === 'success') {x.style.color = '#010201'; x.style.backgroundColor = '#C4F8B6'; x.innerHTML = text}
-    if(type === 'error'){ x.style.color = '#010201'; x.style.backgroundColor = '#FFB7B7'; x.innerHTML = text}
+    if (type === 'success') { x.style.color = '#010201'; x.style.backgroundColor = '#C4F8B6'; x.innerHTML = text }
+    if (type === 'error') { x.style.color = '#010201'; x.style.backgroundColor = '#FFB7B7'; x.innerHTML = text }
 
     // Add the "show" class to DIV
     x.className = "show";
