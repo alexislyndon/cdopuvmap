@@ -71,7 +71,7 @@
         background: linear-gradient(#A8C0FF, #3F2B96);
         border-radius: 10px;
         transition: 0.2s;
-        overflow: hidden;
+        overflow: auto;
         visibility: hidden;
         /* height: inherit; */
         /* width: 250px; */
@@ -83,7 +83,7 @@
         display: flex;
         flex-wrap: nowrap;
         flex-direction: row;
-        justify-content: flex-end;
+        justify-content: space-between;
         position: relative;
         width: 100%;
         height: 7%;
@@ -95,7 +95,6 @@
     .panelTitle {
         flex-wrap: nowrap;
         margin-left: 5%;
-        margin-top: 10%;
         flex-grow: 4;
         font-weight: normal;
         color: #ffffff;
@@ -109,17 +108,10 @@
         border: 0px;
         width: 30px;
         height: 30px;
-        top: 5px;
         background-image: url('../icons/close_x.svg');
         background-size: 25px 25px;
         background-repeat: no-repeat;
         background-position: center;
-    }
-    #journeyCloseBtn {
-
-    }
-    #routesCloseBtn {
-        /* right: -195px; */
     }
     .closeBtn:hover {
         cursor: pointer;
@@ -157,8 +149,7 @@
     .textInput {
         margin-left: 15px;
         display: inline-block;
-        width: 230px;
-        height: 40px;
+        width: 70%;
         border: 0px;
         border-radius: 10px;
         outline: 0;

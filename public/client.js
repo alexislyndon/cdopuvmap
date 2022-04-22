@@ -210,11 +210,11 @@ $( window ).resize(function() {
     }else if ($("#journeyPanel").css("visibility") === "visible"){
         openPanel('#journeyPanel');
     } else{ // if all are close, only move the button panel and resize the map
-        if (window.matchMedia('(max-width: 600px)').matches) {
-            // extra small devices (small phones)
+        if (window.matchMedia('(min-width: 992px)').matches) {
+            // large devices (laptops/desktops)
             $('.buttonPanel').css({
                 'left': '0%',
-                'bottom': '0.1%'
+                'bottom': '50%'
             });
         } else if (window.matchMedia('(min-width: 768px)').matches){
             // mediumDevices (landscape tablets)
@@ -222,13 +222,13 @@ $( window ).resize(function() {
                 'left': '0%',
                 'bottom': '50%'
             });
-        } else {
-            // large devices (laptops/desktops)
+        } else if (window.matchMedia('(max-width: 767px)').matches) {
+            // phones
             $('.buttonPanel').css({
                 'left': '0%',
-                'bottom': '50%'
+                'bottom': '0.1%'
             });
-        }
+        } 
         $('#map').css({
             'margin-bottom': '0%',
             'margin-left': '0%',
@@ -239,26 +239,7 @@ $( window ).resize(function() {
 });
 
 function openPanel(id) {
-    if (window.matchMedia('(max-width: 600px)').matches) {
-        // extra small devices (small phones)
-        $(id).css({
-            'width': '100%',
-            'height': '50%',
-            'visibility': 'visible'
-        });
-        $('#map').css({
-            'margin-bottom': '50%',
-            'margin-left': '0%',
-            'width': '100%',
-            'height': '50%'
-        });
-        $('.buttonPanel').css({
-            'bottom': '50%',
-            'left': '0%'
-        });
-        $(id).show();
-        console.log('small phones');
-    } else if (window.matchMedia('(min-width: 992px)').matches){
+    if (window.matchMedia('(min-width: 992px)').matches){
         // large devices (laptops/desktops)
         $(id).css({
             'width': '18.3%',
@@ -276,8 +257,7 @@ function openPanel(id) {
             'left': '18.3%'
         });
         $(id).show();
-        console.log('laptops/desktops');
-    } else if (window.matchMedia('(min-width: 768px)').matches){
+    }  else if (window.matchMedia('(min-width: 768px)').matches){
         // mediumDevices (landscape tablets)
         $(id).css({
             'width': '50%',
@@ -295,28 +275,28 @@ function openPanel(id) {
             'left': '50%'
         });
         $(id).show();
-        console.log('landscape tablet');
+    } else if (window.matchMedia('(max-width: 767px)').matches) {
+        // phones with width 767px bellow 
+        $(id).css({
+            'width': '100%',
+            'height': '50%',
+            'visibility': 'visible'
+        });
+        $('#map').css({
+            'margin-bottom': '50%',
+            'margin-left': '0%',
+            'width': '100%',
+            'height': '50%'
+        });
+        $('.buttonPanel').css({
+            'bottom': '50%',
+            'left': '0%'
+        });
+        $(id).show();
     } 
 }
 function closePanel(id) {
-    if (window.matchMedia('(max-width: 600px)').matches) {
-        // extra small devices (small phones)
-        $(id).css({
-            'height': '0%',
-            'visibility': 'hidden',
-        });
-        $('.buttonPanel').css({
-            'left': '0%',
-            'bottom': '0.1%'
-        });
-        $('#map').css({
-            'margin-bottom': '0%',
-            'margin-left': '0%',
-            'width': '100%',
-            'height': '100%'
-        });
-        $(id).hide();
-    } else if (window.matchMedia('(min-width: 992px)').matches){
+    if (window.matchMedia('(min-width: 992px)').matches){
         // large devices (laptops/desktops)
         $(id).css({
             'width': '0%',
@@ -348,7 +328,24 @@ function closePanel(id) {
             'height': '100%'
         });
         $(id).hide();
-    } 
+    } else if (window.matchMedia('(max-width: 767px)').matches) {
+        // phones with width 767px bellow 
+        $(id).css({
+            'height': '0%',
+            'visibility': 'hidden',
+        });
+        $('.buttonPanel').css({
+            'left': '0%',
+            'bottom': '0.1%'
+        });
+        $('#map').css({
+            'margin-bottom': '0%',
+            'margin-left': '0%',
+            'width': '100%',
+            'height': '100%'
+        });
+        $(id).hide();
+    }
 }
 $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
     switch (e.target.id) {
