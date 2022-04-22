@@ -63,7 +63,7 @@ html {
     text-transform: uppercase;
     font-size: 15px;
     display: block;
-    width: 9%;
+    width: max(9%, 100px);
     font-weight: bold;
 }
 
