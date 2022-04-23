@@ -357,6 +357,8 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
     switch (e.target.id) {
         case "journeyBtn":
             // console.log('#'+e.target.id);
+            hideAllRouteLayers();
+            selectSpecificRoute = true;
             if (window.matchMedia('(max-width: 600px)').matches) {
                 // narrow
                 if ($('#journeyPanel').height() > 0) { //check if open already
@@ -474,6 +476,8 @@ window.onload = function () {
         $('#journeyBtn').css({
             'background-color': '#A8C0FF'
         });
+    } else {
+        openPanel('#routesPanel');
     }
 }
 function hideAllRouteLayers() {
@@ -524,6 +528,7 @@ function removeRoute(input) {
 }
 
 $(document).on('click', '.routes_ItemClickZone', function (e) {
+    hideAllRouteLayers();
     let id = e.currentTarget.id;
     activeButton(e.currentTarget.id);
     $('div.route-info').each(function () { $(this).hide() })
