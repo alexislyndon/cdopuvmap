@@ -1,14 +1,13 @@
 # CH4
 ## 4.1 KNOWLEDGE AGGREGATION
-----
+  
 ## 4.2 2DESIGN
-----
 ## DATA TRANSFORMATION (cleanup)
 ### Conversion of Data from Shapefile to Geoojson format
 ### Preparing Data for importation to Database using ogr2ogr
 ### 
 
-----
+
 ## 4.3 CODING
 ### Displaying a Map on a Webpage
 ### PostgreSQL Spatial Database Setup
@@ -32,7 +31,7 @@ postgis functions list
 pgr functions list
 ### Walkthrough 
 
-----
+
 ## TESTING
 ### Deployment (needed for testing PWA on https)
 google domain
