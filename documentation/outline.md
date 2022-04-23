@@ -5,6 +5,8 @@
 ### Conversion of Data from Shapefile to Geoojson format
 ### Preparing Data for importation to Database using ogr2ogr
 ### 
+
+----
 ## CODING
 ### Displaying a Map on a Webpage
 ### PostgreSQL Spatial Database Setup
@@ -22,11 +24,13 @@ front end stuff
 #### Reverse Geocoding (pin himuon niyang place daun isulat sa textbox)
 ### Admin Panel
 ### Database design (should this be up top?)
-erd
-data dic
-postgis functions
-pgr functions
+erd figure
+data dictionary tables
+postgis functions list
+pgr functions list
 ### Walkthrough 
+
+----
 ## TESTING
 ### Deployment (needed for testing PWA on https)
 google domain
