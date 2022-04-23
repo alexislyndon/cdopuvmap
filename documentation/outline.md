@@ -1,13 +1,15 @@
 # CH4
-## KNOWLEDGE AGGREGATION
-## DESIGN
+## 4.1 KNOWLEDGE AGGREGATION
+----
+## 4.2 2DESIGN
+----
 ## DATA TRANSFORMATION (cleanup)
 ### Conversion of Data from Shapefile to Geoojson format
 ### Preparing Data for importation to Database using ogr2ogr
 ### 
 
 ----
-## CODING
+## 4.3 CODING
 ### Displaying a Map on a Webpage
 ### PostgreSQL Spatial Database Setup
 ### The NodeJS Back-end
