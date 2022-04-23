@@ -1,7 +1,8 @@
 const { Router } = require('express')
 const router = Router()
 const adminGETReports = require('../services/adminGETReports')
-const adminGETRoutes = require('../services/adminGETRoutes')
+const adminGETRoutes = require('../services/adminGETRoutes');
+const adminUPDATEReport = require('../services/adminUPDATEReport');
 
 router.get('/', async (req, res) => {
     res.render("admin");
@@ -15,6 +16,12 @@ router.get('/routes', async (req, res) => {
 router.get('/reports', async (req, res) => {
     const data = await adminGETReports()
     res.render("reports/index", { reports: data });
+})
+router.post('/reports/:id', async (req, res) => {
+    const { id } = req.params;
+    const {status} = req.body
+    const data = await adminUPDATEReport(id, status);
+    res.sendStatus(200);
 })
 
 module.exports = router
