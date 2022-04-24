@@ -104,7 +104,6 @@ const fetchroutes = function () {
                 let text = data[i].properties.shortname;
                 // let splitted = text.split('Via');
                 let elementID = data[i].properties.route_code // 'route_' + cleanString(text);
-                // console.log(elementID);
                 // if (splitted.length == 200) { //check if 'route_name' have: 'Via westbound chuchu'
                 //     $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem"  id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
                 // } else {
@@ -152,7 +151,6 @@ var itirenaryNames = [];
 function getItineraries(o, d) {
     spinner.removeAttribute('hidden');
     hideAllRouteLayers();
-    console.log('check length' + allItirenariesArray.length);
     clearItirenary();
     var o = origin.getLatLng();
     var d = destination.getLatLng();
@@ -188,7 +186,6 @@ function getItineraries(o, d) {
                 itirenaryNames[i] = text;
                 let splitted = text.split('Via');
                 let elementID = 'itirenary_' + cleanString(text);
-                console.log('added' + elementID);
                 if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
                     $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
                 } else {
@@ -210,6 +207,7 @@ L.control.locate().addTo(map); //check top left corner for added button/control
 
 //this will update panel width if user changes screen size while panel is still open
 $( window ).resize(function() {
+    console.log('here');
     if($("#routesPanel").css("visibility") === "visible"){
         openPanel('#routesPanel');
     }else if ($("#journeyPanel").css("visibility") === "visible"){
@@ -249,7 +247,6 @@ function openPanel(id) {
         showAllRouteItem();
     } else if(id == '#journeyPanel'){
         hideAllRouteLayers();
-        console.log('here');
     }
     if (window.matchMedia('(min-width: 992px)').matches){
         // large devices (laptops/desktops)
@@ -260,7 +257,7 @@ function openPanel(id) {
         });
         $('#map').css({
             'margin-left': '18.3%',
-            'width': 'calc(100% - 18.3%)',
+            'width': '81.7%',
             'height': '100%',
             'margin-bottom': '0%'
         });
@@ -278,7 +275,7 @@ function openPanel(id) {
         });
         $('#map').css({
             'margin-left': '50%',
-            'width': 'calc(50%)',
+            'width': '50%',
             'height': '100%',
             'margin-bottom': '0%'
         });
@@ -305,7 +302,8 @@ function openPanel(id) {
             'left': '0%'
         });
         $(id).show();
-    } 
+    }
+    setTimeout(function(){ map.invalidateSize()}, 400);
 }
 function closePanel(id) {
     if (window.matchMedia('(min-width: 992px)').matches){
@@ -358,11 +356,11 @@ function closePanel(id) {
         });
         $(id).hide();
     }
+    setTimeout(function(){ map.invalidateSize()}, 400);
 }
 $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
     switch (e.target.id) {
         case "journeyBtn":
-            // console.log('#'+e.target.id);
             if ($('#journeyPanel').css("visibility") === "visible") { //check if open already
                 closePanel('#journeyPanel');
                 $('#journeyBtn').css({
@@ -400,7 +398,6 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
             }
             break;
         default:
-            console.log('here');
             break;
     }
 });
@@ -448,7 +445,6 @@ function hideAllRouteLayers() {
     allRoutesArray.forEach(route => {
         route.remove();
     });
-    console.log(map.getBounds);
 }
 var selectSpecificRoute = false;
 $('#hideAllBtn').click(function () {
@@ -551,7 +547,6 @@ function hideAllItirenaryItem() {
 }
 function removeAllItirenaryItem() {
     allItirenariesArray.forEach(itirenary => {
-        console.log('removed: ' + itirenary.layer_id);
         $('#' + itirenary.layer_id).remove();
 
     });
@@ -590,7 +585,7 @@ var origin = {}
 var destination = {}
 
 var pinOrigin = function (e) {
-    if (e.id == 'originBtn') console.log(e.id);
+    if (e.id == 'originBtn')
     if (origin.options) {
         if (map.listens('drag')) {
             var pin1 = origin.getLatLng()
@@ -651,13 +646,11 @@ ogeocoder.on('select', function (item) {
     var [lng, lat] = item.center
     origin = L.marker(L.latLng([lat, lng])).addTo(map);
     originInput.value = item.place_name
-    console.log('oSelected', item);
 });
 dgeocoder.on('select', function (item) {
     var [lng, lat] = item.center
     destination = L.marker([lat, lng]).addTo(map);
     destinationInput.value = item.place_name
-    console.log('dSelected', item);
 });
 
 function reverseGeocode(latlng, inputE) {
@@ -665,7 +658,6 @@ function reverseGeocode(latlng, inputE) {
         .then(res => { return res.json() })
         .then(data => {
             inputE.value = data.features[0].place_name
-            // console.log('rGeodata', data);
         })
 }
 
@@ -688,7 +680,6 @@ closeButton.addEventListener("click", toggleModal);
 window.addEventListener("click", windowOnClick);
 
 $('form.report-form').on('submit', function (e) {
-    console.log('form');
     e.preventDefault();
     spinner.removeAttribute('hidden');
     $.ajax({
@@ -698,7 +689,6 @@ $('form.report-form').on('submit', function (e) {
         success: function () {
             toggleModal();
             spinner.setAttribute('hidden', '');
-            console.log('successed');
             snack('success','Successfully submitted form.');
         }
     });
