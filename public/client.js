@@ -113,10 +113,17 @@ const fetchroutes = function () {
             allRoutesArray.forEach(route => {
                 route.addTo(map);
             });
-
             //need to add allRoutesLayers to map first before doing this loop
             for (let i = 0; i < data.length; i++) {
                 allRoutesArray[i].layer_id = data[i].properties.route_code //'route_' + cleanString(data[i].properties.route_name); //adds new attribute 'layer_id'
+
+                if(data[i].properties.path != null){
+                    allRoutesArray[i].path = [];
+                    data[i].properties.path.forEach(item => {
+                        allRoutesArray[i].path.push(item.toLocaleLowerCase());
+                    })
+                } 
+
             }
         });
 }();
@@ -207,7 +214,6 @@ L.control.locate().addTo(map); //check top left corner for added button/control
 
 //this will update panel width if user changes screen size while panel is still open
 $( window ).resize(function() {
-    console.log('here');
     if($("#routesPanel").css("visibility") === "visible"){
         openPanel('#routesPanel');
     }else if ($("#journeyPanel").css("visibility") === "visible"){
@@ -469,12 +475,20 @@ $('#searchBtn').click(function () {
     inputStr = inputStr.toLocaleLowerCase();
     let elementID = '';
     allRoutesArray.forEach(route => {
-        if (route.layer_id.search(inputStr) == -1) {
-            elementID = cleanString(route.layer_id);
-            $('#' + elementID).hide();
+        if(route.path != null){
+            if(route.path.includes(inputStr)){
+                console.log('hit');
+                elementID = route.layer_id;
+                console.log(elementID);
+                $('#div_' + elementID).show();
+            } else {
+                elementID = route.layer_id;
+                console.log('here');
+                $('#div_' + elementID).hide();
+            }
         } else {
-            elementID = cleanString(route.layer_id);
-            $('#' + elementID).show();
+            elementID = route.layer_id;
+            $('#div_' + elementID).hide();
         }
     });
 });
