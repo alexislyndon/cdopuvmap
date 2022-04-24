@@ -378,7 +378,7 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
                     //then open target panel
                     openPanel('#journeyPanel');
                     $('#journeyBtn').css({
-                        'background-color': '#A8C0FF'
+                        'background-color': '#2a1d63'
                     });
                 }
             } else {
@@ -397,7 +397,7 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
                     //then open target panel
                     openPanel('#journeyPanel');
                     $('#journeyBtn').css({
-                        'background-color': '#A8C0FF'
+                        'background-color': '#2a1d63'
                     });
                 }
             }
@@ -418,7 +418,7 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
 
                     openPanel('#routesPanel');
                     $('#routesBtn').css({
-                        'background-color': '#A8C0FF'
+                        'background-color': '#2a1d63'
                     });
                 }
             } else {
@@ -436,7 +436,7 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
 
                     openPanel('#routesPanel');
                     $('#routesBtn').css({
-                        'background-color': '#A8C0FF'
+                        'background-color': '#2a1d63'
                     });
                 }
             }
@@ -477,7 +477,7 @@ window.onload = function () {
         sessionStorage.removeItem("reloading");
         openPanel('#journeyPanel');
         $('#journeyBtn').css({
-            'background-color': '#A8C0FF'
+            'background-color': '#2a1d63'
         });
     } else {
         openPanel('#routesPanel');
@@ -569,7 +569,7 @@ $(document).on('click', '.journey_ItemClickZone', function (e) {
 function activeButton(str) {
     let id = 'div_' + str;
     $('#' + id).css({
-        'border': '3px solid #A8C0FF',
+        'border': '3px solid #2a1d63',
     });
 }
 function inActiveButton(str) {
