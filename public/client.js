@@ -245,6 +245,11 @@ $( window ).resize(function() {
 });
 
 function openPanel(id) {
+    if(id == '#routesPanel'){
+        showAllRouteLayers();
+    } else if(id == '#journeyPanel'){
+        hideAllRouteLayers();
+    }
     if (window.matchMedia('(min-width: 992px)').matches){
         // large devices (laptops/desktops)
         $(id).css({
@@ -605,7 +610,7 @@ $("#searchInput").keyup(function (event) {
         $("#searchBtn").click();
     }
 });
-var LeafIcon = L.Icon.extend({
+var LocationMarker = L.Icon.extend({
     options: {
         iconSize: [38, 95],
         shadowSize: [50, 64],
@@ -614,15 +619,21 @@ var LeafIcon = L.Icon.extend({
         popupAnchor: [-3, -76]
     }
 });
-var greenIcon = new LeafIcon({
-    iconUrl: 'http://leafletjs.com/SlavaUkraini/examples/custom-icons/leaf-green.png',
-    shadowUrl: 'http://leafletjs.com/SlavaUkraini/examples/custom-icons/leaf-shadow.png'
+var locationA = new MarkerA({
+    // iconUrl: 'http://icons/locationA.svg'
+    iconUrl: 'icons/locationB.png'
 })
+var locationB = new MarkerB({
+    // iconUrl: 'http://icons/locationB.svg'
+    iconUrl: 'icons/locationB.png'
+})
+
 
 var origin = {}
 var destination = {}
 
 var pinOrigin = function (e) {
+    window.alert('origin');
     if (e.id == 'originBtn') console.log(e.id);
     if (origin.options) {
         if (map.listens('drag')) {
@@ -634,7 +645,7 @@ var pinOrigin = function (e) {
         return
     }
     if (!origin.options) {
-        origin = L.marker(map.getCenter(), { draggable: true }).addTo(map);
+        origin = L.marker(map.getCenter(), { draggable: true, icon: locationA  }).addTo(map);
         map.on('drag', oDrag);
     }
 };
@@ -651,7 +662,7 @@ var pinDestination = function (e) {
         return
     }
     if (!destination.options) {
-        destination = L.marker(map.getCenter(), { draggable: true, icon: greenIcon }).addTo(map);
+        destination = L.marker(map.getCenter(), { draggable: true, icon: locationB }).addTo(map);
         map.on('drag', dDrag);
     }
 };
