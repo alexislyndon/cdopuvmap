@@ -1,5 +1,6 @@
 .container {
-    border: 5px solid limegreen;
+    margin-top: 100px;
+    border: 1px solid thistle;
     width: min(100% - 2rem, 400px);
     margin-inline: auto;
 }

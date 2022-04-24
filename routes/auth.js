@@ -10,28 +10,35 @@ const getUser = require('../services/getUser');
 
 
 router.get('/signup', async (req, res) => { })
-router.post('/signup', async (req, res) => { 
+router.post('/signup', async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
         const result = await insertUser(req.body.username, hashedPassword)
         res.status(201).send()
-    }catch(err){
+    } catch (err) {
         console.log(err);
         res.status(500).send(err.detail)
     }
- })
+})
 router.get('/login', async (req, res) => { res.render('login') })
 router.post('/login', async (req, res) => {
     const { username, password } = req.body
+    // if (!username || !password) { res.status(401); return }
     const data = await getUser(username)
-    
+    if(!data) {res.send(403); return;}
+    const maxAge = 60 * 60 * 12
 
     try {
-        if(await bcrypt.compare(password, data.password)){
-            const accessToken = jwt.sign(username, process.env.ACCESS_TOKEN_SECRET)
-            res.json({accessToken})
+        if (await bcrypt.compare(password, data.password)) {
+            const accessToken = jwt.sign({ username }, process.env.ACCESS_TOKEN_SECRET, {
+                expiresIn: maxAge
+            })
+            req.user = data
+            res.cookie('jwt', accessToken, { httpOnly: true, maxAge: maxAge * 1000 })
+            res.json({ user: req.user.id })
+            // res.render("admin");
         } else {
-            res.send('Not allowed!')
+            res.send(403)
         }
     } catch (error) {
         console.log(error);
