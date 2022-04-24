@@ -67,6 +67,19 @@ html {
     font-weight: bold;
 }
 
+.pinner {
+    cursor: pointer;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    z-index: 9999999;
+    border-radius: 10px;
+    height: 2rem;
+    width: 100px;
+    margin-left: -50px;
+    /* transform: translateX(50%); */
+}
+
 .trigger::after {
   content: "";
   height: 3px;
