@@ -610,30 +610,26 @@ $("#searchInput").keyup(function (event) {
         $("#searchBtn").click();
     }
 });
-var LocationMarker = L.Icon.extend({
+var LeafIcon = L.Icon.extend({
     options: {
-        iconSize: [38, 95],
+        iconSize: [48, 105],
         shadowSize: [50, 64],
         iconAnchor: [22, 94],
         shadowAnchor: [4, 62],
         popupAnchor: [-3, -76]
     }
 });
-var locationA = new MarkerA({
-    // iconUrl: 'http://icons/locationA.svg'
-    iconUrl: 'icons/locationB.png'
+var startIcon = new LeafIcon({
+    iconUrl: 'icons/startIcon.svg'
 })
-var locationB = new MarkerB({
-    // iconUrl: 'http://icons/locationB.svg'
-    iconUrl: 'icons/locationB.png'
+var endIcon = new LeafIcon({
+    iconUrl: 'icons/endIcon.svg'
 })
-
 
 var origin = {}
 var destination = {}
 
 var pinOrigin = function (e) {
-    window.alert('origin');
     if (e.id == 'originBtn') console.log(e.id);
     if (origin.options) {
         if (map.listens('drag')) {
@@ -645,7 +641,7 @@ var pinOrigin = function (e) {
         return
     }
     if (!origin.options) {
-        origin = L.marker(map.getCenter(), { draggable: true, icon: locationA  }).addTo(map);
+        origin = L.marker(map.getCenter(), { draggable: true, icon: startIcon }).addTo(map);
         map.on('drag', oDrag);
     }
 };
@@ -662,7 +658,7 @@ var pinDestination = function (e) {
         return
     }
     if (!destination.options) {
-        destination = L.marker(map.getCenter(), { draggable: true, icon: locationB }).addTo(map);
+        destination = L.marker(map.getCenter(), { draggable: true, icon: endIcon }).addTo(map);
         map.on('drag', dDrag);
     }
 };
