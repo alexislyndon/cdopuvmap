@@ -612,9 +612,8 @@ $("#searchInput").keyup(function (event) {
 });
 var LeafIcon = L.Icon.extend({
     options: {
-        iconSize: [48, 105],
-        shadowSize: [50, 64],
-        iconAnchor: [22, 94],
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
         shadowAnchor: [4, 62],
         popupAnchor: [-3, -76]
     }
@@ -708,18 +707,6 @@ function reverseGeocode(latlng, inputE) {
             // console.log('rGeodata', data);
         })
 }
-
-// Called when Map zoom changes
-// map.on('zoomend', function () {
-//     if (map.getZoom() == map.getMaxZoom()) {
-//         console.log('already at max zoom out');
-//     }
-//     console.log('zoom ', map.getZoom());
-// }
-// );
-
-// window.onscroll = function () { console.log('scrolled'); }
-//script for the modal user report
 
 const modal = document.querySelector(".modal");
 const trigger = document.querySelector(".trigger");
