@@ -600,36 +600,48 @@ var destination = {}
 
 var pinOrigin = function (e) {
     if (e.id == 'originBtn')
-    if (origin.options) {
-        if (map.listens('drag')) {
-            var pin1 = origin.getLatLng()
-            // document.getElementById("originInput").value = Object.values(pin1).reverse().toString()
-            map.off('drag')
-            reverseGeocode(pin1, originInput)
-        } else { map.on('drag', oDrag) }
-        return
-    }
+    // if (origin.options) {
+    //     if (map.listens('drag')) {
+    //         var pin1 = origin.getLatLng()
+    //         // document.getElementById("originInput").value = Object.values(pin1).reverse().toString()
+    //         map.off('drag')
+    //         reverseGeocode(pin1, originInput)
+    //     } else { map.on('drag', oDrag) }
+    //     return
+    // }
     if (!origin.options) {
+        console.log(origin);
         origin = L.marker(map.getCenter(), { draggable: true, icon: startIcon }).addTo(map);
         map.on('drag', oDrag);
     }
+
+    origin.on('dragend', function(event) {
+        let latlng = event.target.getLatLng();
+        // console.log(latlng.lat, latlng.lng)
+        reverseGeocode(latlng, originInput)
+    });
 };
 
 var pinDestination = function (e) {
     if (e.id == 'destinationBtnn') return
-    if (destination.options) {
-        if (map.listens('drag')) {
-            var pin1 = destination.getLatLng()
-            // document.getElementById("destinationInput").value = Object.values(pin1).reverse().toString()
-            map.off('drag')
-            reverseGeocode(pin1, destinationInput)
-        } else { map.on('drag', dDrag) }
-        return
-    }
+    // if (destination.options) {
+    //     if (map.listens('drag')) {
+    //         var pin1 = destination.getLatLng()
+    //         map.off('drag')
+    //         reverseGeocode(pin1, destinationInput)
+    //     } else { map.on('drag', dDrag) }
+    //     return
+    // }
     if (!destination.options) {
         destination = L.marker(map.getCenter(), { draggable: true, icon: endIcon }).addTo(map);
         map.on('drag', dDrag);
     }
+
+    destination.on('dragend', function(event) {
+        let latlng = event.target.getLatLng();
+        // console.log(latlng.lat, latlng.lng)
+        reverseGeocode(latlng, destinationInput);
+    });
 };
 var oDrag = function (e) {
     if (!e) return
