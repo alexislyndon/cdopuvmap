@@ -602,7 +602,7 @@ var pinOrigin = function (e) {
     if (e.id == 'originBtn')
     // if (origin.options) {
     //     if (map.listens('drag')) {
-    //         var pin1 = origin.getLatLng()
+    //         var pin1 = origin.getLatLng()imon
     //         // document.getElementById("originInput").value = Object.values(pin1).reverse().toString()
     //         map.off('drag')
     //         reverseGeocode(pin1, originInput)
@@ -620,7 +620,7 @@ var pinOrigin = function (e) {
         // console.log(latlng.lat, latlng.lng)
         reverseGeocode(latlng, originInput)
     });
-};
+}; //test
 
 var pinDestination = function (e) {
     if (e.id == 'destinationBtnn') return
