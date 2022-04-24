@@ -151,7 +151,6 @@ var itirenaryNames = [];
 
 function getItineraries(o, d) {
     spinner.removeAttribute('hidden');
-    hideAllRouteItem();
     hideAllRouteLayers();
     console.log('check length' + allItirenariesArray.length);
     clearItirenary();
@@ -247,8 +246,10 @@ $( window ).resize(function() {
 function openPanel(id) {
     if(id == '#routesPanel'){
         showAllRouteLayers();
+        showAllRouteItem();
     } else if(id == '#journeyPanel'){
         hideAllRouteLayers();
+        console.log('here');
     }
     if (window.matchMedia('(min-width: 992px)').matches){
         // large devices (laptops/desktops)
@@ -362,83 +363,40 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
     switch (e.target.id) {
         case "journeyBtn":
             // console.log('#'+e.target.id);
-            if (window.matchMedia('(max-width: 600px)').matches) {
-                // narrow
-                if ($('#journeyPanel').height() > 0) { //check if open already
-                    closePanel('#journeyPanel');
-                    $('#journeyBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-                } else {
-                    //close other panels first
-                    closePanel('#routesPanel');
-                    $('#routesBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-                    //then open target panel
-                    openPanel('#journeyPanel');
-                    $('#journeyBtn').css({
-                        'background-color': '#2a1d63'
-                    });
-                }
+            if ($('#journeyPanel').css("visibility") === "visible") { //check if open already
+                closePanel('#journeyPanel');
+                $('#journeyBtn').css({
+                    'background-color': '#3F2B96'
+                });
             } else {
-                // wide
-                if ($('#journeyPanel').width() > 0) { //check if open already
-                    closePanel('#journeyPanel');
-                    $('#journeyBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-                } else {
-                    //close other panels first
-                    closePanel('#routesPanel');
-                    $('#routesBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-                    //then open target panel
-                    openPanel('#journeyPanel');
-                    $('#journeyBtn').css({
-                        'background-color': '#2a1d63'
-                    });
-                }
+                //close other panels first
+                closePanel('#routesPanel');
+                $('#routesBtn').css({
+                    'background-color': '#3F2B96'
+                });
+                //then open target panel
+                openPanel('#journeyPanel');
+                $('#journeyBtn').css({
+                    'background-color': '#2a1d63'
+                });
             }
             break;
         case "routesBtn":
-            if (window.matchMedia('(max-width: 600px)').matches) {
-                // narrow
-                if ($('#routesPanel').height() > 0) { //check if open already
-                    closePanel('#routesPanel');
-                    $('#routesBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-                } else {
-                    closePanel('#journeyPanel');
-                    $('#journeyBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-
-                    openPanel('#routesPanel');
-                    $('#routesBtn').css({
-                        'background-color': '#2a1d63'
-                    });
-                }
+            if ($('#routesPanel').css("visibility") === "visible") { //check if open already
+                closePanel('#routesPanel');
+                $('#routesBtn').css({
+                    'background-color': '#3F2B96'
+                });
             } else {
-                // wide
-                if ($('#routesPanel').width() > 0) { //check if open already
-                    closePanel('#routesPanel');
-                    $('#routesBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-                } else {
-                    closePanel('#journeyPanel');
-                    $('#journeyBtn').css({
-                        'background-color': '#3F2B96'
-                    });
+                closePanel('#journeyPanel');
+                $('#journeyBtn').css({
+                    'background-color': '#3F2B96'
+                });
 
-                    openPanel('#routesPanel');
-                    $('#routesBtn').css({
-                        'background-color': '#2a1d63'
-                    });
-                }
+                openPanel('#routesPanel');
+                $('#routesBtn').css({
+                    'background-color': '#2a1d63'
+                });
             }
             break;
         default:
@@ -481,6 +439,9 @@ window.onload = function () {
         });
     } else {
         openPanel('#routesPanel');
+        $('#routesBtn').css({
+            'background-color': '#2a1d63'
+        });
     }
 }
 function hideAllRouteLayers() {
