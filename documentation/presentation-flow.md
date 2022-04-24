@@ -22,3 +22,5 @@ shapefiles, geojson, the coordinate system, spatial databases, TADTAD ni dapat u
 
 The data that we got 
 # 
+
+#### say: our HTTP endpoints describe what is possible with the application
