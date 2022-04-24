@@ -6,6 +6,7 @@ const sessions = require('express-session');
 const authRoutes = require('./routes/auth')
 const mapRoutes = require('./routes/map')
 const adminRoutes = require('./routes/admin')
+const bcrypt = require('bcrypt')
 
 const path = require('path');
 
