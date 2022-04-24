@@ -5,28 +5,30 @@
 <table class="main-tbl" id="reports">
   <thead>
     <tr>
+      <th>Date/Time</th>
+      <th >Status</th>
       <th>Summary</th>
       <th>Description</th>
       <th>Type</th>
       <th>Reported by</th>
       <th>Email Address</th>
-      <th>Resolved</th>
-      <th>Actions <button class="add">Add new</button></th>
+      <th>Actions</th> <!--<button class="add">Add new</button></th>-->
     </tr>
   </thead>
   <tbody>
     <% reports?.map((i) =>{ %>
     <tr data-id="<%= i.id%>">
+      <td><%= new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeStyle: 'medium' }).format(i.datetime) %></td>
+      <td class="editable" ><%= i.status %></td>
       <td><%= i.summary %></td>
-      <td><%= i.desc %></td>
+      <td><%= i.descrip %></td>
       <td><%= i.type %></td>
       <td><%= i.name %></td>
       <td><%= i.email %></td>
-      <td><%= i.resolved %></td>
       <td>
         <button class="save">Save</button>
         <button class="edit">Edit</button>
-        <button class="delete">Delete</button>
+        <!-- <button class="delete">Delete</button> -->
       </td>
     </tr>
     <% }) %>

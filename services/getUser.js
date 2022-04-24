@@ -1,0 +1,13 @@
+const db = require("./db");
+
+module.exports = async (username) => {
+  const result = await db.query(`
+  
+  SELECT * from users where username=$1
+  
+  `, [username]);
+  const data = result.rows[0];
+
+  return data;
+  //res.render("index", { people: data });
+};

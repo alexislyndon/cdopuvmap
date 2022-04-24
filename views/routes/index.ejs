@@ -8,33 +8,35 @@
       <th>Route Code</th>
       <th>Route Name</th>
       <th>Shortname</th>
-      <th>Via</th>
-      <th>Start/End</th>
+      <th class="thpath">Path</th>
+      <th>Signage</th>
       <th>Length</th>
       <th>Color</th>
-      <th>Active</th>
       <th>Actions <button class="add">Add new</button></th>
     </tr>
   </thead>
   <tbody>
     <% routes?.map((i) =>{ %>
     <tr data-id="<%= i.id%>">
-      <td class="data"><%= i.route_code %></td>
-      <td class="data"><%= i.route_name %></td>
-      <td class="data"><%= i.shortname %></td>
-      <td class="data"><%= i.via %></td>
-      <td class="data"><%= i.start_end %></td>
-      <td class="data"><%= i.Length %></td>
-      <td class="data"><%= i.Color %></td>
-      <td><%= i.Active %></td>
+      <td name="route_code" class="r e"><%= i.route_code %></td>
+      <td name="route_name" class="r e"><%= i.route_name %></td>
+      <td name="shortname" class="r e"><%= i.shortname %></td>
+      <td name="path" class="r data-ul thpath"> 
+        <ul class="list_sbar">
+      <% i?.path?.map((j,idx) => { %>
+        <li class="path" > <a href="javascript:void(0);"><%= j %></a></li>
+      <% }) %>
+        </ul>
+      </td>
+      <td name="signage" class="r e"><%= i.signage %></td>
+      <td class="r"><%= i.length %></td>
+      <td class="r color"><input type="color" name="color" id="" value="<%= i.color %>" disabled></td>
       <td>
         <button class="save">Save</button>
         <button class="edit">Edit</button>
-        <button class="delete">Delete</button>
+        <!-- <button class="delete">Delete</button> -->
       </td>
     </tr>
     <% }) %>
   </tbody>
 </table>
-<!-- <script src="app.js"></script> -->
-<link rel="stylesheet" href="admin.css" />

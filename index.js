@@ -6,8 +6,10 @@ const sessions = require('express-session');
 const authRoutes = require('./routes/auth')
 const mapRoutes = require('./routes/map')
 const adminRoutes = require('./routes/admin')
+const bcrypt = require('bcrypt')
 
 const path = require('path');
+const authMW = require('./middleware/authMW');
 
 const port = process.env.PORT || 8080;
 
@@ -29,7 +31,7 @@ app.get('/', (req, res) => {
 });
 app.use(authRoutes)
 app.use(mapRoutes)
-app.use('/admin', adminRoutes)
+app.use('/admin', authMW, adminRoutes)
 
 app.listen(port, () => {
     console.log(`App listening on port: ${port}`);

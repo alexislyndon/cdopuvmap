@@ -3,7 +3,7 @@ const db = require("./db");
 module.exports = async() => {
     const result = await db.query(`
   
-  SELECT * FROM routes
+  SELECT * FROM routescopy order by route_code
   
   `);
     const data = result.rows;

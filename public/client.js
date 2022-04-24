@@ -24,9 +24,15 @@ const originInput = document.getElementById("originInput");
 const destinationInput = document.getElementById("destinationInput");
 const spinner = document.getElementById("spinner");
 
-function popup(feature, layer) {
+function popupRouteViewing(feature, layer) {
     if (feature.properties) {
-        layer.bindPopup('Name: ' + feature.properties.route_name + '<br> Code: ' + feature.properties.route_code + '<br> leg: ' + feature.properties.leg_type);
+        layer.bindPopup('Name: ' + feature.properties.route_name);
+    }
+}
+
+function popupItineraries(feature, layer) {
+    if (feature.properties) {
+        layer.bindPopup('Name: ' + feature.properties.route_name + '<br> Length: ' + Math.round((feature.properties.distance + Number.EPSILON) * 100) / 100 + 'km<br> Leg: ' + feature.properties.leg_type);
     }
 }
 
@@ -84,7 +90,7 @@ const fetchroutes = function () {
                     onEachFeature: function (feature, layer) {
                         layer.on({
                             'click': function (e) {
-                                popup(feature, e.target);
+                                popupRouteViewing(feature, e.target);
                                 highlight(e.target); //e.target is layer
                             }
                         })
@@ -168,7 +174,7 @@ function getItineraries(o, d) {
                         onEachFeature: function (feature, layer) {
                             layer.on({
                                 'click': function (e) {
-                                    popup(feature, e.target);
+                                    popupItineraries(feature, e.target);
                                     highlight(e.target);
                                 }
                             })
