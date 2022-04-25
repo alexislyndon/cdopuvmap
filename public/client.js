@@ -104,7 +104,6 @@ const fetchroutes = function () {
                 let text = data[i].properties.shortname;
                 // let splitted = text.split('Via');
                 let elementID = data[i].properties.route_code // 'route_' + cleanString(text);
-                // console.log(elementID);
                 // if (splitted.length == 200) { //check if 'route_name' have: 'Via westbound chuchu'
                 //     $('#routesOutputList').append('<li><span class="routes_ItemClickZone" id="' + elementID + '"><div class="outputItem"  id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
                 // } else {
@@ -114,10 +113,17 @@ const fetchroutes = function () {
             allRoutesArray.forEach(route => {
                 route.addTo(map);
             });
-
             //need to add allRoutesLayers to map first before doing this loop
             for (let i = 0; i < data.length; i++) {
                 allRoutesArray[i].layer_id = data[i].properties.route_code //'route_' + cleanString(data[i].properties.route_name); //adds new attribute 'layer_id'
+
+                if(data[i].properties.path != null){
+                    allRoutesArray[i].path = [];
+                    data[i].properties.path.forEach(item => {
+                        allRoutesArray[i].path.push(item.toLocaleLowerCase());
+                    })
+                } 
+
             }
         });
 }();
@@ -151,9 +157,7 @@ var itirenaryNames = [];
 
 function getItineraries(o, d) {
     spinner.removeAttribute('hidden');
-    hideAllRouteItem();
     hideAllRouteLayers();
-    console.log('check length' + allItirenariesArray.length);
     clearItirenary();
     var o = origin.getLatLng();
     var d = destination.getLatLng();
@@ -189,7 +193,6 @@ function getItineraries(o, d) {
                 itirenaryNames[i] = text;
                 let splitted = text.split('Via');
                 let elementID = 'itirenary_' + cleanString(text);
-                console.log('added' + elementID);
                 if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
                     $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
                 } else {
@@ -245,6 +248,12 @@ $( window ).resize(function() {
 });
 
 function openPanel(id) {
+    if(id == '#routesPanel'){
+        showAllRouteLayers();
+        showAllRouteItem();
+    } else if(id == '#journeyPanel'){
+        hideAllRouteLayers();
+    }
     if (window.matchMedia('(min-width: 992px)').matches){
         // large devices (laptops/desktops)
         $(id).css({
@@ -254,7 +263,7 @@ function openPanel(id) {
         });
         $('#map').css({
             'margin-left': '18.3%',
-            'width': 'calc(100% - 18.3%)',
+            'width': '81.7%',
             'height': '100%',
             'margin-bottom': '0%'
         });
@@ -272,7 +281,7 @@ function openPanel(id) {
         });
         $('#map').css({
             'margin-left': '50%',
-            'width': 'calc(50%)',
+            'width': '50%',
             'height': '100%',
             'margin-bottom': '0%'
         });
@@ -299,7 +308,8 @@ function openPanel(id) {
             'left': '0%'
         });
         $(id).show();
-    } 
+    }
+    setTimeout(function(){ map.invalidateSize()}, 400);
 }
 function closePanel(id) {
     if (window.matchMedia('(min-width: 992px)').matches){
@@ -352,92 +362,48 @@ function closePanel(id) {
         });
         $(id).hide();
     }
+    setTimeout(function(){ map.invalidateSize()}, 400);
 }
 $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
     switch (e.target.id) {
         case "journeyBtn":
-            // console.log('#'+e.target.id);
-            if (window.matchMedia('(max-width: 600px)').matches) {
-                // narrow
-                if ($('#journeyPanel').height() > 0) { //check if open already
-                    closePanel('#journeyPanel');
-                    $('#journeyBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-                } else {
-                    //close other panels first
-                    closePanel('#routesPanel');
-                    $('#routesBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-                    //then open target panel
-                    openPanel('#journeyPanel');
-                    $('#journeyBtn').css({
-                        'background-color': '#A8C0FF'
-                    });
-                }
+            if ($('#journeyPanel').css("visibility") === "visible") { //check if open already
+                closePanel('#journeyPanel');
+                $('#journeyBtn').css({
+                    'background-color': '#3F2B96'
+                });
             } else {
-                // wide
-                if ($('#journeyPanel').width() > 0) { //check if open already
-                    closePanel('#journeyPanel');
-                    $('#journeyBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-                } else {
-                    //close other panels first
-                    closePanel('#routesPanel');
-                    $('#routesBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-                    //then open target panel
-                    openPanel('#journeyPanel');
-                    $('#journeyBtn').css({
-                        'background-color': '#A8C0FF'
-                    });
-                }
+                //close other panels first
+                closePanel('#routesPanel');
+                $('#routesBtn').css({
+                    'background-color': '#3F2B96'
+                });
+                //then open target panel
+                openPanel('#journeyPanel');
+                $('#journeyBtn').css({
+                    'background-color': '#2a1d63'
+                });
             }
             break;
         case "routesBtn":
-            if (window.matchMedia('(max-width: 600px)').matches) {
-                // narrow
-                if ($('#routesPanel').height() > 0) { //check if open already
-                    closePanel('#routesPanel');
-                    $('#routesBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-                } else {
-                    closePanel('#journeyPanel');
-                    $('#journeyBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-
-                    openPanel('#routesPanel');
-                    $('#routesBtn').css({
-                        'background-color': '#A8C0FF'
-                    });
-                }
+            if ($('#routesPanel').css("visibility") === "visible") { //check if open already
+                closePanel('#routesPanel');
+                $('#routesBtn').css({
+                    'background-color': '#3F2B96'
+                });
             } else {
-                // wide
-                if ($('#routesPanel').width() > 0) { //check if open already
-                    closePanel('#routesPanel');
-                    $('#routesBtn').css({
-                        'background-color': '#3F2B96'
-                    });
-                } else {
-                    closePanel('#journeyPanel');
-                    $('#journeyBtn').css({
-                        'background-color': '#3F2B96'
-                    });
+                closePanel('#journeyPanel');
+                $('#journeyBtn').css({
+                    'background-color': '#3F2B96'
+                });
 
-                    openPanel('#routesPanel');
-                    $('#routesBtn').css({
-                        'background-color': '#A8C0FF'
-                    });
-                }
+                openPanel('#routesPanel');
+                $('#routesBtn').css({
+                    'background-color': '#2a1d63'
+                });
             }
             break;
         default:
-            console.log('here');
             break;
     }
 });
@@ -472,7 +438,12 @@ window.onload = function () {
         sessionStorage.removeItem("reloading");
         openPanel('#journeyPanel');
         $('#journeyBtn').css({
-            'background-color': '#A8C0FF'
+            'background-color': '#2a1d63'
+        });
+    } else {
+        openPanel('#routesPanel');
+        $('#routesBtn').css({
+            'background-color': '#2a1d63'
         });
     }
 }
@@ -480,7 +451,6 @@ function hideAllRouteLayers() {
     allRoutesArray.forEach(route => {
         route.remove();
     });
-    console.log(map.getBounds);
 }
 var selectSpecificRoute = false;
 $('#hideAllBtn').click(function () {
@@ -505,12 +475,20 @@ $('#searchBtn').click(function () {
     inputStr = inputStr.toLocaleLowerCase();
     let elementID = '';
     allRoutesArray.forEach(route => {
-        if (route.layer_id.search(inputStr) == -1) {
-            elementID = cleanString(route.layer_id);
-            $('#' + elementID).hide();
+        if(route.path != null){
+            if(route.path.includes(inputStr)){
+                console.log('hit');
+                elementID = route.layer_id;
+                console.log(elementID);
+                $('#div_' + elementID).show();
+            } else {
+                elementID = route.layer_id;
+                console.log('here');
+                $('#div_' + elementID).hide();
+            }
         } else {
-            elementID = cleanString(route.layer_id);
-            $('#' + elementID).show();
+            elementID = route.layer_id;
+            $('#div_' + elementID).hide();
         }
     });
 });
@@ -527,6 +505,7 @@ $(document).on('click', '.routes_ItemClickZone', function (e) {
     let id = e.currentTarget.id;
     activeButton(e.currentTarget.id);
     $('div.route-info').each(function () { $(this).hide() })
+    selectSpecificRoute = true;
     for (let i = 0; i < allRoutesArray.length; i++) {
         if (allRoutesArray[i].layer_id == id) {
             if (selectSpecificRoute) {
@@ -561,7 +540,7 @@ $(document).on('click', '.journey_ItemClickZone', function (e) {
 function activeButton(str) {
     let id = 'div_' + str;
     $('#' + id).css({
-        'border': '3px solid #A8C0FF',
+        'border': '3px solid #2a1d63',
     });
 }
 function inActiveButton(str) {
@@ -582,7 +561,6 @@ function hideAllItirenaryItem() {
 }
 function removeAllItirenaryItem() {
     allItirenariesArray.forEach(itirenary => {
-        console.log('removed: ' + itirenary.layer_id);
         $('#' + itirenary.layer_id).remove();
 
     });
@@ -604,53 +582,88 @@ $("#searchInput").keyup(function (event) {
 });
 var LeafIcon = L.Icon.extend({
     options: {
-        iconSize: [38, 95],
-        shadowSize: [50, 64],
-        iconAnchor: [22, 94],
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
         shadowAnchor: [4, 62],
         popupAnchor: [-3, -76]
     }
 });
-var greenIcon = new LeafIcon({
-    iconUrl: 'http://leafletjs.com/SlavaUkraini/examples/custom-icons/leaf-green.png',
-    shadowUrl: 'http://leafletjs.com/SlavaUkraini/examples/custom-icons/leaf-shadow.png'
+var startIcon = new LeafIcon({
+    iconUrl: 'icons/startIcon.svg'
+})
+var endIcon = new LeafIcon({
+    iconUrl: 'icons/endIcon.svg'
 })
 
 var origin = {}
 var destination = {}
 
 var pinOrigin = function (e) {
-    if (e.id == 'originBtn') console.log(e.id);
+    console.log('here');
     if (origin.options) {
+        
         if (map.listens('drag')) {
-            var pin1 = origin.getLatLng()
-            // document.getElementById("originInput").value = Object.values(pin1).reverse().toString()
+            console.log('heree');
+            let pin1 = origin.getLatLng()
             map.off('drag')
             reverseGeocode(pin1, originInput)
-        } else { map.on('drag', oDrag) }
+            $('#startPinner').css({
+                'visibility': 'hidden'
+            });
+        } else { 
+            $('#startPinner').css({
+                'visibility': 'visible'
+            });
+            map.on('drag', oDrag) 
+        }
         return
     }
-    if (!origin.options) {
-        origin = L.marker(map.getCenter(), { draggable: true }).addTo(map);
+    if (!origin.options) { //if marker was not added to map yet
+        origin = L.marker(map.getCenter(), { draggable: true, icon: startIcon }).addTo(map);
         map.on('drag', oDrag);
+        $('#startPinner').css({
+            'visibility': 'visible'
+        });
+        
     }
+
+    // origin.on('dragend', function(event) {
+    //     let latlng = event.target.getLatLng();
+    //     // console.log(latlng.lat, latlng.lng)
+    //     reverseGeocode(latlng, originInput)
+    // });
 };
 
 var pinDestination = function (e) {
-    if (e.id == 'destinationBtnn') return
     if (destination.options) {
         if (map.listens('drag')) {
-            var pin1 = destination.getLatLng()
-            // document.getElementById("destinationInput").value = Object.values(pin1).reverse().toString()
+            let pin2 = destination.getLatLng()
             map.off('drag')
-            reverseGeocode(pin1, destinationInput)
-        } else { map.on('drag', dDrag) }
+            reverseGeocode(pin2, destinationInput)
+            $('#endPinner').css({
+                'visibility': 'hidden'
+            });
+        } else { 
+            $('#endPinner').css({
+                'visibility': 'visible'
+            });
+            map.on('drag', dDrag) 
+        }
         return
     }
     if (!destination.options) {
-        destination = L.marker(map.getCenter(), { draggable: true, icon: greenIcon }).addTo(map);
+        destination = L.marker(map.getCenter(), { draggable: true, icon: endIcon }).addTo(map);
         map.on('drag', dDrag);
+        $('#endPinner').css({
+            'visibility': 'visible'
+        });
     }
+
+    // destination.on('dragend', function(event) {
+    //     let latlng = event.target.getLatLng();
+    //     // console.log(latlng.lat, latlng.lng)
+    //     reverseGeocode(latlng, destinationInput);
+    // });
 };
 var oDrag = function (e) {
     if (!e) return
@@ -681,13 +694,11 @@ ogeocoder.on('select', function (item) {
     var [lng, lat] = item.center
     origin = L.marker(L.latLng([lat, lng])).addTo(map);
     originInput.value = item.place_name
-    console.log('oSelected', item);
 });
 dgeocoder.on('select', function (item) {
     var [lng, lat] = item.center
     destination = L.marker([lat, lng]).addTo(map);
     destinationInput.value = item.place_name
-    console.log('dSelected', item);
 });
 
 function reverseGeocode(latlng, inputE) {
@@ -695,21 +706,8 @@ function reverseGeocode(latlng, inputE) {
         .then(res => { return res.json() })
         .then(data => {
             inputE.value = data.features[0].place_name
-            // console.log('rGeodata', data);
         })
 }
-
-// Called when Map zoom changes
-// map.on('zoomend', function () {
-//     if (map.getZoom() == map.getMaxZoom()) {
-//         console.log('already at max zoom out');
-//     }
-//     console.log('zoom ', map.getZoom());
-// }
-// );
-
-// window.onscroll = function () { console.log('scrolled'); }
-//script for the modal user report
 
 const modal = document.querySelector(".modal");
 const trigger = document.querySelector(".trigger");
@@ -730,7 +728,6 @@ closeButton.addEventListener("click", toggleModal);
 window.addEventListener("click", windowOnClick);
 
 $('form.report-form').on('submit', function (e) {
-    console.log('form');
     e.preventDefault();
     spinner.removeAttribute('hidden');
     $.ajax({
@@ -740,7 +737,6 @@ $('form.report-form').on('submit', function (e) {
         success: function () {
             toggleModal();
             spinner.setAttribute('hidden', '');
-            console.log('successed');
             snack('success','Successfully submitted form.');
         }
     });
