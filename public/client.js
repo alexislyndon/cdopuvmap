@@ -85,6 +85,8 @@ const fetchroutes = function () {
             spinner.setAttribute('hidden', '');
             data = data.features
             for (let i = 0; i < data.length; ++i) {
+                console.log(data[i]);
+                console.log('here');
 
                 allRoutesArray.push(L.geoJSON(data[i], {
                     onEachFeature: function (feature, layer) {
@@ -249,7 +251,6 @@ $(window).resize(function () {
 });
 
 function openPanel(id) {
-<<<<<<< HEAD
     if(id == '#routesPanel'){
         showAllRouteLayers();
         showAllRouteItem();
@@ -257,10 +258,6 @@ function openPanel(id) {
         hideAllRouteLayers();
     }
     if (window.matchMedia('(min-width: 992px)').matches){
-=======
-    console.log('openpanel()');
-    if (window.matchMedia('(min-width: 992px)').matches) {
->>>>>>> 3f71e3e890aaaf1e06dd4e09aded2a45a7fd07f7
         // large devices (laptops/desktops)
         $(id).css({
             'width': '18.3%',
@@ -315,11 +312,7 @@ function openPanel(id) {
         });
         $(id).show();
     }
-<<<<<<< HEAD
     setTimeout(function(){ map.invalidateSize()}, 400);
-=======
-    // setTimeout(function () { map.invalidateSize() }, 400);
->>>>>>> 3f71e3e890aaaf1e06dd4e09aded2a45a7fd07f7
 }
 function closePanel(id) {
     if (window.matchMedia('(min-width: 992px)').matches) {
@@ -372,11 +365,7 @@ function closePanel(id) {
         });
         $(id).hide();
     }
-<<<<<<< HEAD
     setTimeout(function(){ map.invalidateSize()}, 400);
-=======
-    // setTimeout(function () { map.invalidateSize() }, 400);
->>>>>>> 3f71e3e890aaaf1e06dd4e09aded2a45a7fd07f7
 }
 $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
     switch (e.target.id) {
@@ -751,12 +740,8 @@ $('form.report-form').on('submit', function (e) {
         success: function () {
             toggleModal();
             spinner.setAttribute('hidden', '');
-<<<<<<< HEAD
-            snack('success','Successfully submitted form.');
-=======
             console.log('successed');
             snack('success', 'Successfully submitted form.');
->>>>>>> 3f71e3e890aaaf1e06dd4e09aded2a45a7fd07f7
         }
     });
 });
