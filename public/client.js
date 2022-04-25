@@ -117,12 +117,12 @@ const fetchroutes = function () {
             for (let i = 0; i < data.length; i++) {
                 allRoutesArray[i].layer_id = data[i].properties.route_code //'route_' + cleanString(data[i].properties.route_name); //adds new attribute 'layer_id'
 
-                if(data[i].properties.path != null){
+                if (data[i].properties.path != null) {
                     allRoutesArray[i].path = [];
                     data[i].properties.path.forEach(item => {
                         allRoutesArray[i].path.push(item.toLocaleLowerCase());
                     })
-                } 
+                }
 
             }
         });
@@ -155,15 +155,21 @@ function clearItirenary() {
 var allItirenariesArray = [];
 var itirenaryNames = [];
 
-function getItineraries(o, d) {
+function getItineraries(x, y) {
+    if (!origin.options || !destination.options) { snack('error', 'Please set start and end markers.'); return; }
+    if($('.pinner').is(":visible")) {
+        $('.pinner').each(function() {
+            $(this).trigger('click')
+        })
+    }
+    var o = origin.getLatLng();
+    var d = destination.getLatLng();
     spinner.removeAttribute('hidden');
     hideAllRouteLayers();
     clearItirenary();
-    var o = origin.getLatLng();
-    var d = destination.getLatLng();
     if (o.lng < 124.579983 || o.lng > 124.784260 || o.lat < 8.396130 || o.lat > 8.524154 || d.lng < 124.579983 || d.lng > 124.784260 || d.lat < 8.396130 || d.lat > 8.524154) {
         spinner.setAttribute('hidden', '');
-        snack('error','Origin/destination points must be within CDO');
+        snack('error', 'Origin/destination points must be within CDO');
         return
     }
     fetch(`/itineraries?origin=${encodeURIComponent(`${o.lng} ${o.lat}`)}&destination=${encodeURIComponent(`${d.lng} ${d.lat}`)}`)
@@ -213,19 +219,19 @@ L.control.locate().addTo(map); //check top left corner for added button/control
 
 
 //this will update panel width if user changes screen size while panel is still open
-$( window ).resize(function() {
-    if($("#routesPanel").css("visibility") === "visible"){
+$(window).resize(function () {
+    if ($("#routesPanel").css("visibility") === "visible") {
         openPanel('#routesPanel');
-    }else if ($("#journeyPanel").css("visibility") === "visible"){
+    } else if ($("#journeyPanel").css("visibility") === "visible") {
         openPanel('#journeyPanel');
-    } else{ // if all are close, only move the button panel and resize the map
+    } else { // if all are close, only move the button panel and resize the map
         if (window.matchMedia('(min-width: 992px)').matches) {
             // large devices (laptops/desktops)
             $('.buttonPanel').css({
                 'left': '0%',
                 'bottom': '50%'
             });
-        } else if (window.matchMedia('(min-width: 768px)').matches){
+        } else if (window.matchMedia('(min-width: 768px)').matches) {
             // mediumDevices (landscape tablets)
             $('.buttonPanel').css({
                 'left': '0%',
@@ -237,7 +243,7 @@ $( window ).resize(function() {
                 'left': '0%',
                 'bottom': '0.1%'
             });
-        } 
+        }
         $('#map').css({
             'margin-bottom': '0%',
             'margin-left': '0%',
@@ -248,13 +254,13 @@ $( window ).resize(function() {
 });
 
 function openPanel(id) {
-    if(id == '#routesPanel'){
+    if (id == '#routesPanel') {
         showAllRouteLayers();
         showAllRouteItem();
-    } else if(id == '#journeyPanel'){
+    } else if (id == '#journeyPanel') {
         hideAllRouteLayers();
     }
-    if (window.matchMedia('(min-width: 992px)').matches){
+    if (window.matchMedia('(min-width: 992px)').matches) {
         // large devices (laptops/desktops)
         $(id).css({
             'width': '18.3%',
@@ -272,7 +278,7 @@ function openPanel(id) {
             'left': '18.3%'
         });
         $(id).show();
-    }  else if (window.matchMedia('(min-width: 768px)').matches){
+    } else if (window.matchMedia('(min-width: 768px)').matches) {
         // mediumDevices (landscape tablets)
         $(id).css({
             'width': '50%',
@@ -309,10 +315,10 @@ function openPanel(id) {
         });
         $(id).show();
     }
-    setTimeout(function(){ map.invalidateSize()}, 400);
+    setTimeout(function () { map.invalidateSize() }, 400);
 }
 function closePanel(id) {
-    if (window.matchMedia('(min-width: 992px)').matches){
+    if (window.matchMedia('(min-width: 992px)').matches) {
         // large devices (laptops/desktops)
         $(id).css({
             'width': '0%',
@@ -328,7 +334,7 @@ function closePanel(id) {
             'height': '100%'
         });
         $(id).hide();
-    } else if (window.matchMedia('(min-width: 768px)').matches){
+    } else if (window.matchMedia('(min-width: 768px)').matches) {
         // mediumDevices (landscape tablets)
         $(id).css({
             'width': '0%',
@@ -362,7 +368,7 @@ function closePanel(id) {
         });
         $(id).hide();
     }
-    setTimeout(function(){ map.invalidateSize()}, 400);
+    setTimeout(function () { map.invalidateSize() }, 400);
 }
 $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
     switch (e.target.id) {
@@ -475,8 +481,8 @@ $('#searchBtn').click(function () {
     inputStr = inputStr.toLocaleLowerCase();
     let elementID = '';
     allRoutesArray.forEach(route => {
-        if(route.path != null){
-            if(route.path.includes(inputStr)){
+        if (route.path != null) {
+            if (route.path.includes(inputStr)) {
                 console.log('hit');
                 elementID = route.layer_id;
                 console.log(elementID);
@@ -599,9 +605,10 @@ var origin = {}
 var destination = {}
 
 var pinOrigin = function (e) {
+    if($('#endPinner').isv)
     console.log('here');
     if (origin.options) {
-        
+
         if (map.listens('drag')) {
             console.log('heree');
             let pin1 = origin.getLatLng()
@@ -610,11 +617,11 @@ var pinOrigin = function (e) {
             $('#startPinner').css({
                 'visibility': 'hidden'
             });
-        } else { 
+        } else {
             $('#startPinner').css({
                 'visibility': 'visible'
             });
-            map.on('drag', oDrag) 
+            map.on('drag', oDrag)
         }
         return
     }
@@ -624,7 +631,7 @@ var pinOrigin = function (e) {
         $('#startPinner').css({
             'visibility': 'visible'
         });
-        
+
     }
 
     // origin.on('dragend', function(event) {
@@ -643,11 +650,11 @@ var pinDestination = function (e) {
             $('#endPinner').css({
                 'visibility': 'hidden'
             });
-        } else { 
+        } else {
             $('#endPinner').css({
                 'visibility': 'visible'
             });
-            map.on('drag', dDrag) 
+            map.on('drag', dDrag)
         }
         return
     }
@@ -692,12 +699,16 @@ var dgeocoder = new maptiler.Geocoder({
 ogeocoder.on('select', function (item) {
     var center = map.getCenter()
     var [lng, lat] = item.center
-    origin = L.marker(L.latLng([lat, lng])).addTo(map);
+    // origin = {}
+    origin = L.marker([lng, lat], { draggable: true, icon: startIcon })//.addTo(map);
+    if(!map.hasLayer(origin)) {origin.addTo(map)}
     originInput.value = item.place_name
 });
 dgeocoder.on('select', function (item) {
     var [lng, lat] = item.center
-    destination = L.marker([lat, lng]).addTo(map);
+    // destination = {}
+    destination = L.marker([lng, lat], { draggable: true, icon: endIcon })//.addTo(map);
+    if(!map.hasLayer(destination)) {destination.addTo(map)}
     destinationInput.value = item.place_name
 });
 
@@ -737,7 +748,7 @@ $('form.report-form').on('submit', function (e) {
         success: function () {
             toggleModal();
             spinner.setAttribute('hidden', '');
-            snack('success','Successfully submitted form.');
+            snack('success', 'Successfully submitted form.');
         }
     });
 });
@@ -747,8 +758,8 @@ function snack(type, text) {
     // Get the snackbar DIV
     // x.style.color = 'white'; x.style.backgroundColor = 'green';
     var x = document.getElementById("snackbar");
-    if(type === 'success') {x.style.color = '#010201'; x.style.backgroundColor = '#C4F8B6'; x.innerHTML = text}
-    if(type === 'error'){ x.style.color = '#010201'; x.style.backgroundColor = '#FFB7B7'; x.innerHTML = text}
+    if (type === 'success') { x.style.color = '#010201'; x.style.backgroundColor = '#C4F8B6'; x.innerHTML = text }
+    if (type === 'error') { x.style.color = '#010201'; x.style.backgroundColor = '#FFB7B7'; x.innerHTML = text }
 
     // Add the "show" class to DIV
     x.className = "show";

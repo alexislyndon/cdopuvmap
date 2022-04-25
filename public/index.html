@@ -193,61 +193,6 @@
         <button class="toggles" id="journeyBtn">Journey Planner</button>
     </div>
 
-    <div class="panel" id="journeyPanel">
-        <div class="headDiv">
-            <h1 class="panelTitle">Journey Planner</h1>
-            <button class="closeBtn" id="journeyCloseBtn"></button>
-        </div>
-
-        <form action="/pathfind" method="GET" id="org_des_div">
-            <h2 id="originLabel" class="inputLabel">Origin</h2>
-            <div class="inputDiv">
-                <input type="text" name="origin" class="textInput"id="originInput" placeholder="Search place or use marker">
-                <button type="button" class="smallBtn" id="originBtn" onclick="pinOrigin(this)"></button>
-            </div>
-            <h2 id="destinationLabel" class="inputLabel">Destination</h2>
-            <div class="inputDiv">
-                <input type="text" name="destination" class="textInput"id="destinationInput" placeholder="Search place or use marker">
-                <button type="button" class="smallBtn" id="destinationBtn" onclick="pinDestination(this)"></button>
-            </div>
-            <div id="goBtnDiv">
-                <button type="button" id="goBtn" onclick="getItineraries(originInput, destinationInput)"> GO </button>
-                <button type="button" id="goBtn2" onclick="pathfind3()"> WITHPOINTS </button>
-                
-            </div>
-        </form>
-        <h2 id="itineraries">
-            Itineraries
-        </h2>
-        <button type="button" class="smallBtn" id="refreshBtn"></button>
-        <div class="outputPanel" id="journeyOutputPanel">
-            <ul id="journeyOutputList">
-            </ul>
-        </div>
-    </div>
-
-    <div class="panel" id="routesPanel">
-        <div class="headDiv">
-            <h1 class="panelTitle">View Routes</h1>
-            <button class="closeBtn" id="routesCloseBtn"></button>
-        </div>
-
-        <div id="searchRouteDiv">
-            <div class="inputDiv">
-                <input type="text" class="textInput" id="searchInput" placeholder="Search specific route">
-                <button id="searchBtn"></button>
-            </div>
-        </div>
-        <div id="hideShowDiv">
-            <button id="showAllBtn" class="toggleRouteBtn">Show All</button>
-            <button id="hideAllBtn" class="toggleRouteBtn">Hide All</button>
-        </div>
-        <div class="outputPanel" id="routesOutputPanel">
-            <ul id="routesOutputList">
-            </ul>
-        </div>
-    </div>
-
     <!-- leaflet js-->
     <!-- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script> -->
 
