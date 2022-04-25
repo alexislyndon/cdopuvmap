@@ -98,6 +98,8 @@ The admin module is accessible thru the `/admin` endpoints - which are login pro
 A `GET /login` endpoint is available for users to log into the app. By supplying the correct username and password and posting it to `POST /login`, a user is granted access to the admin module. A `POST /signup` endpoint also exist for creation of admin users but there is no front-end for it and a front-end will never be made for it.
 
 TABLE OF ENDPOINTS (HTTP)
+
+
 | endpoint | takes | returns | protected | remarks |
 | --- | --- | --- | --- | --- | --- |
 | GET / | nothing | html of web map app | no | Gets the web app from server |
