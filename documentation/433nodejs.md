@@ -101,7 +101,7 @@ TABLE OF ENDPOINTS (HTTP)
 
 
 | endpoint | takes | returns | protected | remarks |
-| --- | --- | --- | --- | --- | --- |
+| ------ | ------ | ------- | ------- | ------ | ------------ |
 | GET / | nothing | html of web map app | no | Gets the web app from server |
 | GET /itineraries | origin & destination coordinates | ARRAY of type FeatureCollection to display features on a map | no | FeatureCollection array for immediate consumption by the Leaflet library front-end |
 | POST /reports | subject,desc,type,name,email | nothing | no | Allows users to send reports about bugs or missing info |
@@ -113,3 +113,8 @@ TABLE OF ENDPOINTS (HTTP)
 | GET /login | nothing | login page html  | no | Unauthenticated requests to /admin will be redirected to this endpoint |
 | POST /login | username,password | jwt cookie  | no | Returns a jwt cookie that expires in 12hours |
 
+
+| Syntax      | Description |
+| ----------- | ----------- |
+| Header      | Title       |
+| Paragraph   | Text        |
