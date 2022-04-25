@@ -93,4 +93,21 @@ module.exports = db;
 
 The NodeJS server exposed three unprotected endpoints: a `GET /routes` endpoint that returned all the data about each individual jeepney route, a `GET /itineraries` endpoint that returns itinerary suggestions from an input of 2 coordinates, and a `POST /reports` endpoint that allows users to send the app admins suggestions or report missing routes.
 
-The admin module is accessible thru the `/admin` endpoints which are login protected. 
+The admin module is accessible thru the `/admin` endpoints - which are login protected. There are five (5) endpoints under `/admin`. A root `/` endpoint that renders a page, a `GET /routes` endpoint that fetches the routes from the database for display in a table, a `GET /reports` endpoint that fetches reports made by users, a `POST /reports/:id` endpoint to update the status of reports to New | Resolved | Unactionable, and a `POST /routes/:id` endpoint to update a jeepney route's information.
+
+A `GET /login` endpoint is available for users to log into the app. By supplying the correct username and password and posting it to `POST /login`, a user is granted access to the admin module. A `POST /signup` endpoint also exist for creation of admin users but there is no front-end for it and a front-end will never be made for it.
+
+TABLE OF ENDPOINTS (HTTP)
+| endpoint | takes | returns | protected | remarks |
+| --- | --- | --- | --- | --- | --- |
+| GET / | nothing | html of web map app | no | Gets the web app from server |
+| GET /itineraries | origin & destination coordinates | ARRAY of type FeatureCollection to display features on a map | no | FeatureCollection array for immediate consumption by the Leaflet library front-end |
+| POST /reports | subject,desc,type,name,email | nothing | no | Allows users to send reports about bugs or missing info |
+| GET /admin | jwt auth cookie | admin HTML | yes | Allows users in when login is valid, redirects to login page when invalid |
+| GET /admin/routes | nothing | routes info | yes | Renders info into an editable table |
+| GET /admin/reports | nothing | table of reports | yes | Renders info into an editable table |
+| POST /admin/routes/:id | id,route_code,route_name,shortname,path,color,signage | nothing | yes | Updates info of the jeepney routes in database |
+| POST /admin/reports/:id | id,status | nothing | yes | Updates a report's status |
+| GET /login | nothing | login page html  | no | Unauthenticated requests to /admin will be redirected to this endpoint |
+| POST /login | username,password | jwt cookie  | no | Returns a jwt cookie that expires in 12hours |
+
