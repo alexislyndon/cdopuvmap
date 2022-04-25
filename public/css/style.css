@@ -83,11 +83,11 @@ html {
     /* transform: translateX(50%); */
 }
 #startPinner{
-    background-color: #085dd5;
+    background-color: #69F;
 }
 
 #endPinner{
-    background-color: #962323;
+    background-color: #ff6699;
 }
 
 .trigger::after {

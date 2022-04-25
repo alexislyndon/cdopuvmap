@@ -10,7 +10,7 @@ var gl = L.mapboxGL({
 var map = L.map('map', {
     center: [8.477703150412395, 124.64379231398955], // target is rizal monument
     zoom: 14,
-    minZoom: 14,
+    minZoom: 13,
     maxBounds: [
         [8.786011072628465, 124.94613647460939],
         [8.142844225655255, 124.34532165527345]
@@ -119,12 +119,12 @@ const fetchroutes = function () {
             for (let i = 0; i < data.length; i++) {
                 allRoutesArray[i].layer_id = data[i].properties.route_code //'route_' + cleanString(data[i].properties.route_name); //adds new attribute 'layer_id'
 
-                if(data[i].properties.path != null){
+                if (data[i].properties.path != null) {
                     allRoutesArray[i].path = [];
                     data[i].properties.path.forEach(item => {
                         allRoutesArray[i].path.push(item.toLocaleLowerCase());
                     })
-                } 
+                }
 
             }
         });
@@ -157,12 +157,18 @@ function clearItirenary() {
 var allItirenariesArray = [];
 var itirenaryNames = [];
 
-function getItineraries(o, d) {
+function getItineraries(x, y) {
+    if (!origin.options || !destination.options) { snack('error', 'Please set start and end markers.'); return; }
+    if($('.pinner').is(":visible")) {
+        $('.pinner').each(function() {
+            $(this).trigger('click')
+        })
+    }
+    var o = origin.getLatLng();
+    var d = destination.getLatLng();
     spinner.removeAttribute('hidden');
     hideAllRouteLayers();
     clearItirenary();
-    var o = origin.getLatLng();
-    var d = destination.getLatLng();
     if (o.lng < 124.579983 || o.lng > 124.784260 || o.lat < 8.396130 || o.lat > 8.524154 || d.lng < 124.579983 || d.lng > 124.784260 || d.lat < 8.396130 || d.lat > 8.524154) {
         spinner.setAttribute('hidden', '');
         snack('error', 'Origin/destination points must be within CDO');
@@ -216,7 +222,6 @@ L.control.locate().addTo(map); //check top left corner for added button/control
 
 //this will update panel width if user changes screen size while panel is still open
 $(window).resize(function () {
-    console.log('resize');
     if ($("#routesPanel").css("visibility") === "visible") {
         openPanel('#routesPanel');
     } else if ($("#journeyPanel").css("visibility") === "visible") {
@@ -251,13 +256,21 @@ $(window).resize(function () {
 });
 
 function openPanel(id) {
+<<<<<<< HEAD
     if(id == '#routesPanel'){
+=======
+    if (id == '#routesPanel') {
+>>>>>>> 5cfa60f7dfa8f0fae13f8522b4c5837a7a575831
         showAllRouteLayers();
         showAllRouteItem();
-    } else if(id == '#journeyPanel'){
+    } else if (id == '#journeyPanel') {
         hideAllRouteLayers();
     }
+<<<<<<< HEAD
     if (window.matchMedia('(min-width: 992px)').matches){
+=======
+    if (window.matchMedia('(min-width: 992px)').matches) {
+>>>>>>> 5cfa60f7dfa8f0fae13f8522b4c5837a7a575831
         // large devices (laptops/desktops)
         $(id).css({
             'width': '18.3%',
@@ -312,7 +325,11 @@ function openPanel(id) {
         });
         $(id).show();
     }
+<<<<<<< HEAD
     setTimeout(function(){ map.invalidateSize()}, 400);
+=======
+    setTimeout(function () { map.invalidateSize() }, 400);
+>>>>>>> 5cfa60f7dfa8f0fae13f8522b4c5837a7a575831
 }
 function closePanel(id) {
     if (window.matchMedia('(min-width: 992px)').matches) {
@@ -365,7 +382,11 @@ function closePanel(id) {
         });
         $(id).hide();
     }
+<<<<<<< HEAD
     setTimeout(function(){ map.invalidateSize()}, 400);
+=======
+    setTimeout(function () { map.invalidateSize() }, 400);
+>>>>>>> 5cfa60f7dfa8f0fae13f8522b4c5837a7a575831
 }
 $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
     switch (e.target.id) {
@@ -478,8 +499,8 @@ $('#searchBtn').click(function () {
     inputStr = inputStr.toLocaleLowerCase();
     let elementID = '';
     allRoutesArray.forEach(route => {
-        if(route.path != null){
-            if(route.path.includes(inputStr)){
+        if (route.path != null) {
+            if (route.path.includes(inputStr)) {
                 console.log('hit');
                 elementID = route.layer_id;
                 console.log(elementID);
@@ -602,9 +623,10 @@ var origin = {}
 var destination = {}
 
 var pinOrigin = function (e) {
+    if($('#endPinner').isv)
     console.log('here');
     if (origin.options) {
-        
+
         if (map.listens('drag')) {
             console.log('heree');
             let pin1 = origin.getLatLng()
@@ -613,11 +635,11 @@ var pinOrigin = function (e) {
             $('#startPinner').css({
                 'visibility': 'hidden'
             });
-        } else { 
+        } else {
             $('#startPinner').css({
                 'visibility': 'visible'
             });
-            map.on('drag', oDrag) 
+            map.on('drag', oDrag)
         }
         return
     }
@@ -627,7 +649,7 @@ var pinOrigin = function (e) {
         $('#startPinner').css({
             'visibility': 'visible'
         });
-        
+
     }
 
     // origin.on('dragend', function(event) {
@@ -646,11 +668,11 @@ var pinDestination = function (e) {
             $('#endPinner').css({
                 'visibility': 'hidden'
             });
-        } else { 
+        } else {
             $('#endPinner').css({
                 'visibility': 'visible'
             });
-            map.on('drag', dDrag) 
+            map.on('drag', dDrag)
         }
         return
     }
@@ -695,12 +717,16 @@ var dgeocoder = new maptiler.Geocoder({
 ogeocoder.on('select', function (item) {
     var center = map.getCenter()
     var [lng, lat] = item.center
-    origin = L.marker(L.latLng([lat, lng])).addTo(map);
+    // origin = {}
+    origin = L.marker([lng, lat], { draggable: true, icon: startIcon })//.addTo(map);
+    if(!map.hasLayer(origin)) {origin.addTo(map)}
     originInput.value = item.place_name
 });
 dgeocoder.on('select', function (item) {
     var [lng, lat] = item.center
-    destination = L.marker([lat, lng]).addTo(map);
+    // destination = {}
+    destination = L.marker([lng, lat], { draggable: true, icon: endIcon })//.addTo(map);
+    if(!map.hasLayer(destination)) {destination.addTo(map)}
     destinationInput.value = item.place_name
 });
 
@@ -740,7 +766,10 @@ $('form.report-form').on('submit', function (e) {
         success: function () {
             toggleModal();
             spinner.setAttribute('hidden', '');
+<<<<<<< HEAD
             console.log('successed');
+=======
+>>>>>>> 5cfa60f7dfa8f0fae13f8522b4c5837a7a575831
             snack('success', 'Successfully submitted form.');
         }
     });

@@ -1,4 +1,6 @@
-# The NodeJS Back-end
+# CH 4
+## Coding
+### The NodeJS Back-end
 Node.js is a JavaScript runtime built on Chrome's V8 Javascript engine. A NodeJS Server allowed us to write a both the back-end and the front-end in the JavaScript programming language. Node also allowed the use of the largest Software Registry, npm, to install our dependencies.
 
 The ExpressJS framework enabled HTTP capabilities of the server, able to respond to HTTP GET and HTTP POST request from the client.
