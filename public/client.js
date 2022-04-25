@@ -10,7 +10,7 @@ var gl = L.mapboxGL({
 var map = L.map('map', {
     center: [8.477703150412395, 124.64379231398955], // target is rizal monument
     zoom: 14,
-    minZoom: 14,
+    minZoom: 13,
     maxBounds: [
         [8.786011072628465, 124.94613647460939],
         [8.142844225655255, 124.34532165527345]
