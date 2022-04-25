@@ -29,3 +29,28 @@ GET http://localhost:3232/admin/routes
 
 ###
 GET http://localhost:3232/admin/reports
+###
+POST http://localhost:8080/signup
+Content-Type: application/json
+
+{
+    "username": "axis2",
+    "password": "password1"
+}
+
+###
+
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+    "username": "axis",
+    "password": "password1"
+}
+
+###
+GET http://localhost:8080/admin
+
+###
+GET http://localhost:8080/admin
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.YXhpcw.PSGBawPhnN0iGnsak0bM6FtuwltJnGEmyYnX_XRQPk8

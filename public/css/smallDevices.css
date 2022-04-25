@@ -1,4 +1,7 @@
 /* Small devices (portrait tablets, large phones) */
+html, body {
+    height:100%
+}
 @media only screen and (max-width: 767px) {
     * {
         font-family: "Roboto", sans-serif;

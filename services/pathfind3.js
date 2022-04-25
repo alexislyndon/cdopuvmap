@@ -130,20 +130,20 @@ module.exports = async (olon, olat, dlon, dlat, maxwalk = 300) => {
         // console.log(itinerary);
         // console.log('itinerary');
         // console.log(JSON.stringify(itinerary));
-        itinerary.forEach(r => {
-            var le = r.json.features.length
-            console.log(`route:${r.json.features[0].properties.route_code} cost: ${r.json.features[le-1].properties.agg_cost}`);
-        })
+        // itinerary.forEach(r => {
+        //     var le = r.json.features.length
+        //     console.log(`route:${r.json.features[0].properties.route_code} cost: ${r.json.features[le-1].properties.agg_cost}`);
+        // })
         itinerary.sort((a, b) => {
             var l = a.json.features.length
             var ll = b.json.features.length
             return (a.json.features[l - 1].properties.agg_cost > b.json.features[ll - 1].properties.agg_cost)  ? 1 : -1
         });
-        console.log(`\n`);
-        itinerary.forEach(r => {
-            var le = r.json.features.length
-            console.log(`route:${r.json.features[0].properties.route_code} cost: ${r.json.features[le-1].properties.agg_cost}`);
-        })
+        // console.log(`\n`);
+        // itinerary.forEach(r => {
+        //     var le = r.json.features.length
+        //     console.log(`route:${r.json.features[0].properties.route_code} cost: ${r.json.features[le-1].properties.agg_cost}`);
+        // })
         // console.log(itinerary);
         return itinerary
     }
