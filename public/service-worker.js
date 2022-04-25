@@ -16,7 +16,7 @@ workbox.routing.registerRoute(
 
 
 workbox.routing.registerRoute(
-    ({url}) => url.pathname.startsWith('/routes'),
+    /\/routes/,
     new workbox.strategies.CacheFirst({
         cacheName: 'routes-cache',
         plugins: [
