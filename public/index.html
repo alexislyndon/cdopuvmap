@@ -184,11 +184,12 @@
         </div>
         <div hidden id="spinner"></div>
         <div id="map">
-            <button class="pinner">Set Start Pin</button>
+            <button class="pinner" id='startPinner' onclick="pinOrigin(this)">Set 'start' pin</button>
+            <button class="pinner" id='endPinner' onclick="pinDestination(this)">Set 'end' pin</button>
         </div>
     </div>
     <div class="buttonPanel">
-        <button class="toggles" id="routesBtn">View Routes</button>
+        <button class="toggles" id="routesBtn" >View Routes</button>
         <button class="toggles" id="journeyBtn">Journey Planner</button>
     </div>
 

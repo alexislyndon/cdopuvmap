@@ -599,49 +599,71 @@ var origin = {}
 var destination = {}
 
 var pinOrigin = function (e) {
-    if (e.id == 'originBtn')
-    // if (origin.options) {
-    //     if (map.listens('drag')) {
-    //         var pin1 = origin.getLatLng()imon
-    //         // document.getElementById("originInput").value = Object.values(pin1).reverse().toString()
-    //         map.off('drag')
-    //         reverseGeocode(pin1, originInput)
-    //     } else { map.on('drag', oDrag) }
-    //     return
-    // }
-    if (!origin.options) {
-        console.log(origin);
+    console.log('here');
+    if (origin.options) {
+        
+        if (map.listens('drag')) {
+            console.log('heree');
+            let pin1 = origin.getLatLng()
+            map.off('drag')
+            reverseGeocode(pin1, originInput)
+            $('#startPinner').css({
+                'visibility': 'hidden'
+            });
+        } else { 
+            $('#startPinner').css({
+                'visibility': 'visible'
+            });
+            map.on('drag', oDrag) 
+        }
+        return
+    }
+    if (!origin.options) { //if marker was not added to map yet
         origin = L.marker(map.getCenter(), { draggable: true, icon: startIcon }).addTo(map);
         map.on('drag', oDrag);
+        $('#startPinner').css({
+            'visibility': 'visible'
+        });
+        
     }
 
-    origin.on('dragend', function(event) {
-        let latlng = event.target.getLatLng();
-        // console.log(latlng.lat, latlng.lng)
-        reverseGeocode(latlng, originInput)
-    });
-}; //test
+    // origin.on('dragend', function(event) {
+    //     let latlng = event.target.getLatLng();
+    //     // console.log(latlng.lat, latlng.lng)
+    //     reverseGeocode(latlng, originInput)
+    // });
+};
 
 var pinDestination = function (e) {
-    if (e.id == 'destinationBtnn') return
-    // if (destination.options) {
-    //     if (map.listens('drag')) {
-    //         var pin1 = destination.getLatLng()
-    //         map.off('drag')
-    //         reverseGeocode(pin1, destinationInput)
-    //     } else { map.on('drag', dDrag) }
-    //     return
-    // }
+    if (destination.options) {
+        if (map.listens('drag')) {
+            let pin2 = destination.getLatLng()
+            map.off('drag')
+            reverseGeocode(pin2, destinationInput)
+            $('#endPinner').css({
+                'visibility': 'hidden'
+            });
+        } else { 
+            $('#endPinner').css({
+                'visibility': 'visible'
+            });
+            map.on('drag', dDrag) 
+        }
+        return
+    }
     if (!destination.options) {
         destination = L.marker(map.getCenter(), { draggable: true, icon: endIcon }).addTo(map);
         map.on('drag', dDrag);
+        $('#endPinner').css({
+            'visibility': 'visible'
+        });
     }
 
-    destination.on('dragend', function(event) {
-        let latlng = event.target.getLatLng();
-        // console.log(latlng.lat, latlng.lng)
-        reverseGeocode(latlng, destinationInput);
-    });
+    // destination.on('dragend', function(event) {
+    //     let latlng = event.target.getLatLng();
+    //     // console.log(latlng.lat, latlng.lng)
+    //     reverseGeocode(latlng, destinationInput);
+    // });
 };
 var oDrag = function (e) {
     if (!e) return
