@@ -1,11 +1,13 @@
 const db = require("./db");
 
-module.exports = async () => {
+module.exports = async (username, hashedPassword) => {
   const result = await db.query(`
   
-  SELECT * FROM reports order by datetime desc
+  INSERT INTO users(
+	username, password)
+	VALUES ($1, $2);
   
-  `);
+  `, [username, hashedPassword]);
   const data = result.rows;
 
   return data;
