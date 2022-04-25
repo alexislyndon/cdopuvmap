@@ -114,7 +114,3 @@ TABLE OF ENDPOINTS (HTTP)
 | POST /login | username,password | jwt cookie  | no | Returns a jwt cookie that expires in 12hours |
 
 
-| Syntax      | Description |
-| ----------- | ----------- |
-| Header      | Title       |
-| Paragraph   | Text        |
