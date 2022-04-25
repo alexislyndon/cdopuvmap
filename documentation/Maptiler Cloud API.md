@@ -6,9 +6,9 @@
 
 The MapTiler Cloud Services provides access to Geocoding and Tiles among others. Tiles are individual squares of images that are stiched seamlessly to form a map. Different zoom levels require different tiles fetched from the servers. Tiles are available in both Vector and Raster formats. Their Geocoding service converts Place names to coordinates on a map. The reverse of this is also possible - Reverse Geocoding provides an approximate place name when given a set of coordinates.
 
-The MapTiler Cloud Services are invoked directly by the LeafletJS Library - meaning that we don't have to explicitly call their APIs to request for map tiles or related data. 
+#### Maptiler Tiles
 
-We used Vector tiles, rather than Raster tiles because there's a 20% size reduction to the initial Tiles load. 
+The MapTiler Tiles are invoked directly by the LeafletJS Library - meaning that we don't have to explicitly call their APIs to request for map tiles or related data. 
 
 The code below initializes a map. The leaflet library handles the fetching of the map tiles as well as the appending of leaflet map object to an element in the HTML. 
 
@@ -34,4 +34,32 @@ var map = L.map('map', {
 });
 ```
 
-[sequence diag]
+#### Maptiler Tiles
+
+We used Vector tiles, rather than Raster tiles because there's a about 20% size reduction to the initial Tiles load.
+
+[screenshot raster vs vector]
+
+The Geocoding API returns an array of Places when given a search term. The array of Places contain coordinates and in the front-end, the array is shown as a dropdown list. When an item on that list is selected, an eventListener fires and provides us access to the item - including the coordinates. 
+
+
+```
+<html>
+  <head>
+    <script src="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.js"></script>
+    <link href="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.css" rel="stylesheet" />
+  </head>
+  <body>
+    <input autocomplete="off" id="search" type="text" />
+    <script>
+      var geocoder = new maptiler.Geocoder({
+        input: 'search',
+        key: 'Qd14bES0AWln0kUQZN5O'
+      });
+      geocoder.on('select', function(item) {
+        console.log('Selected', item);
+      });
+    </script>
+  </body>
+</html>
+```
