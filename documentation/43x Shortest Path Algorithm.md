@@ -42,6 +42,6 @@ SELECT * FROM pgr_dijkstra('SELECT id,source,target,distance cost, rcost reverse
 13. Drop the temporary tables 
 (end of iteration)
 
-Sort array by lowest aggregate cost first and return to the client as a response. 
+Sort array by lowest aggregate cost first and return to the client as a response.  
 (End of Algorithm)
 
