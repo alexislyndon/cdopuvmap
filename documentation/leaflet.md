@@ -1,5 +1,5 @@
 # Map display
-
+    The leaflet map can be instantiated
 # GeoJSON
     Routes found in the application are stored in the database as GeoJSON format.
 
@@ -9,17 +9,11 @@
 
     These stored routes along with their data are retrieved through SQL queries initiated by the web application and will be then aggregated into a GeoJSON object by leaflet.
 
-# Feature
-
 # Layers
 
     In leaflet, anything that can be added and rendered to the map is a layer. The layer can be anything from circles and polygons to map markers and popups. GeoJSON data from the SQL query results will be added and rendered to the map as a layer. As a result, each route from the database will be represented as layers on the map.
 
     Leaflet layers will have methods such as layer.remove(), layer.addto(), layer.getbounds(), etc.. These methods including the other ones that are not mentioned will be used/called by the client-side JavaScript functions to present geographical data on the map itself. 
-
-# Jeepney route
-
-# Markers
 
 # Location tracking
     Leaflet plugins are available for developers to use. One of the available plugins is the location tracking plugin. Location control will then be added to the map as a layer. 
@@ -28,5 +22,3 @@
 
 # HTML controls
     Depending on the task, route layers will be represented as html buttons in the user interface and will be rendered to the web application dynamically. These buttons will contain basic information about each route.
-##  View Routes panel
-##  Journey Planner panel
