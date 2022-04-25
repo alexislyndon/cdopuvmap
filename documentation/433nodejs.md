@@ -100,7 +100,7 @@ A `GET /login` endpoint is available for users to log into the app. By supplying
 TABLE OF ENDPOINTS (HTTP)
 
 
-| endpoint | takes | returns | protected | remarks |
+| Endpoint | Takes | Returns | Protected | Remarks |
 | ------ | ------ | ------- | ------- | ------ | ------------ |
 | GET / | nothing | html of web map app | no | Gets the web app from server |
 | GET /itineraries | origin & destination coordinates | ARRAY of type FeatureCollection to display features on a map | no | FeatureCollection array for immediate consumption by the Leaflet library front-end |
