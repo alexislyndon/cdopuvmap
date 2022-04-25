@@ -51,7 +51,7 @@
             background-size: 50px 50px;
         }
         .toggles:hover {
-            background-color: #A8C0FF;
+            background-color: #2a1d63;
             cursor: pointer;
         }
         .toggleIcons {
@@ -64,7 +64,6 @@
             flex-direction: column;
             flex-wrap: nowrap;
             box-sizing: border-box;
-            border: 5px solid #A8C0FF;
             height: 0%;
             width: 100%;
             left: 0;
@@ -183,14 +182,14 @@
             align-self: flex-end;
         }
         .smallBtn:hover {
-            background-color: #A8C0FF;
+            background-color: #2a1d63;
             cursor: pointer;
         }
         #searchBtn {
             background-image: url('../icons/search_slim.svg');
         }
         #searchBtn:hover {
-            background-color: #A8C0FF;
+            background-color: #2a1d63;
             cursor: pointer;
         }
         .inputLabel {
@@ -207,7 +206,7 @@
             box-shadow: -6px 10px 8px -6px #808080;
         }
         #goBtn:hover {
-            background-color: #A8C0FF;
+            background-color: #2a1d63;
             cursor: pointer;
         }
         #itineraries {
@@ -294,7 +293,7 @@
             margin-left: 5px;
         }
         .toggleRouteBtn:hover {
-            background-color: #A8C0FF;
+            background-color: #2a1d63;
             cursor: pointer;
         }
          ::-webkit-scrollbar {
@@ -312,7 +311,7 @@
             border: 2px solid #A8C0FF;
         }
          ::-webkit-scrollbar-thumb:hover {
-            background: #A8C0FF;
+            background: #2a1d63;
         }
         .dropbtn {
             text-align: left;
