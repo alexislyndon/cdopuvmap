@@ -4,6 +4,9 @@
 | Limketkai | XU SEC Mall | 1. NHA RB 2. R2 Carmen Cogon | R2 Route | CORRECT |
 | Bugo Delmonte | Gaisano City Mall | 1. Bugo | Bugo | CORRECT |
 | XU SEC Mall | SSS Carmen | 1. Cogon - Carmen R2 2. NHA RB | NHA RB | CORRECT |
+|Barra Barangay Road, Bulua, Cagayan De Oro, Cagayan De Oro, Misamis Oriental | Destination: Corrales Avenue, Barangay 9, Cagayan De Oro, Cagayan De Oro, Misamis Oriental | 1. Bulua – Cogon Public Mkt (B2) 2. Youngsville – Cogon Public Mkt | Bulua – Cogon Public Mkt (B2) | Correct |
+| Morning Mist Village, Cagayan De Oro, Cagayan De Oro, Misamis Oriental | Masterson Avenue, Cagayan De Oro, Cagayan De Oro, Misamis Oriental | 1. Tignapolan – Cogon Public Mkt | 2. Dansolihon – Carmen Public Mkt Roundtrip | Tignapolan – Cogon Public Mkt | Correct |
+| Morning Mist Village, Cagayan De Oro, Cagayan De Oro, Misamis Oriental | Destination: Corrales Avenue, Barangay 9, Cagayan De Oro, Cagayan De Oro, Misamis Oriental | 1. SM uptown – Limketkai Center (RB) 2. Xavier Heights – Cogon Public mkt | Xavier Heights – Cogon Public Mkt | Correct |
 | | | | |
 | | | | |
 | | | | |
