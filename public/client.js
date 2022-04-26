@@ -602,8 +602,6 @@ var origin = {}
 var destination = {}
 
 var pinOrigin = function (e) {
-    if($('#endPinner').isv)
-    console.log('here');
     if (origin.options) {
 
         if (map.listens('drag')) {
