@@ -5,6 +5,7 @@ nginx, aws ec2, aws rds, ssl/https
 The NodeJS server is deployed to an AWS EC2 Virtual Machine running nodeJS and an nginx reverse proxy. The application needed to be properly deployed as the PWA functionality requires HTTPS. 
 
 Amazon Linux VM https setup
+
 ```
 sudo amazon-linux-extras install nginx1 -y
 sudo systemctl enable nginx
