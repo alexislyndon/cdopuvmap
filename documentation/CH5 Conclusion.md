@@ -1,1 +1,0 @@
-Not only does CDO not have a physical map of these routes accessible to the public, but it also doesn’t have digital copies of these route maps online. This, therefore, is the problem we have solved by creating an Interactive Route Map for Public Utility Vehicles currently servicing Cagayan de Oro City. 
