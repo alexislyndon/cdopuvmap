@@ -34,14 +34,13 @@ var map = L.map('map', {
 });
 ```
 
-#### Maptiler Tiles
 
 We used Vector tiles, rather than Raster tiles because there's a about 20% size reduction to the initial Tiles load.
 
-[screenshot raster vs vector]
+[screenshot raster vs vector size]
+#### Maptiler Geocoding
 
 The Geocoding API returns an array of Places when given a search term. The array of Places contain coordinates and in the front-end, the array is shown as a dropdown list. When an item on that list is selected, an eventListener fires and provides us access to the item - including the coordinates. 
-
 
 ```
 <html>
@@ -62,4 +61,18 @@ The Geocoding API returns an array of Places when given a search term. The array
     </script>
   </body>
 </html>
+```
+
+#### Maptiler Reverse Geocoding
+
+The reverse is also possible, when a user places a marker on the map, the Reverse Geocoding API is called to fech the approximate place associated with a set of coordinates. The place name resolved from the input coordinates will then be filled into the appropriate textbox. 
+
+```
+function reverseGeocode(latlng, inputE) {
+    fetch(`https://api.maptiler.com/geocoding/${latlng.lng},${latlng.lat}.json?key=Qd14bES0AWln0kUQZN5O`)
+        .then(res => { return res.json() })
+        .then(data => {
+            inputE.value = data.features[0].place_name
+        })
+}
 ```
