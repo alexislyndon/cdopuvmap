@@ -127,6 +127,7 @@
 
     <!--end for the user report-->
     <div class="app">
+        
         <div class="panel" id="journeyPanel">
             <div class="headDiv">
                 <h1 class="panelTitle">Journey Planner</h1>
@@ -147,13 +148,14 @@
                 <div id="goBtnDiv">
                     <button type="button" id="goBtn" onclick="getItineraries(originInput, destinationInput)"> GO
                     </button>
-
                 </div>
                 <h2 id="itineraries">
                     Itineraries
                 </h2>
                 <button type="button" class="smallBtn" id="refreshBtn"></button>
             </form>
+            <br>
+
             
             <div class="outputPanel" id="journeyOutputPanel">
                 <ul id="journeyOutputList">
@@ -186,6 +188,20 @@
         <div id="map">
             <button class="pinner" id='startPinner' onclick="pinOrigin(this)">Set 'start' pin</button>
             <button class="pinner" id='endPinner' onclick="pinDestination(this)">Set 'end' pin</button>
+            <div id="legend" class="leaflet-bottom leaflet-right" style="bottom: 30px; right: 20px; border: 1px yellow; visibility: hidden;" > 
+                LEGEND <br>
+                <svg height="10" width="100">
+                    <g fill="none" stroke="#FFBE54" stroke-width="6">
+                        <path stroke-dasharray="12 3 9" d="M5 10 l215 0" />
+                    </g>
+                </svg> WALK
+                <br>
+                <svg height="10" width="100">
+                    <g fill="none" stroke="#71ff34" stroke-width="8">
+                        <path stroke-dasharray="" d="M5 10 l215 0" />
+                    </g>
+                </svg> Jeepney Line
+            </div>
         </div>
     </div>
     <div class="buttonPanel">

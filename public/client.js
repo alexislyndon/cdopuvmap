@@ -251,6 +251,11 @@ $(window).resize(function () {
 });
 
 function openPanel(id) {
+    if (id == '#journeyPanel') {
+        $('#legend.leaflet-bottom.leaflet-right').css('visibility', 'visible')
+    } else {
+        $('#legend.leaflet-bottom.leaflet-right').css('visibility', 'hidden')
+    }
     if (id == '#routesPanel') {
         showAllRouteLayers();
         showAllRouteItem();
@@ -315,6 +320,9 @@ function openPanel(id) {
     setTimeout(function () { map.invalidateSize() }, 400);
 }
 function closePanel(id) {
+    if (id == '#journeyPanel') {
+        $('#legend.leaflet-bottom.leaflet-right').css('visibility', 'hidden')
+    }
     if (window.matchMedia('(min-width: 992px)').matches) {
         // large devices (laptops/desktops)
         $(id).css({
