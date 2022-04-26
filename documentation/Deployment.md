@@ -6,6 +6,19 @@ The NodeJS server is deployed to an AWS EC2 Virtual Machine running nodeJS and a
 
 Amazon Linux VM https setup
 
+Install Node
+```
+sudo yum install -y gcc-c++ make
+curl -sL https://rpm.nodesource.com/setup_16.x | sudo -E bash -
+sudo yum install -y nodejs
+```
+
+Install git and pull the repo
+```
+sudo yum install -y git
+git clone https://github.com/sam-meech-ward-bci...
+```
+
 ```
 sudo amazon-linux-extras install nginx1 -y
 sudo systemctl enable nginx
@@ -30,7 +43,7 @@ Setup a TLS Certificate for cdopuv.org domain
 sudo certbot certonly --standalone --debug -d cdopuv.org
 ```
 
-Change nginx config to:
+Change nginx config to: [APPENDIX KAY TAAS RA KAAYO]
 ```
 # For more information on configuration, see:
 #   * Official English Documentation: http://nginx.org/en/docs/
