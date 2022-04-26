@@ -157,13 +157,10 @@ var itirenaryNames = [];
 
 function getItineraries(x, y) {
     if (!origin.options || !destination.options) { snack('error', 'Please set start and end markers.'); return; }
-    if($('.pinner').is(":visible")) {
-        $('.pinner').each(function() {
-            $(this).trigger('click')
-        })
-    }
+    
     var o = origin.getLatLng();
     var d = destination.getLatLng();
+    if(o == d) {snack('error', 'Origin and Destination may not be the same'); return;}
     spinner.removeAttribute('hidden');
     hideAllRouteLayers();
     clearItirenary();
