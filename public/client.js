@@ -605,7 +605,6 @@ var pinOrigin = function (e) {
     if (origin.options) {
 
         if (map.listens('drag')) {
-            console.log('heree');
             let pin1 = origin.getLatLng()
             map.off('drag')
             reverseGeocode(pin1, originInput)
@@ -629,11 +628,11 @@ var pinOrigin = function (e) {
 
     }
 
-    // origin.on('dragend', function(event) {
-    //     let latlng = event.target.getLatLng();
-    //     // console.log(latlng.lat, latlng.lng)
-    //     reverseGeocode(latlng, originInput)
-    // });
+    origin.on('dragstart', function(event) {
+        $('#startPinner').css({
+            'visibility': 'visible'
+        });
+    });
 };
 
 var pinDestination = function (e) {
@@ -661,11 +660,11 @@ var pinDestination = function (e) {
         });
     }
 
-    // destination.on('dragend', function(event) {
-    //     let latlng = event.target.getLatLng();
-    //     // console.log(latlng.lat, latlng.lng)
-    //     reverseGeocode(latlng, destinationInput);
-    // });
+    destination.on('dragstart', function(event) {
+        $('#endPinner').css({
+            'visibility': 'visible'
+        });
+    });
 };
 var oDrag = function (e) {
     if (!e) return
