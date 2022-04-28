@@ -83,13 +83,26 @@ html {
     /* transform: translateX(50%); */
 }
 #startPinner{
-    background-color: #69F;
+    background-color: #085dd5;
 }
 
 #endPinner{
     background-color: #ff6699;
 }
-
+.legend{
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    z-index: 9999999;
+    border-radius: 10px;
+    height: 2rem;
+    width: 30%;
+    margin-left: -50px;
+    border: 0px;
+    color: #ffffff;
+    visibility: visible;
+    border: 2px dotted red;
+}
 .trigger::after {
   content: "";
   height: 3px;
