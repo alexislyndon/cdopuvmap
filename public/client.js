@@ -160,6 +160,7 @@ function getItineraries(x, y) {
     
     var o = origin.getLatLng();
     var d = destination.getLatLng();
+    map.flyToBounds(L.latLngBounds(o,d))
     if(o == d) {snack('error', 'Origin and Destination may not be the same'); return;}
     spinner.removeAttribute('hidden');
     hideAllRouteLayers();
