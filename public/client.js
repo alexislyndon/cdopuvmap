@@ -705,16 +705,38 @@ ogeocoder.on('select', function (item) {
     var center = map.getCenter()
     var [lng, lat] = item.center
     // origin = {}
-    origin = L.marker([lng, lat], { draggable: true, icon: startIcon })//.addTo(map);
-    if(!map.hasLayer(origin)) {origin.addTo(map)}
+    if(map.hasLayer(origin)){
+        origin.remove();
+    }
+    origin = L.marker([lat, lng], { draggable: true, icon: startIcon }).addTo(map);
+    // if(!map.hasLayer(origin)) {origin.addTo(map)}
     originInput.value = item.place_name
+    map.panTo([lat, lng])
+    origin.on('dragstart', function(event) {
+        $('#startPinner').css({
+            'visibility': 'visible'
+        });
+        map.on('drag', oDrag)
+    });
+
 });
 dgeocoder.on('select', function (item) {
     var [lng, lat] = item.center
     // destination = {}
-    destination = L.marker([lng, lat], { draggable: true, icon: endIcon })//.addTo(map);
-    if(!map.hasLayer(destination)) {destination.addTo(map)}
+    if(map.hasLayer(destination)){
+        destination.remove();
+    }
+    destination = L.marker([lat, lng], { draggable: true, icon: endIcon }).addTo(map);
+    // if(!map.hasLayer(destination)) {destination.addTo(map)}
     destinationInput.value = item.place_name
+    map.panTo([lat, lng])
+    destination.on('dragstart', function(event) {
+        $('#endPinner').css({
+            'visibility': 'visible'
+        });
+        map.on('drag', dDrag)
+    });
+
 });
 
 function reverseGeocode(latlng, inputE) {
