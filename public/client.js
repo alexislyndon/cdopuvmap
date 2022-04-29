@@ -641,6 +641,7 @@ var pinOrigin = function (e) {
         $('#startPinner').css({
             'visibility': 'visible'
         });
+        map.on('drag', dDrag)
     });
 };
 
@@ -673,6 +674,7 @@ var pinDestination = function (e) {
         $('#endPinner').css({
             'visibility': 'visible'
         });
+        map.on('drag', dDrag)
     });
 };
 var oDrag = function (e) {
