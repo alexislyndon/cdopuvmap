@@ -4,7 +4,7 @@ importScripts(
 
 
 workbox.routing.registerRoute(
-    /\/routes/,
+    /^\/routes/,
     new workbox.strategies.CacheFirst({
         cacheName: 'routes-cache',
         plugins: [
