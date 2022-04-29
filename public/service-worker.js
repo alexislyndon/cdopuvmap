@@ -5,7 +5,7 @@ importScripts(
 
 workbox.routing.registerRoute(
     /^\/routes/,
-    new workbox.strategies.CacheFirst({
+    new workbox.strategies.NetworkFirst({
         cacheName: 'routes-cache',
         plugins: [
             new workbox.cacheableResponse.CacheableResponsePlugin({
@@ -17,7 +17,7 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
     /^https:\/\/api.maptiler.com\/maps.*/,
-    new workbox.strategies.CacheFirst({
+    new workbox.strategies.NetworkFirst({
         cacheName: 'tile-cache',
         plugins: [
             new workbox.cacheableResponse.CacheableResponsePlugin({
@@ -29,28 +29,28 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
     /\.html/,
-    new workbox.strategies.CacheFirst({
+    new workbox.strategies.NetworkFirst({
         cacheName: 'html-cache',
     })
 );
 
 workbox.routing.registerRoute(
     /\.css$/,
-    new workbox.strategies.CacheFirst({
+    new workbox.strategies.NetworkFirst({
         cacheName: 'css-cache',
     })
 );
 
 workbox.routing.registerRoute(
     /\.js/,
-    new workbox.strategies.CacheFirst({
+    new workbox.strategies.NetworkFirst({
         cacheName: 'js-cache',
     })
 );
 
 // workbox.routing.registerRoute(
 //     /\/.*/,
-//     new workbox.strategies.NetworkFirst({
+//     new workbox.strategies.CacheFirst({
 //         cacheName: 'all-cache'
 //     })
 // );
