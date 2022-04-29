@@ -4,7 +4,7 @@ var osmDefault = L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.
 var gl = L.mapboxGL({
     attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
     style: 'https://api.maptiler.com/maps/streets/style.json?key=Qd14bES0AWln0kUQZN5O'
-})//.addTo(map);
+})
 
 // map initialization
 var map = L.map('map', {
@@ -85,7 +85,6 @@ const fetchroutes = function () {
             spinner.setAttribute('hidden', '');
             data = data.features
             for (let i = 0; i < data.length; ++i) {
-
                 allRoutesArray.push(L.geoJSON(data[i], {
                     onEachFeature: function (feature, layer) {
                         layer.on({
@@ -488,18 +487,17 @@ $('#searchBtn').click(function () {
     allRoutesArray.forEach(route => {
         if (route.path != null) {
             if (route.path.includes(inputStr)) {
-                console.log('hit');
                 elementID = route.layer_id;
                 console.log(elementID);
-                $('#div_' + elementID).show();
+                $('#' + elementID).show();
             } else {
                 elementID = route.layer_id;
                 console.log('here');
-                $('#div_' + elementID).hide();
+                $('#' + elementID).hide();
             }
         } else {
             elementID = route.layer_id;
-            $('#div_' + elementID).hide();
+            $('#' + elementID).hide();
         }
     });
 });
