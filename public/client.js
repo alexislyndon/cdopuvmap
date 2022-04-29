@@ -491,15 +491,15 @@ $('#searchBtn').click(function () {
                 console.log('hit');
                 elementID = route.layer_id;
                 console.log(elementID);
-                $('#div_' + elementID).show();
+                $('#' + elementID).show();
             } else {
                 elementID = route.layer_id;
                 console.log('here');
-                $('#div_' + elementID).hide();
+                $('#' + elementID).hide();
             }
         } else {
             elementID = route.layer_id;
-            $('#div_' + elementID).hide();
+            $('#' + elementID).hide();
         }
     });
 });
