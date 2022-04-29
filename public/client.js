@@ -641,7 +641,7 @@ var pinOrigin = function (e) {
         $('#startPinner').css({
             'visibility': 'visible'
         });
-        map.on('drag', dDrag)
+        map.on('drag', oDrag)
     });
 };
 
