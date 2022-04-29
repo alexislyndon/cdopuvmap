@@ -174,6 +174,9 @@ function getItineraries(x, y) {
         .then(res => { return res.json() })
         .then(data => {
             spinner.setAttribute('hidden', '');
+            if(data == -1){
+                snack('error', 'No routes found. Please try again.'); return;
+            }
             for (let i = 0; i < data.length; ++i) { //loop for data[n]
                 let text = '';
                 allItirenariesArray[i] = L.featureGroup()  // 1 layer group = 2 walks, route's vertices/edges

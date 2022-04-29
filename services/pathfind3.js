@@ -6,6 +6,7 @@ const getNearestVertexID2 = require("./getNearestVertexID2");
 
 module.exports = async (olon, olat, dlon, dlat, maxwalk = 300) => {
     let db = null
+    let nofound = false;
     try {
         var itinerary = []
         db = await dbPool.connect();
@@ -33,6 +34,11 @@ module.exports = async (olon, olat, dlon, dlat, maxwalk = 300) => {
                 `, [olon, olat, dlon, dlat]);
 
         var rows = result.rows;
+        if(!rows[0]) {
+            console.log('no rows');
+            nofound = true
+            return
+        }
 
 
         for await (const row of rows) {
@@ -127,6 +133,7 @@ module.exports = async (olon, olat, dlon, dlat, maxwalk = 300) => {
         return JSON.stringify(itinerary)
 
     } finally {
+        if(nofound) {return -1}
         // console.log(itinerary);
         // console.log('itinerary');
         // console.log(JSON.stringify(itinerary));
