@@ -48,9 +48,9 @@ workbox.routing.registerRoute(
     })
 );
 
-// workbox.routing.registerRoute(
-//     /\/.*/,
-//     new workbox.strategies.CacheFirst({
-//         cacheName: 'all-cache'
-//     })
-// );
+workbox.routing.registerRoute(
+    /\/.*/,
+    new workbox.strategies.CacheFirst({
+        cacheName: 'all-cache'
+    })
+);
