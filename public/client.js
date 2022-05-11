@@ -113,6 +113,7 @@ const fetchroutes = function () {
             allRoutesArray.forEach(route => {
                 route.addTo(map);
             });
+            hideAllRouteLayers();
             //need to add allRoutesLayers to map first before doing this loop
             for (let i = 0; i < data.length; i++) {
                 allRoutesArray[i].layer_id = data[i].properties.route_code //'route_' + cleanString(data[i].properties.route_name); //adds new attribute 'layer_id'
@@ -258,8 +259,7 @@ function openPanel(id) {
         $('#legend.leaflet-bottom.leaflet-right').css('visibility', 'hidden')
     }
     if (id == '#routesPanel') {
-        showAllRouteLayers();
-        showAllRouteItem();
+
     } else if (id == '#journeyPanel') {
         hideAllRouteLayers();
     }
