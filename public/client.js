@@ -213,7 +213,8 @@ function getItineraries(x, y) {
                 if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
                     $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
                 } else {
-                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong> Riding distance: '+ridingDistance+' km<br> Est time (30kph): '+estMinute+' mins</p></div></span></li>');
+                    // $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong> Riding distance: '+ridingDistance+' km<br> Est time (30kph): '+estMinute+' mins</p></div></span></li>');
+                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span><table class="info-tbl"><tr><td class="bold">Distance </td><td>' + ridingDistance + ' km</td></tr><tr><td class="bold">Est time (30kph)</td><td>' + estMinute + ' km</td></tr></table></li>');
                 }
 
             }

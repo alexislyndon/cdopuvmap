@@ -233,5 +233,7 @@ table.info-tbl {
     /* border: 1px dotted yellow; */
 }
 table, tr, td {
-    border: 1px solid black;
+    border-radius: 2px;
+    border: 1px solid #808080;
+    color: #3F2B96;
 }
