@@ -176,7 +176,10 @@ function getItineraries(x, y) {
         .then(data => {
             spinner.setAttribute('hidden', '');
             for (let i = 0; i < data.length; ++i) { //loop for data[n]
-                let text = '';
+                let routeName = '';
+                let walkDistance = '';
+                let estMinute = '';
+                let estHour = '';
                 allItirenariesArray[i] = L.featureGroup()  // 1 layer group = 2 walks, route's vertices/edges
                 for (let j = 0; j < data[i].json.features.length; ++j) { //loop for data[n].json.features[n]
                     let currentLayer = L.geoJSON(data[i].json.features[j], {
@@ -192,16 +195,25 @@ function getItineraries(x, y) {
                     });
                     currentLayer.addTo(allItirenariesArray[i]);
                     if (data[i].json.features[j].properties.route_name != null) { // get only the route_name
-                        text = data[i].json.features[j].properties.route_name;
+                        routeName = data[i].json.features[j].properties.route_name;
+                        if (data[i].json.features[j].properties.leg_type == 'route'){
+                            ridingDistance = data[i].json.features[j].properties.distance;
+                            // time = distance/speed(kph) constant speed 30; given no traffic and stops
+                            estHour = data[i].json.features[j].properties.distance / 30;
+                            estMinute = estHour * 60;
+                            estMinute = Math.round((estMinute + Number.EPSILON) * 100) / 100
+                            ridingDistance = Math.round((ridingDistance + Number.EPSILON) * 100) / 100
+                        }
+                        console.log(data[i].json.features[j]);
                     }
                 }
-                itirenaryNames[i] = text;
-                let splitted = text.split('Via');
-                let elementID = 'itirenary_' + cleanString(text);
+                itirenaryNames[i] = routeName;
+                let splitted = routeName.split('Via');
+                let elementID = 'itirenary_' + cleanString(routeName);
                 if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
                     $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
                 } else {
-                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
+                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong> Riding distance: '+ridingDistance+' km<br> Est time (30kph): '+estMinute+' mins</p></div></span></li>');
                 }
 
             }
