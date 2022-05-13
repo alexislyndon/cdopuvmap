@@ -177,9 +177,10 @@ function getItineraries(x, y) {
             spinner.setAttribute('hidden', '');
             for (let i = 0; i < data.length; ++i) { //loop for data[n]
                 let routeName = '';
-                let walkDistance = '';
-                let estMinute = '';
-                let estHour = '';
+                let distance = []
+                let estMinute = [];
+                let estHour = [];
+                let totalEstMinute = '';
                 allItirenariesArray[i] = L.featureGroup()  // 1 layer group = 2 walks, route's vertices/edges
                 for (let j = 0; j < data[i].json.features.length; ++j) { //loop for data[n].json.features[n]
                     let currentLayer = L.geoJSON(data[i].json.features[j], {
@@ -194,15 +195,32 @@ function getItineraries(x, y) {
                         style: stylistic(data[i].json.features[j].properties.leg_type, i)
                     });
                     currentLayer.addTo(allItirenariesArray[i]);
+                    
                     if (data[i].json.features[j].properties.route_name != null) { // get only the route_name
                         routeName = data[i].json.features[j].properties.route_name;
-                        if (data[i].json.features[j].properties.leg_type == 'route'){
-                            ridingDistance = data[i].json.features[j].properties.distance;
+                        if (data[i].json.features[j].properties.leg_type == 'walk1'){
+                            distance[0] = data[i].json.features[j].properties.distance;
+                            // time = distance/speed(kph) constant speed 5; given no traffic and stops
+                            estHour[0] = data[i].json.features[j].properties.distance / 5;
+                            estMinute[0] = estHour[0] * 60;
+                            estMinute[0] = Math.round((estMinute[0] + Number.EPSILON) * 100) / 100
+                            distance[0] = Math.round((distance[0] + Number.EPSILON) * 100) / 100
+                        }
+                        else if (data[i].json.features[j].properties.leg_type == 'route'){
+                            distance[1] = data[i].json.features[j].properties.distance;
                             // time = distance/speed(kph) constant speed 30; given no traffic and stops
-                            estHour = data[i].json.features[j].properties.distance / 30;
-                            estMinute = estHour * 60;
-                            estMinute = Math.round((estMinute + Number.EPSILON) * 100) / 100
-                            ridingDistance = Math.round((ridingDistance + Number.EPSILON) * 100) / 100
+                            estHour[1] = data[i].json.features[j].properties.distance / 30;
+                            estMinute[1] = estHour[1] * 60;
+                            estMinute[1] = Math.round((estMinute[1] + Number.EPSILON) * 100) / 100
+                            distance[1] = Math.round((distance[1] + Number.EPSILON) * 100) / 100
+                        }
+                        else if (data[i].json.features[j].properties.leg_type == 'walk99'){
+                            distance[2] = data[i].json.features[j].properties.distance;
+                            // time = distance/speed(kph) constant speed 5; given no traffic and stops
+                            estHour[2] = data[i].json.features[j].properties.distance / 5;
+                            estMinute[2] = estHour[2] * 60;
+                            estMinute[2] = Math.round((estMinute[2] + Number.EPSILON) * 100) / 100
+                            distance[2] = Math.round((distance[2] + Number.EPSILON) * 100) / 100
                         }
                         console.log(data[i].json.features[j]);
                     }
@@ -213,8 +231,8 @@ function getItineraries(x, y) {
                 if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
                     $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
                 } else {
-                    // $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong> Riding distance: '+ridingDistance+' km<br> Est time (30kph): '+estMinute+' mins</p></div></span></li>');
-                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span><table class="info-tbl"><tr><td class="bold">Distance </td><td>' + ridingDistance + ' km</td></tr><tr><td class="bold">Est time (30kph)</td><td>' + estMinute + ' km</td></tr></table></li>');
+                    totalEstMinute = estMinute[0] + estMinute[1] + estMinute [2];
+                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span><table class="info-tbl"><tr><td class="bold">Walk (origin to jeepney): </td><td>' + distance[0] + ' km</td></tr><tr><td class="bold">Riding distance: </td><td>' + distance[1] + ' km</td></tr><tr><td class="bold">Walk (jeepney to destination): </td><td>' + distance[2] + ' km</td></tr><tr><td class="bold">Total est time (30kph)</td><td>' + totalEstMinute + ' mins</td></tr></table></li>');
                 }
 
             }
