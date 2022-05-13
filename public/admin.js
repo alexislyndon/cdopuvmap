@@ -24,6 +24,9 @@ $(function () {
     $('#reports').on('click', (params) => {
         $('#main').load('/admin/reports')
     })
+    $('#account').on('click', (params) => {
+        $('#main').load('/admin/account')
+    })
 
 
 $(document).on('click', '.edit', function () {
@@ -196,6 +199,34 @@ function setActiveClass(evt) {
 	evt.currentTarget.classList.add('active');
 }
 
+$(document).on('click','.slider-switch', function(){
+    console.log($(this).closest('input'));
+
+    if($('#2fa').is(":checked")){ //already checked - going to disabled
+        alert('disabled')
+    }else { // from disabled to enabled
+        $(this).closest("div").append('<button id="generate"> Generate Secret </button>')
+        $(document).on('click','#generate', function(){
+            $.ajax({
+                url: '/admin/gen2fa',
+                method: 'POST',
+                data: "",
+                success: function (data) {
+                    if (data.qr) {
+                        console.log(data);
+                        $('.2fa').append('<img src="' + data.qr + '">')
+                    }
+                },
+                error: function () {
+                    $('#m').fadeIn().delay(1800).fadeOut();
+                }
+    
+            })
+        })
+        alert('nyay')
+    }
+    
+});
 
 
 $('#routes').click()

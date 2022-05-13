@@ -2,6 +2,13 @@ importScripts(
     'https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js'
 );
 
+const matchCb = ({ url, request, event }) => {
+    if (url.pathname.includes('admin')) {
+        console.log('admin--not maTCH');
+        return false
+    } else { return true }
+};
+
 
 workbox.routing.registerRoute(
     /^\/routes/,
@@ -49,8 +56,12 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-    /\/.*/,
+    matchCb,
     new workbox.strategies.CacheFirst({
         cacheName: 'all-cache'
     })
 );
+
+// workbox.routing.registerNavigationRoute("/admin", {
+//     blacklist: [/^\/login/, /^\/admin/],
+// });

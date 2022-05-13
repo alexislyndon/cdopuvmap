@@ -26,7 +26,7 @@ router.post('/login', async (req, res) => {
     // if (!username || !password) { res.status(401); return }
     const data = await getUser(username)
     if(!data) {res.send(403); return;}
-    const maxAge = 60 * 60 * 12
+    const maxAge = 15 * 60// 15s
 
     try {
         if (await bcrypt.compare(password, data.password)) {
