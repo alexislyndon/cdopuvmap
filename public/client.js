@@ -494,16 +494,19 @@ $('#searchBtn').click(function () {
             if (route.path.includes(inputStr)) {
                 console.log('hit');
                 elementID = route.layer_id;
-                console.log(elementID);
                 $('#' + elementID).show();
+                $('#div_' + elementID).show();
+
             } else {
                 elementID = route.layer_id;
-                console.log('here');
                 $('#' + elementID).hide();
+                $('#div_' + elementID).hide();
             }
         } else {
             elementID = route.layer_id;
+            console.log(elementID);
             $('#' + elementID).hide();
+            $('#div_' + elementID).hide();
         }
     });
 });
@@ -583,11 +586,13 @@ function removeAllItirenaryItem() {
 function showAllRouteItem() {
     allRoutesArray.forEach(route => {
         $('#' + route.layer_id).show();
+        $('#div_' + route.layer_id).show();
     });
 }
 function hideAllRouteItem() {
     allRoutesArray.forEach(route => {
         $('#' + route.layer_id).hide();
+        $('#div_' + route.layer_id).hide();
     });
 }
 $("#searchInput").keyup(function (event) {
