@@ -113,6 +113,7 @@ const fetchroutes = function () {
             allRoutesArray.forEach(route => {
                 route.addTo(map);
             });
+            hideAllRouteLayers();
             //need to add allRoutesLayers to map first before doing this loop
             for (let i = 0; i < data.length; i++) {
                 allRoutesArray[i].layer_id = data[i].properties.route_code //'route_' + cleanString(data[i].properties.route_name); //adds new attribute 'layer_id'
@@ -175,7 +176,12 @@ function getItineraries(x, y) {
         .then(data => {
             spinner.setAttribute('hidden', '');
             for (let i = 0; i < data.length; ++i) { //loop for data[n]
-                let text = '';
+                let routeName = '';
+                let distance = []
+                let estMinute = [];
+                let estHour = [];
+                let totalEstMinute = '';
+                let fare = 0;
                 allItirenariesArray[i] = L.featureGroup()  // 1 layer group = 2 walks, route's vertices/edges
                 for (let j = 0; j < data[i].json.features.length; ++j) { //loop for data[n].json.features[n]
                     let currentLayer = L.geoJSON(data[i].json.features[j], {
@@ -190,17 +196,57 @@ function getItineraries(x, y) {
                         style: stylistic(data[i].json.features[j].properties.leg_type, i)
                     });
                     currentLayer.addTo(allItirenariesArray[i]);
+                    
                     if (data[i].json.features[j].properties.route_name != null) { // get only the route_name
-                        text = data[i].json.features[j].properties.route_name;
+                        routeName = data[i].json.features[j].properties.route_name;
+                        if (data[i].json.features[j].properties.leg_type == 'walk1'){
+                            distance[0] = data[i].json.features[j].properties.distance;
+                            // time = distance/speed(kph) constant speed 5; given no traffic and stops
+                            estHour[0] = data[i].json.features[j].properties.distance / 5;
+                            estMinute[0] = estHour[0] * 60;
+                            estMinute[0] = Math.round((estMinute[0] + Number.EPSILON) * 100) / 100;
+                            distance[0] = Math.round((distance[0] + Number.EPSILON) * 100) / 100;
+                        }
+                        else if (data[i].json.features[j].properties.leg_type == 'route'){
+                            distance[1] = data[i].json.features[j].properties.distance;
+                            // time = distance/speed(kph) constant speed 30; given no traffic and stops
+                            estHour[1] = data[i].json.features[j].properties.distance / 30;
+                            estMinute[1] = estHour[1] * 60;
+                            estMinute[1] = Math.round((estMinute[1] + Number.EPSILON) * 100) / 100;
+                            distance[1] = Math.round((distance[1] + Number.EPSILON) * 100) / 100;
+
+                            if (distance[1] < 4){
+                                fare = 10;
+                            }else if (distance[1] > 4){
+                                fare = distance[1] - 4; //first 4 km costs minimum fare which is 10php
+                            
+                                // each succeeding km costs 1.5php
+                                fare = fare / 1; 
+                                fare = fare * 1.5;
+                                fare = fare + 10; //add minimum fare later.
+                                fare = Math.round((fare + Number.EPSILON) * 100) / 100;
+                            }
+                        }
+                        else if (data[i].json.features[j].properties.leg_type == 'walk99'){
+                            distance[2] = data[i].json.features[j].properties.distance;
+                            // time = distance/speed(kph) constant speed 5; given no traffic and stops
+                            estHour[2] = data[i].json.features[j].properties.distance / 5;
+                            estMinute[2] = estHour[2] * 60;
+                            estMinute[2] = Math.round((estMinute[2] + Number.EPSILON) * 100) / 100
+                            distance[2] = Math.round((distance[2] + Number.EPSILON) * 100) / 100
+                        }
+                        console.log(data[i].json.features[j]);
                     }
                 }
-                itirenaryNames[i] = text;
-                let splitted = text.split('Via');
-                let elementID = 'itirenary_' + cleanString(text);
+                itirenaryNames[i] = routeName;
+                let splitted = routeName.split('Via');
+                let elementID = 'itirenary_' + cleanString(routeName);
                 if (splitted.length == 2) { //check if 'route_name' have: 'Via westbound chuchu'
                     $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong>Via' + splitted[1] + '</p></div></span></li>');
                 } else {
-                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span></li>');
+                    totalEstMinute = estMinute[0] + estMinute[1] + estMinute [2];
+                    totalEstMinute = Math.round((totalEstMinute + Number.EPSILON) * 100) / 100
+                    $('#journeyOutputList').append('<li><span class="journey_ItemClickZone" id="' + elementID + '"><div class="outputItem" id="div_' + elementID + '"><img src="icons/jeepney.svg" alt="jeepney icon" class="jeepneyIcon "><p class="routeName" ><strong>' + splitted[0] + '<br></strong></p></div></span><table class="info-tbl"><tr><td class="bold">Walk (origin to jeepney): </td><td>' + distance[0] + ' km</td></tr><tr><td class="bold">Riding distance: </td><td>' + distance[1] + ' km</td></tr><tr><td class="bold">Walk (jeepney to destination): </td><td>' + distance[2] + ' km</td></tr><tr><td class="bold">Total est time (30kph)</td><td>' + totalEstMinute + ' mins</td></tr><tr><td class="bold">Fare: </td><td>' + fare + ' php</td></tr></table></li>');
                 }
 
             }
@@ -258,8 +304,7 @@ function openPanel(id) {
         $('#legend.leaflet-bottom.leaflet-right').css('visibility', 'hidden')
     }
     if (id == '#routesPanel') {
-        showAllRouteLayers();
-        showAllRouteItem();
+
     } else if (id == '#journeyPanel') {
         hideAllRouteLayers();
     }
