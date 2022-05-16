@@ -7,9 +7,17 @@
     <h3>2 Factor Authentication</h3>
 
     <label class="switch">
-      <input type="checkbox" id="2fa" />
+      <input type="checkbox" id="2fa" <%= user?.totp_status ? "checked":"" %>  />
       <span class="slider-switch round"></span>
     </label>
     <h4>TOTP (Time-based One Time Password)</h4>
+    <br/><button class="otpgen" id="generate" <%= user?.totp_status ? "hidden":"" %> > Generate Secret </button> <br>
+    <div id="qr-holder" class="otpgen"></div>
+    <form id="otp-form" class="otpgen" hidden>
+      <label for="otp">Verify:</label><br>
+      <input type="text" id="otpbox" name="otp" placeholder="enter 6-digit OTP" ><br>
+      <input type="submit" value="Submit">
+    </form> 
+    <br>
   </div>
 </div>
