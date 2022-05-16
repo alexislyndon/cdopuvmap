@@ -19,7 +19,7 @@ POST http://localhost:3232/pathfind/124.64405905455351 8.476703511625551/124.657
 
 
 ###
-GET http://localhost:8080/itineraries?origin=124.62075233459474 8.505224863792407&destination=124.64272499084474 8.48188029558921
+GET http://cdopuv.org/itineraries?origin=124.62075233459474 8.505224863792407&destination=124.64272499084474 8.48188029558921
 
 ###
 GET http://localhost:8080/withpoints
@@ -54,3 +54,5 @@ GET http://localhost:8080/admin
 ###
 GET http://localhost:8080/admin
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.YXhpcw.PSGBawPhnN0iGnsak0bM6FtuwltJnGEmyYnX_XRQPk8
+
+SELECT * FROM routes where ST_Distance(ST_Transform(st_setsrid(st_makepoint(<dest longitude>, dest.latitude),4326),3857) < 300 order by <-> the_geom

@@ -315,20 +315,23 @@ table tbody tr td {
 
 .Tabs__tab {
 		float: left;
-		width: 33.333%;
+		width: 25%;
 		text-align: center;
 	}
 
 .Tabs__tab:first-child.active ~ .Tabs__presentation-slider {
-			transform: translateX(0) scaleX(0.333);
+			transform: translateX(0) scaleX(0.25);
 		}
 
 .Tabs__tab:nth-child(2).active ~ .Tabs__presentation-slider {
-			transform: translateX(33.333%) scaleX(0.333);
+			transform: translateX(25%) scaleX(0.25);
 		}
 
 .Tabs__tab:nth-child(3).active ~ .Tabs__presentation-slider {
-			transform: translateX(calc(33.333% * 2)) scaleX(0.333);
+			transform: translateX(calc(25% * 2)) scaleX(0.25);
+		}
+.Tabs__tab:nth-child(4).active ~ .Tabs__presentation-slider {
+			transform: translateX(calc(25% * 3)) scaleX(0.25);
 		}
 
 .Tabs__presentation-slider {
@@ -442,4 +445,70 @@ ul.list_sbar li a.aftered:after{
 
 li.closable {
   content: "x";
+}
+
+/* toggle switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider-switch {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider-switch:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider-switch {
+  background-color: #2196F3;
+}
+
+input:focus + .slider-switch {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider-switch:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider-switch.round {
+  border-radius: 34px;
+}
+
+.slider-switch.round:before {
+  border-radius: 50%;
+}
+
+.main {
+  margin: auto;
+  width: 60%;
 }

@@ -24,6 +24,9 @@ $(function () {
     $('#reports').on('click', (params) => {
         $('#main').load('/admin/reports')
     })
+    $('#account').on('click', (params) => {
+        $('#main').load('/admin/account')
+    })
 
 
 $(document).on('click', '.edit', function () {
@@ -196,6 +199,88 @@ function setActiveClass(evt) {
 	evt.currentTarget.classList.add('active');
 }
 
+$(document).on('click','.slider-switch', function(e){
+    console.log($(this).closest('input'));
+
+    if($('#2fa').is(":checked")){ //already checked - going to disabled
+        $.ajax({
+            url: '/admin/disable2fa',
+            method: 'POST',
+            data: "",
+            success: function (data) {
+                if(data.success) {
+                    console.log('2fa disabled');
+                    $(".success-msg")
+                    .html("2 Factor Authentication disabled.")
+                    .fadeIn()
+                    .delay(1800)
+                    .fadeOut();
+        $('#generate').show()
+
+                }
+
+            },
+            error: function () {
+                $('#m').fadeIn().delay(1800).fadeOut();
+                console.log('error');
+            }
+    
+        })
+    }else { // from disabled to enabled
+        e.preventDefault()
+        $('#generate').show()
+        alert('Generate and Verify Secret to enable')
+    }
+});
+
+$(document).on('click','#generate', function(){
+    $.ajax({
+        url: '/admin/gen2fa',
+        method: 'POST',
+        data: "",
+        success: function (data) {
+            if (data.qr) {
+                console.log(data);
+                $('img').remove()
+                $('#qr-holder').append('<img src="' + data.qr + '">')
+                $('.otpgen').show()
+                
+            }
+        },
+        error: function () {
+            $('#m').fadeIn().delay(1800).fadeOut();
+        }
+
+    })
+});
+
+$(document).on('submit','form#otp-form', function(e){
+    e.preventDefault();
+    $(this).serialize()
+    // spinner.removeAttribute('hidden');
+    $.ajax({
+        url: '/admin/ver2fa',
+        method: 'POST',
+        data: $(this).serialize(),
+        success: function (data) {
+            console.log(data);
+            console.log('yayers');
+            if(data.verified) {
+                $(".success-msg")
+                .html("OTP Enabled successfully")
+                .fadeIn()
+                .delay(1800)
+                .fadeOut();
+                $('.otpgen').hide()
+                $('input#2fa').prop('checked', true)
+            }
+        },
+        error: function () {
+            $('#m').fadeIn().delay(1800).fadeOut();
+        }
+
+    })
+});
 
 
 $('#routes').click()

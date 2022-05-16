@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <h1>Login</h1>
-			<form >
+			<form id="login">
 				<label for="username">
 					<!-- font awesome icon -->
 					<!-- <i class="fas fa-user"></i> -->
@@ -23,7 +23,14 @@
 				<button>Submit</button>
 			</form>
 			<p id="m" hidden>Wrong username or password. Please try again.</p>
-		</div>
+			<form id="verify" hidden>
+				<label for="otp">Verify:</label><br>
+				<input id="userid" type="hidden" name="userid" value="">
+				<input type="text" id="otpbox" name="otp" placeholder="enter 6-digit OTP" ><br>
+				<input type="submit" value="Submit">
+			</form>
+	</div>
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="login.js"></script>
 </body>

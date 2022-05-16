@@ -175,6 +175,9 @@ function getItineraries(x, y) {
         .then(res => { return res.json() })
         .then(data => {
             spinner.setAttribute('hidden', '');
+            if(data == -1){
+                snack('error', 'No routes found. Please try again.'); return;
+            }
             for (let i = 0; i < data.length; ++i) { //loop for data[n]
                 let routeName = '';
                 let distance = []
