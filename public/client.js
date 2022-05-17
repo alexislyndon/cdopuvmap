@@ -262,8 +262,9 @@ function getItineraries(x, y) {
             $('#' + allItirenariesArray[0].layer_id).click();  // automatic focus 1 route
         })
 }
-L.control.locate().addTo(map); //check top left corner for added button/control
-
+// location tracker
+var lc = L.control.locate().addTo(map); 
+lc.start();
 
 //this will update panel width if user changes screen size while panel is still open
 $(window).resize(function () {
