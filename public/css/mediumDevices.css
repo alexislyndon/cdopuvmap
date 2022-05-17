@@ -172,9 +172,11 @@
         background-position: center;
         box-shadow: -6px 10px 8px -6px #808080;
     }
-    #destinationBtn,
+    #destinationBtn{
+        background-image: url('../icons/endIcon.svg');
+    }
     #originBtn {
-        background-image: url('../icons/marker.svg');
+        background-image: url('../icons/startIcon.svg');
     }
     #refreshBtn {
         position: relative;
