@@ -155,7 +155,7 @@ module.exports = async (olon, olat, dlon, dlat, maxwalk = 300) => {
             console.log(`route:${r.json.features[0].properties.route_code} cost: ${r.json.features[le-1].properties.agg_cost}`);
         })
         // console.log(itinerary);
-        return itinerary.slice(0,2)
+        return itinerary.slice(0,4)
     }
 
 }
