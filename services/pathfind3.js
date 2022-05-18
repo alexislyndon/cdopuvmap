@@ -133,7 +133,10 @@ module.exports = async (olon, olat, dlon, dlat, maxwalk = 300) => {
         return JSON.stringify(itinerary)
 
     } finally {
-        if(nofound) {return -1}
+        if(nofound) {
+            console.log("noroutesfound: ",nofound);
+            return -1
+        }
         // console.log(itinerary);
         // console.log('itinerary');
         // console.log(JSON.stringify(itinerary));
@@ -152,7 +155,9 @@ module.exports = async (olon, olat, dlon, dlat, maxwalk = 300) => {
             console.log(`route:${r.json.features[0].properties.route_code} cost: ${r.json.features[le-1].properties.agg_cost}`);
         })
         // console.log(itinerary);
-        return itinerary.slice(0,3)
+
+        return itinerary.slice(0,4)
+
     }
 
 }

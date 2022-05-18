@@ -10,12 +10,12 @@ var gl = L.mapboxGL({
 var map = L.map('map', {
     center: [8.477703150412395, 124.64379231398955], // target is rizal monument
     zoom: 14,
-    minZoom: 13,
+    minZoom: 10,
     maxBounds: [
         [8.786011072628465, 124.94613647460939],
         [8.142844225655255, 124.34532165527345]
     ],
-    layers: [ //route layer can be added directly if needed
+    layers: [ //route layer can be added directly if needed 124.484024,8.355540,124.792328,8.587132
         gl
     ]
 });
@@ -44,6 +44,20 @@ function dehighlight(layer) {
     }
 }
 
+var LeafIcon = L.Icon.extend({
+    options: {
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        shadowAnchor: [4, 62],
+        popupAnchor: [-3, -76]
+    }
+});
+var startendIcon = new LeafIcon({
+    iconUrl: 'icons/start_end.svg'
+})
+
+
+var decorator = L.layerGroup().addTo(map)
 function highlight(layer) {
     if (selected !== null) { //check if there is a layer already selected prior to this
         var previous = selected;
@@ -62,6 +76,22 @@ function highlight(layer) {
     if (previous) { //dehighlight the previous selected layer
         dehighlight(previous);
     }
+
+    console.log(layer._layers[Object.keys(layer._layers)[0]].feature.properties.start_end);
+    var ll = L.latLng(layer._layers[Object.keys(layer._layers)[0]].feature.properties.start_end.split(" ").reverse())
+
+    var startend = L.marker(ll, { draggable: false, icon: startendIcon })
+
+    if(decorator.getLayers().length > 0) {
+        decorator.clearLayers()
+    }
+    var arrows = L.polylineDecorator(layer.latlngsfordecorator, {
+        patterns: [
+            {offset: 25, repeat: 80, symbol: L.Symbol.arrowHead({pixelSize: 17, pathOptions: {fillOpacity: 1, weight: 0, color:000}})}
+        ]
+    })
+    decorator.addLayer(arrows)
+    decorator.addLayer(startend)
 }
 
 function cleanString(str) {
@@ -117,6 +147,8 @@ const fetchroutes = function () {
             //need to add allRoutesLayers to map first before doing this loop
             for (let i = 0; i < data.length; i++) {
                 allRoutesArray[i].layer_id = data[i].properties.route_code //'route_' + cleanString(data[i].properties.route_name); //adds new attribute 'layer_id'
+                allRoutesArray[i].latlngsfordecorator = L.GeoJSON.coordsToLatLngs(data[i].geometry.coordinates);
+                // console.log(L.GeoJSON.coordsToLatLngs(data[i].geometry.coordinates));
 
                 if (data[i].properties.path != null) {
                     allRoutesArray[i].path = [];
@@ -174,6 +206,7 @@ function getItineraries(x, y) {
     fetch(`/itineraries?origin=${encodeURIComponent(`${o.lng} ${o.lat}`)}&destination=${encodeURIComponent(`${d.lng} ${d.lat}`)}`)
         .then(res => { return res.json() })
         .then(data => {
+            console.log(`origin: ${o.lng} ${o.lat} | destination: ${d.lng} ${d.lat}`);
             spinner.setAttribute('hidden', '');
             if(data == -1){
                 snack('error', 'No routes found. Please try again.'); return;
@@ -445,6 +478,7 @@ $('#journeyBtn, #routesBtn').click(function (e) { //sidebar button function
                     'background-color': '#2a1d63'
                 });
             }
+            decorator.clearLayers()
             break;
         case "routesBtn":
             if ($('#routesPanel').css("visibility") === "visible") { //check if open already
