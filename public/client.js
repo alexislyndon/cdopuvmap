@@ -44,6 +44,19 @@ function dehighlight(layer) {
     }
 }
 
+var LeafIcon = L.Icon.extend({
+    options: {
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        shadowAnchor: [4, 62],
+        popupAnchor: [-3, -76]
+    }
+});
+var startendIcon = new LeafIcon({
+    iconUrl: 'icons/start_end.svg'
+})
+
+
 var decorator = L.layerGroup().addTo(map)
 function highlight(layer) {
     if (selected !== null) { //check if there is a layer already selected prior to this
@@ -65,6 +78,9 @@ function highlight(layer) {
     }
 
     console.log(layer._layers[Object.keys(layer._layers)[0]].feature.properties.start_end);
+    var ll = L.latLng(layer._layers[Object.keys(layer._layers)[0]].feature.properties.start_end.split(" ").reverse())
+
+    var startend = L.marker(ll, { draggable: false, icon: startendIcon })
 
     if(decorator.getLayers().length > 0) {
         decorator.clearLayers()
@@ -75,6 +91,7 @@ function highlight(layer) {
         ]
     })
     decorator.addLayer(arrows)
+    decorator.addLayer(startend)
 }
 
 function cleanString(str) {
